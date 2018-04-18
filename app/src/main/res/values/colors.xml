@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00d1ae</color>
+    <color name="colorPrimaryDark">#00d1ae</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="splash_color">#00d1ae</color>
+    <color name="main_screen">#1a2226</color>
+    <color name="edttxt_bg_clr">#374850</color>
+
+    <color name="hint_color">#8Cffffff</color>
+</resources>
