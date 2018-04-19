@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppointmentApp</string>
+
+    <string name="forgot_pswd_instruction">Enter your email address and we will send you instruction on how to change your password</string>
 </resources>

@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import com.quicsolv.appointmentapp.R;
 
+/**********************************************************************
+ * Created by   -  Tushar Patil
+ * Organization -  QuicSolv Technologies Pvt.Ltd
+ * Date         -  18 Apr 2018
+ ***********************************************************************/
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;

@@ -8,6 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.quicsolv.appointmentapp.R;
 
+/**********************************************************************
+ * Created by   -  Tushar Patil
+ * Organization -  QuicSolv Technologies Pvt.Ltd
+ * Date         -  18 Apr 2018
+ ***********************************************************************/
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     /**

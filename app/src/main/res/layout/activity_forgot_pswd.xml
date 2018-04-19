@@ -40,6 +40,14 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/hint_color" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/forgot_pswd_instruction"
+                android:textSize="16sp" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
