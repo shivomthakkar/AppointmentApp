@@ -36,7 +36,7 @@
                 android:drawableLeft="@drawable/ic_mail_white"
                 android:drawablePadding="10dp"
                 android:hint="Email"
-                android:padding="12dp"
+                android:padding="@dimen/edttxt_padding"
                 android:textColor="@color/white"
                 android:textColorHint="@color/hint_color" />
 

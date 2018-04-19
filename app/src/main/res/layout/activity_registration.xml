@@ -40,6 +40,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/edttxt_full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -47,11 +48,13 @@
                     android:drawableLeft="@drawable/ic_person_white"
                     android:drawablePadding="10dp"
                     android:hint="Full name"
-                    android:padding="12dp"
+                    android:padding="@dimen/edttxt_padding"
+                    android:inputType="textPersonName"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
+                    android:id="@+id/edttxt_mob_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -59,11 +62,13 @@
                     android:drawableLeft="@drawable/ic_mobile_white"
                     android:drawablePadding="10dp"
                     android:hint="Mobile number"
-                    android:padding="12dp"
+                    android:padding="@dimen/edttxt_padding"
+                    android:inputType="number"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
+                    android:id="@+id/edttxt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -71,11 +76,13 @@
                     android:drawableLeft="@drawable/ic_mail_white"
                     android:drawablePadding="10dp"
                     android:hint="Email"
-                    android:padding="12dp"
+                    android:padding="@dimen/edttxt_padding"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
+                    android:id="@+id/edttxt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -83,11 +90,80 @@
                     android:drawableLeft="@drawable/ic_password"
                     android:drawablePadding="10dp"
                     android:hint="Password"
-                    android:padding="12dp"
+                    android:padding="@dimen/edttxt_padding"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/hint_color" />
+
+                <EditText
+                    android:id="@+id/edttxt_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_outline"
+                    android:drawableLeft="@drawable/ic_calender_white"
+                    android:drawablePadding="10dp"
+                    android:hint="Date of Birth"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/edttxt_padding"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_outline"
+                    android:orientation="horizontal"
+                    android:padding="13dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp"
+                        android:layout_weight="1.2"
+                        android:drawableLeft="@drawable/ic_person_white"
+                        android:drawablePadding="10dp"
+                        android:text="Gender"
+                        android:textSize="18sp" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rb_male"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="@color/splash_color"
+                            android:text="Male"
+                            android:checked="true"
+                            android:textColor="@color/splash_color" />
+
+                        <RadioButton
+                            android:id="@+id/rb_female"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="@color/splash_color"
+                            android:text="Female"
+                            android:textColor="@color/splash_color" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+
                 <Button
+                    android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
@@ -99,31 +175,42 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/txt_login"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_weight="1"
                         android:gravity="left"
                         android:text="Login"
                         android:textColor="@color/splash_color"
                         android:textSize="18sp" />
 
                     <TextView
+                        android:id="@+id/txt_help"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_weight="1"
                         android:gravity="right"
                         android:text="Help?"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
                 </LinearLayout>
-
-
             </LinearLayout>
         </ScrollView>
 
+        <ProgressBar
+            android:id="@+id/progress_register"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

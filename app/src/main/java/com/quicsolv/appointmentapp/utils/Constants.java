@@ -14,4 +14,11 @@ public class Constants {
     public static final String MPARK_PREFS = "MparkPrefs";
     public static final String PREFS_PARKING_NAME = "PrefsParkingName";
 
+    public static final String USER_TYPE_PATIENT = "p";
+
+    //Error code
+    public static final int ERROR_CODE_200 = 200;
+    public static final int ERROR_CODE_400 = 400;
+    public static final int ERROR_CODE_401 = 401;
+
 }

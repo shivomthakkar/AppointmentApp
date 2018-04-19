@@ -1,23 +1,24 @@
-package com.quicsolv.appointmentapp.retrofit.models.pojo;
+package com.quicsolv.appointmentapp.retrofit.models.pojo.register;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**********************************************************************
  * Created by   -  Tushar Patil
  * Organization -  QuicSolv Technologies Pvt.Ltd
- * Date         -  18 Apr 2018
+ * Date         -  19 Apr 2018
  ***********************************************************************/
 
-public class ParkingListResponse {
+public class RegistrationResponse {
     @SerializedName("code")
     @Expose
     private Integer code;
-    @SerializedName("list")
+    @SerializedName("auth_token")
     @Expose
-    private List<List<String>> list = null;
+    private String authToken;
+    @SerializedName("pid")
+    @Expose
+    private Integer pid;
     @SerializedName("message")
     @Expose
     private String message;
@@ -30,12 +31,20 @@ public class ParkingListResponse {
         this.code = code;
     }
 
-    public List<List<String>> getList() {
-        return list;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setList(List<List<String>> list) {
-        this.list = list;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 
     public String getMessage() {
