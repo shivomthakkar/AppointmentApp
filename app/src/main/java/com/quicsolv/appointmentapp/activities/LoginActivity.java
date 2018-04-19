@@ -2,7 +2,9 @@ package com.quicsolv.appointmentapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.LoginInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.login.LoginResponse;
+import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
 
 import retrofit2.Call;
@@ -76,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**********************************************************************
      * OnClicklisteners for Buttons, TextView.
      ***********************************************************************/
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -95,7 +100,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     edttxtEmail.setError(null);
                     edttxtPassword.setError(null);
                     progressLogin.setVisibility(View.VISIBLE);
-                    doLogin(strEmail, strPswd);
+                   
+                    if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+                        doLogin(strEmail, strPswd);
+                    } else {
+                        progressLogin.setVisibility(View.GONE);
+                        Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    }
+                    
                 }
                 break;
 
