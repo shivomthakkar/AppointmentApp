@@ -39,10 +39,9 @@
             android:name=".activities.ForgotPswdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
         <activity android:name=".activities.QuestionariesActivity"
-            android:screenOrientation="portrait"
             android:label="Questionnarie"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 

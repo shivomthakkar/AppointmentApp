@@ -1,5 +1,8 @@
 package com.quicsolv.appointmentapp.retrofit.models.pojo.questionnaries;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * Date         -  19 Apr 2018
  ***********************************************************************/
 
-public class Datum {
+public class Datum implements Parcelable {
     @Expose
     private String qid;
     @SerializedName("question")
@@ -39,6 +42,28 @@ public class Datum {
     @SerializedName("p_answer")
     @Expose
     private Object pAnswer;
+
+    protected Datum(Parcel in) {
+        qid = in.readString();
+        question = in.readString();
+        option1 = in.readString();
+        option2 = in.readString();
+        option3 = in.readString();
+        option4 = in.readString();
+        qAnswer = in.readString();
+    }
+
+    public static final Creator<Datum> CREATOR = new Creator<Datum>() {
+        @Override
+        public Datum createFromParcel(Parcel in) {
+            return new Datum(in);
+        }
+
+        @Override
+        public Datum[] newArray(int size) {
+            return new Datum[size];
+        }
+    };
 
     public String getQid() {
         return qid;
@@ -120,4 +145,19 @@ public class Datum {
         this.pAnswer = pAnswer;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(qid);
+        dest.writeString(question);
+        dest.writeString(option1);
+        dest.writeString(option2);
+        dest.writeString(option3);
+        dest.writeString(option4);
+        dest.writeString(qAnswer);
+    }
 }
