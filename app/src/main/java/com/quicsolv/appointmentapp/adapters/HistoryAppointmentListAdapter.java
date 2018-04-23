@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.appointmentlist._3;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**********************************************************************
@@ -47,19 +50,33 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
             TextView tt3 = (TextView) v.findViewById(R.id.txt_apt_date);
             TextView tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
 
-            if (tt1 != null) {
+            if (tt1 != null && p.getDName() != null) {
                 tt1.setText(p.getDName().toString());
             }
 
-            if (tt2 != null) {
+            if (tt2 != null && p.getSpName() != null) {
                 tt2.setText(p.getSpName());
             }
 
-            if (tt3 != null) {
-                tt3.setText(p.getAppitDate());
+            if (tt3 != null && p.getAppitDate() != null) {
+
+                Date parsed = null;
+                String outputDate = "";
+
+                SimpleDateFormat df_input = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+                SimpleDateFormat df_output = new SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault());
+
+                try {
+                    parsed = df_input.parse(p.getAppitDate());
+                    outputDate = df_output.format(parsed);
+                } catch (ParseException e) {
+
+                }
+
+                tt3.setText(outputDate);
             }
 
-            if (tt4 != null) {
+            if (tt4 != null && p.getAppitTime() != null) {
                 tt4.setText(p.getAppitTime());
             }
         }
