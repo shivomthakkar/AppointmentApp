@@ -16,12 +16,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
 import com.quicsolv.appointmentapp.fragments.LogoutFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
+import com.quicsolv.appointmentapp.fragments.ProfileFragment;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 
 public class DashboardActivity extends AppCompatActivity
@@ -97,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity
 
         if (id == R.id.nav_my_profile) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = AppointmentListFragment.class;
+                fragmentClass = ProfileFragment.class;
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
@@ -149,5 +151,12 @@ public class DashboardActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setToolBarTitle(String toolBarTitle){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView txtTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        txtTitle.setText(toolBarTitle);
     }
 }

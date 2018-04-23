@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.adapters.PagersAdapter;
 
 public class AppointmentListFragment extends Fragment {
@@ -27,6 +28,8 @@ public class AppointmentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_appointment_list, container, false);
+
+        ((DashboardActivity) getActivity()).setToolBarTitle("List of Appointments");
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("History"));
