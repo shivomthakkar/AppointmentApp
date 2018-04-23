@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 
 public class LogoutFragment extends Fragment {
@@ -42,7 +43,8 @@ public class LogoutFragment extends Fragment {
         // Setting Positive "Yes" Button
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-
+                Prefs.setSharedPreferenceString(getActivity(), Prefs.PREF_EMAIL, "");
+                Prefs.setSharedPreferenceString(getActivity(), Prefs.PREF_PASSWORD, "");
             }
         });
 

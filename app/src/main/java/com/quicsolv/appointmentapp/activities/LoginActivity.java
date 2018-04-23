@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,14 +42,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Context mContext;
     private TextView txtFrogotPswd;
     private EditText edttxtEmail, edttxtPassword;
+    private CheckBox cbRememberMe;
     private Button btnLogin;
     private LoginInterface loginInterface;
     private ProgressBar progressLogin;
+    private boolean isRememberMeIsChecked;
 
 
     /**********************************************************************
      * Activity's entry method
      ***********************************************************************/
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +69,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**********************************************************************
      * Declare all component Id's here
      ***********************************************************************/
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void getIds() {
         edttxtEmail = (EditText) findViewById(R.id.edttxt_email);
         edttxtPassword = (EditText) findViewById(R.id.edttxt_password);
 
         txtFrogotPswd = (TextView) findViewById(R.id.txt_forgot_pswd);
         txtFrogotPswd.setOnClickListener(this);
+
+        cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
+        cbRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isRememberMeIsChecked = isChecked;
+            }
+        });
 
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
@@ -84,6 +98,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!strEmail.trim().equals("") && !strPswd.trim().equals("")) {
             edttxtEmail.setText(strEmail);
             edttxtPassword.setText(strPswd);
+
+            edttxtEmail.setError(null);
+            edttxtPassword.setError(null);
+            progressLogin.setVisibility(View.VISIBLE);
+
+            if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+                doLogin(strEmail, strPswd);
+            } else {
+                progressLogin.setVisibility(View.GONE);
+                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -110,6 +135,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     edttxtPassword.setText(strPswd);
                 }
 
+                if (isRememberMeIsChecked){
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);
+                }
+
                 if (strEmail.equals("")) {
                     edttxtEmail.setError("Email required");
                 }
@@ -129,7 +159,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressLogin.setVisibility(View.GONE);
                         Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 break;
 
