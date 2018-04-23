@@ -15,6 +15,8 @@ public class Prefs {
     public final static String PREF_AUTH_TOKEN = "auth_token";
     public final static String PREF_PID = "pid";
     public final static String PREF_QUESTION_COMPLETED = "ques_completed";
+    public final static String PREF_EMAIL = "prefs_email";
+    public final static String PREF_PASSWORD = "prefs_password";
 
     /**
      * Set a string shared preference

@@ -2,6 +2,7 @@ package com.quicsolv.appointmentapp.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -26,6 +27,7 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.RegisterInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.register.RegistrationResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,7 +88,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         edttxtDOB = (EditText) findViewById(R.id.edttxt_dob);
         edttxtDOB.setOnClickListener(this);
 
-        progressLogin = (ProgressBar) findViewById(R.id.progress_login);
+        progressLogin = (ProgressBar) findViewById(R.id.progress_register);
 
         btnregister = (Button) findViewById(R.id.btn_register);
         btnregister.setOnClickListener(this);
@@ -200,7 +202,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
      * @param strPswd
      * @param selectedGender
      * @param strDOB   */
-    private void doRegistration(String strFullName, String strMobNo, String strEmail, String strPswd, int selectedGender, String strDOB) {
+    private void doRegistration(String strFullName, String strMobNo, final String strEmail, final String strPswd, int selectedGender, String strDOB) {
 
         String strCurrentDate = strDOB;
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
@@ -222,6 +224,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
                     Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid().toString());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);
+                    Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                    startActivity(mainIntent);
                 } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                     //failure
                     Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();

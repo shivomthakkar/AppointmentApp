@@ -42,8 +42,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_send_email:
-                Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
-                startActivity(mainIntent);
+
                 break;
         }
     }

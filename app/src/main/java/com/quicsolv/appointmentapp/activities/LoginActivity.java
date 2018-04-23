@@ -75,6 +75,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
 
         progressLogin = (ProgressBar) findViewById(R.id.progress_login);
+
+        String strEmail = "";
+        String strPswd = "";
+        strEmail = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+        strPswd = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
+
+        if (!strEmail.trim().equals("") && !strPswd.trim().equals("")) {
+            edttxtEmail.setText(strEmail);
+            edttxtPassword.setText(strPswd);
+        }
     }
 
 
@@ -86,8 +96,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                String strEmail = edttxtEmail.getText().toString().trim();
-                String strPswd = edttxtPassword.getText().toString().trim();
+                String strEmail = "";
+                String strPswd = "";
+
+                strEmail = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+                strPswd = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
+
+                if (strEmail.trim().equals("") && strPswd.trim().equals("")) {
+                    strEmail = edttxtEmail.getText().toString().trim();
+                    strPswd = edttxtPassword.getText().toString().trim();
+                }else{
+                    edttxtEmail.setText(strEmail);
+                    edttxtPassword.setText(strPswd);
+                }
 
                 if (strEmail.equals("")) {
                     edttxtEmail.setError("Email required");
@@ -137,6 +158,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_AUTH_TOKEN, response.body().getAuthToken());
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid());
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_QUESTION_COMPLETED, response.body().getQc());
+
+                    if (response.body().getQc().trim().equals("0")){ //Questionnarie is incomplete
+                        Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                        startActivity(mainIntent);
+                    }else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0){ //Questionnarie completed
+                        Intent mainIntent = new Intent(mContext, DashboardActivity.class);
+                        startActivity(mainIntent);
+                    }
 
                 } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                     //failure
