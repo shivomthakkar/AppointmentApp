@@ -2,6 +2,7 @@ package com.quicsolv.appointmentapp.activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,13 +10,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
-import com.quicsolv.appointmentapp.fragments.QuestionnarieFragment;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.QuestionnariesInterface;
@@ -39,6 +44,9 @@ public class QuestionariesActivity extends FragmentActivity {
     private ProgressBar progressQuestionnarie;
     private Button btnBack, btnNextQuestion;
     private ViewPager pager;
+    private static List<Datum> questionnarieNewListObject;
+    public static boolean isOption1Selected = false,
+            isOption2Selected = false, isOption3Selected = false, isOption4Selected = false;
 
 
     @Override
@@ -91,18 +99,40 @@ public class QuestionariesActivity extends FragmentActivity {
             public void onClick(View v) {
                 btnBack.setVisibility(View.VISIBLE);
 
-                if (pager.getCurrentItem() != listQuestionnarie.size()) {
-                    if (pager.getCurrentItem() == listQuestionnarie.size() - 2) {
-                        btnNextQuestion.setVisibility(View.GONE);
+                if (isOption1Selected || isOption2Selected || isOption3Selected || isOption4Selected) {
+
+                    if (pager.getCurrentItem() == listQuestionnarie.size() - 1 && questionnarieNewListObject.get(pager.getCurrentItem()).getPAnswer() == null) {
+                        Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
-                    if (pager.getCurrentItem() + 2 == listQuestionnarie.size()) {
+                    if (btnNextQuestion.getText().toString().trim().equalsIgnoreCase("Finish")) {
+                        questionnarieNewListObject.get(0);
+                        Intent mainIntent = new Intent(mContext, DashboardActivity.class);
+                        startActivity(mainIntent);
+                    }
+
+                    if (pager.getCurrentItem() != listQuestionnarie.size()) {
+                        if (pager.getCurrentItem() == listQuestionnarie.size() - 2) {
+                            btnNextQuestion.setVisibility(View.GONE);
+                        }
+
+                        if (pager.getCurrentItem() + 2 == listQuestionnarie.size()) {
+                            btnBack.setVisibility(View.VISIBLE);
+                            btnNextQuestion.setVisibility(View.VISIBLE);
+                            btnNextQuestion.setText("Finish");
+                        }
+
+                        pager.setCurrentItem(pager.getCurrentItem() + 1);
+                    }
+                } else {
+                    pager.setCurrentItem(pager.getCurrentItem());
+                    if (pager.getCurrentItem() == 0) {
+                        btnBack.setVisibility(View.GONE);
+                    } else {
                         btnBack.setVisibility(View.VISIBLE);
-                        btnNextQuestion.setVisibility(View.VISIBLE);
-                        btnNextQuestion.setText("Finish");
                     }
-
-                    pager.setCurrentItem(pager.getCurrentItem() + 1);
+                    Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -135,7 +165,7 @@ public class QuestionariesActivity extends FragmentActivity {
 
         for (int i = 0; i < totalSize; i++) {
             int currentPage = i + 1;
-            fList.add(QuestionnarieFragment.newInstance(listQuestionnarie.get(i), currentPage, totalSize));
+            fList.add(QuestionnarieFragments.newInstance(listQuestionnarie.get(i), currentPage, totalSize));
         }
         return fList;
     }
@@ -154,6 +184,8 @@ public class QuestionariesActivity extends FragmentActivity {
                         listQuestionnarie.add(datum);
                     }
 
+                    questionnarieNewListObject = new ArrayList<Datum>(listQuestionnarie);
+
                     List<Fragment> fragments = getFragments();
                     pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
                     pager = (ViewPager) findViewById(R.id.viewpager);
@@ -169,5 +201,81 @@ public class QuestionariesActivity extends FragmentActivity {
                 Log.d("", "");
             }
         });
+    }
+
+    public static class QuestionnarieFragments extends Fragment {
+
+        public static final String DATUM = "DATUM";
+        public static final String CURRENT_PAGE = "CURRENT_PAGE";
+        public static final String TOTAL_QUESTIONS = "TOTAL_QUESTIONS";
+        private TextView txtQuestion;
+        private RadioGroup rgQue;
+        private RadioButton rbOption1, rbOption2, rbOption3, rbOption4;
+
+        public static final QuestionnarieFragments newInstance(Datum message, int curPage, int totalSize) {
+            QuestionnarieFragments f = new QuestionnarieFragments();
+            Bundle bdl = new Bundle(1);
+            bdl.putParcelable(DATUM, message);
+            bdl.putInt(CURRENT_PAGE, curPage);
+            bdl.putInt(TOTAL_QUESTIONS, totalSize);
+            f.setArguments(bdl);
+            return f;
+        }
+
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            Datum datum = getArguments().getParcelable(DATUM);
+            final int curPage = getArguments().getInt(CURRENT_PAGE);
+            final int queSize = getArguments().getInt(TOTAL_QUESTIONS);
+
+            isOption1Selected = false;
+            isOption2Selected = false;
+            isOption3Selected = false;
+            isOption4Selected = false;
+
+            View v = inflater.inflate(R.layout.myfragment_layout, container, false);
+
+            rgQue = (RadioGroup) v.findViewById(R.id.rg_que);
+            rbOption1 = (RadioButton) v.findViewById(R.id.option1);
+            rbOption2 = (RadioButton) v.findViewById(R.id.option2);
+            rbOption3 = (RadioButton) v.findViewById(R.id.option3);
+            rbOption4 = (RadioButton) v.findViewById(R.id.option4);
+
+            txtQuestion = (TextView) v.findViewById(R.id.txt_question);
+
+            txtQuestion.setText("Q." + curPage + "  " + datum.getQuestion());
+            rbOption1.setText(datum.getOption1());
+            rbOption2.setText(datum.getOption2());
+            rbOption3.setText(datum.getOption3());
+            rbOption4.setText(datum.getOption4());
+
+            rgQue.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    // checkedId is the RadioButton selected
+
+                    switch (checkedId) {
+                        case R.id.option1:
+                            isOption1Selected = true;
+                            questionnarieNewListObject.get(curPage - 1).setPAnswer(1);
+                            break;
+                        case R.id.option2:
+                            isOption2Selected = true;
+                            questionnarieNewListObject.get(curPage - 1).setPAnswer(2);
+                            break;
+                        case R.id.option3:
+                            isOption3Selected = true;
+                            questionnarieNewListObject.get(curPage - 1).setPAnswer(3);
+                            break;
+                        case R.id.option4:
+                            isOption4Selected = true;
+                            questionnarieNewListObject.get(curPage - 1).setPAnswer(4);
+                            break;
+                    }
+                }
+            });
+
+            return v;
+        }
     }
 }
