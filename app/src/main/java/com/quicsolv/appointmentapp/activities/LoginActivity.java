@@ -23,6 +23,7 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.LoginInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.login.LoginResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,14 +101,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     edttxtEmail.setError(null);
                     edttxtPassword.setError(null);
                     progressLogin.setVisibility(View.VISIBLE);
-                   
+
                     if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                         doLogin(strEmail, strPswd);
                     } else {
                         progressLogin.setVisibility(View.GONE);
                         Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
-                    
+
                 }
                 break;
 
@@ -132,6 +133,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
                     Toast.makeText(mContext, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_AUTH_TOKEN, response.body().getAuthToken());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_QUESTION_COMPLETED, response.body().getQc());
+
                 } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                     //failure
                     Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
