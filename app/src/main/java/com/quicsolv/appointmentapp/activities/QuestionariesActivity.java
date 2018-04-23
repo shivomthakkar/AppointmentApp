@@ -20,13 +20,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.QuestionnariesInterface;
+import com.quicsolv.appointmentapp.retrofit.models.interfaces.SubmitQuesAnsInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnaries.Datum;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnaries.QuestionnariesResponse;
+import com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.SubmitQuesAnsRequest;
+import com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.SubmitQuesAnsResponse;
 import com.quicsolv.appointmentapp.utils.Constants;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +45,7 @@ public class QuestionariesActivity extends FragmentActivity {
     private Context mContext;
     MyPageAdapter pageAdapter;
     private QuestionnariesInterface questionnariesInterface;
+    private SubmitQuesAnsInterface submitQuesAnsInterface;
     private List<Datum> listQuestionnarie;
     private ProgressBar progressQuestionnarie;
     private Button btnBack, btnNextQuestion;
@@ -57,6 +63,7 @@ public class QuestionariesActivity extends FragmentActivity {
         mContext = QuestionariesActivity.this;
 
         questionnariesInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(QuestionnariesInterface.class);
+        submitQuesAnsInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(SubmitQuesAnsInterface.class);
         listQuestionnarie = new ArrayList<>();
         progressQuestionnarie = (ProgressBar) findViewById(R.id.progress_questionnarie);
         fetchQuestionnarieFromAPI();
@@ -108,6 +115,7 @@ public class QuestionariesActivity extends FragmentActivity {
 
                     if (btnNextQuestion.getText().toString().trim().equalsIgnoreCase("Finish")) {
                         questionnarieNewListObject.get(0);
+                        saveQuestionnarieToServer();
                         Intent mainIntent = new Intent(mContext, DashboardActivity.class);
                         startActivity(mainIntent);
                     }
@@ -134,6 +142,39 @@ public class QuestionariesActivity extends FragmentActivity {
                     }
                     Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    private void saveQuestionnarieToServer() {
+
+        SubmitQuesAnsRequest submitQuesAnsRequest = new SubmitQuesAnsRequest();
+        submitQuesAnsRequest.setPid(Integer.parseInt(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")));
+
+        List<com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.Datum> listDatum = new ArrayList<>();
+        com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.Datum datum = null;
+
+        for (int i = 0; i < questionnarieNewListObject.size(); i++) {
+            datum = new com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.Datum();
+            datum.setQid(Integer.parseInt(questionnarieNewListObject.get(i).getQid().toString()));
+            datum.setQrId(0);
+            datum.setPAnswer(Integer.parseInt(questionnarieNewListObject.get(i).getPAnswer().toString()));
+            datum.setQAnswer(Integer.parseInt(questionnarieNewListObject.get(i).getQAnswer().toString()));
+            listDatum.add(datum);
+        }
+        submitQuesAnsRequest.setData(listDatum);
+
+        String dataJsnStr = new Gson().toJson(submitQuesAnsRequest);
+
+        submitQuesAnsInterface.submitQuesAns(dataJsnStr).enqueue(new Callback<SubmitQuesAnsResponse>() {
+            @Override
+            public void onResponse(Call<SubmitQuesAnsResponse> call, Response<SubmitQuesAnsResponse> response) {
+                Log.d("", "");
+            }
+
+            @Override
+            public void onFailure(Call<SubmitQuesAnsResponse> call, Throwable t) {
+                Log.d("", "");
             }
         });
     }
@@ -172,7 +213,7 @@ public class QuestionariesActivity extends FragmentActivity {
 
     private void fetchQuestionnarieFromAPI() {
         progressQuestionnarie.setVisibility(View.VISIBLE);
-        questionnariesInterface.getQuestionnarie("3").enqueue(new Callback<QuestionnariesResponse>() {
+        questionnariesInterface.getQuestionnarie(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<QuestionnariesResponse>() {
             @Override
             public void onResponse(Call<QuestionnariesResponse> call, Response<QuestionnariesResponse> response) {
                 Log.d("", "");

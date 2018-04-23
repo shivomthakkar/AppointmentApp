@@ -1,4 +1,4 @@
-package com.quicsolv.appointmentapp.retrofit.models.pojo.login;
+package com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,22 +6,13 @@ import com.google.gson.annotations.SerializedName;
 /**********************************************************************
  * Created by   -  Tushar Patil
  * Organization -  QuicSolv Technologies Pvt.Ltd
- * Date         -  19 Apr 2018
+ * Date         -  23 Apr 2018
  ***********************************************************************/
 
-public class LoginResponse {
+public class SubmitQuesAnsResponse {
     @SerializedName("code")
     @Expose
     private Integer code;
-    @SerializedName("auth_token")
-    @Expose
-    private String authToken;
-    @SerializedName("pid")
-    @Expose
-    private String pid;
-    @SerializedName("qc")
-    @Expose
-    private String qc;
     @SerializedName("message")
     @Expose
     private String message;
@@ -32,30 +23,6 @@ public class LoginResponse {
 
     public void setCode(Integer code) {
         this.code = code;
-    }
-
-    public String getAuthToken() {
-        return authToken;
-    }
-
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
-    public String getQc() {
-        return qc;
-    }
-
-    public void setQc(String qc) {
-        this.qc = qc;
     }
 
     public String getMessage() {
