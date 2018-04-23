@@ -21,4 +21,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+    <item name="tabIndicatorColor">#8C00d1ae</item>
+    <item name="tabIndicatorHeight">58dp</item>
+    <item name="tabSelectedTextColor">@color/white</item>
+    </style>
+
 </resources>
