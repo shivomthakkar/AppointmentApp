@@ -90,6 +90,9 @@
                     android:hint="Date"
                     android:inputType="text"
                     android:padding="@dimen/edttxt_padding"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />
 
@@ -104,6 +107,9 @@
                     android:drawablePadding="10dp"
                     android:hint="Time"
                     android:inputType="text"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
                     android:padding="@dimen/edttxt_padding"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />

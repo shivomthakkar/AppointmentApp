@@ -130,12 +130,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (strEmail.trim().equals("") && strPswd.trim().equals("")) {
                     strEmail = edttxtEmail.getText().toString().trim();
                     strPswd = edttxtPassword.getText().toString().trim();
-                }else{
+                } else {
                     edttxtEmail.setText(strEmail);
                     edttxtPassword.setText(strPswd);
                 }
 
-                if (isRememberMeIsChecked){
+                if (isRememberMeIsChecked) {
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);
                 }
@@ -188,10 +188,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid());
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_QUESTION_COMPLETED, response.body().getQc());
 
-                    if (response.body().getQc().trim().equals("0")){ //Questionnarie is incomplete
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
+
+                    if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
                         Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
                         startActivity(mainIntent);
-                    }else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0){ //Questionnarie completed
+                    } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
                         Intent mainIntent = new Intent(mContext, DashboardActivity.class);
                         startActivity(mainIntent);
                     }

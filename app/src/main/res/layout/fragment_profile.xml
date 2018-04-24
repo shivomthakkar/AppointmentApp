@@ -32,7 +32,6 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Tushar Patil"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -62,12 +61,12 @@
                 android:layout_height="1dp" />
 
             <TextView
+                android:id="@+id/txt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_question_answer_black"
                 android:drawablePadding="10dp"
-                android:text="Tushar Patil"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -78,12 +77,12 @@
                 android:layout_height="1dp" />
 
             <TextView
+                android:id="@+id/txt_mob_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:drawableLeft="@drawable/ic_question_answer_black"
                 android:drawablePadding="10dp"
-                android:text="+91 90113 55859"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -94,12 +93,12 @@
                 android:layout_height="1dp" />
 
             <TextView
+                android:id="@+id/txt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:drawableLeft="@drawable/ic_question_answer_black"
                 android:drawablePadding="10dp"
-                android:text="tusharp@quicsolv.in"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -110,12 +109,12 @@
                 android:layout_height="1dp" />
 
             <TextView
+                android:id="@+id/txt_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:drawableLeft="@drawable/ic_question_answer_black"
                 android:drawablePadding="10dp"
-                android:text="Personal Details"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -126,21 +125,19 @@
                 android:layout_height="1dp" />
 
             <TextView
+                android:id="@+id/txt_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:shadowColor="@color/colorPrimary"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="Settings"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/splash_color"
-                android:textSize="22sp" />
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/ic_question_answer_black"
+                android:drawablePadding="10dp"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
-                android:background="@color/splash_color"
-                android:layout_marginTop="5dp"
+                android:background="#26000000"
+                android:layout_marginTop="10dp"
                 android:layout_height="1dp" />
 
         </LinearLayout>

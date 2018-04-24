@@ -18,6 +18,7 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.AppointmentListInt
 import com.quicsolv.appointmentapp.retrofit.models.pojo.appointmentlist.AppointmentListResponse;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.appointmentlist._2;
 import com.quicsolv.appointmentapp.utils.Constants;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,21 +61,24 @@ public class TabPendingAppointmentFragment extends Fragment {
 
 
     private void fetchAppointmentList() {
-        appointmentListInterface.getAllAppointments("1").enqueue(new Callback<AppointmentListResponse>() {
+        appointmentListInterface.getAllAppointments(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<AppointmentListResponse>() {
             @Override
             public void onResponse(Call<AppointmentListResponse> call, Response<AppointmentListResponse> response) {
                 if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
 
                     listHistory = new ArrayList<>();
 
-                    listHistory = response.body().getApList().get2();
+                    if (response.body().getApList().get2() != null) {
 
-                    PendingAppointmentListAdapter customAdapter = new PendingAppointmentListAdapter(mContext, R.layout.row_appointment_history,listHistory );
-                    listviewAppointmentHistory .setAdapter(customAdapter);
+                        listHistory = response.body().getApList().get2();
 
-                } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
-                    //failure
-                    Toast.makeText(mContext, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                        PendingAppointmentListAdapter customAdapter = new PendingAppointmentListAdapter(mContext, R.layout.row_appointment_history, listHistory);
+                        listviewAppointmentHistory.setAdapter(customAdapter);
+
+                    } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
+                        //failure
+                        Toast.makeText(mContext, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

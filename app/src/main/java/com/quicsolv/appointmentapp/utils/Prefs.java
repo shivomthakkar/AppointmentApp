@@ -18,6 +18,13 @@ public class Prefs {
     public final static String PREF_EMAIL = "prefs_email";
     public final static String PREF_PASSWORD = "prefs_password";
 
+    //Profile Prefs
+    public final static String PREF_PATIENT_NAME = "patient_name";
+    public final static String PREF_PATIENT_EMAIL = "patient_email";
+    public final static String PREF_PATIENT_PHONE = "patient_phone";
+    public final static String PREF_PATIENT_GENDER = "patient_gender";
+    public final static String PREF_PATIENT_DOB = "patient_dob";
+
     /**
      * Set a string shared preference
      *
