@@ -2,6 +2,7 @@ package com.quicsolv.appointmentapp.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.activities.LoginActivity;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
 
@@ -45,6 +47,10 @@ public class LogoutFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 Prefs.setSharedPreferenceString(getActivity(), Prefs.PREF_EMAIL, "");
                 Prefs.setSharedPreferenceString(getActivity(), Prefs.PREF_PASSWORD, "");
+
+                getActivity().finish();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 
