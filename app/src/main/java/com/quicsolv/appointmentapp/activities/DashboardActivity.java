@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
@@ -120,12 +121,14 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
         } else if (id == R.id.nav_my_questionnarie) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = AppointmentListFragment.class;
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_my_appointments) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
@@ -133,12 +136,17 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_request_appointment) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = AppointmentListFragment.class;
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                startActivity(intent);
             } else {
-                fragmentClass = NoInternetConnectionFragment.class;
+                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
         } else if (id == R.id.nav_reset_password) {
@@ -147,6 +155,7 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_logout) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
@@ -154,8 +163,13 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
         }
 
+        return true;
+    }
+
+    private void openFragment(Fragment fragment, Class fragmentClass) {
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -167,7 +181,6 @@ public class DashboardActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     public void setToolBarTitle(String toolBarTitle) {
