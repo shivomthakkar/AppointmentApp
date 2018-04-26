@@ -3,10 +3,14 @@ package com.quicsolv.appointmentapp.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 
+import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
 import com.quicsolv.appointmentapp.fragments.TabAppointmentHistoryFragment;
 import com.quicsolv.appointmentapp.fragments.TabPendingAppointmentFragment;
 import com.quicsolv.appointmentapp.fragments.TabScheduledAppointmentFragment;
+
+import java.util.ArrayList;
 
 /**********************************************************************
  * Created by   -  Tushar Patil
@@ -24,7 +28,6 @@ public class PagersAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 0:
                 TabAppointmentHistoryFragment tab1 = new TabAppointmentHistoryFragment();
@@ -35,7 +38,8 @@ public class PagersAdapter extends FragmentStatePagerAdapter {
             case 2:
                 TabPendingAppointmentFragment tab3 = new TabPendingAppointmentFragment();
                 return tab3;
-            default:
+
+                default:
                 return null;
         }
     }
@@ -44,4 +48,12 @@ public class PagersAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return mNumOfTabs;
     }
+
+    // test
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+
 }

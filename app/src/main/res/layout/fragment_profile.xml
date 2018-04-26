@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/ic_question_answer_black"
+                android:drawableLeft="@drawable/ic_person_black"
                 android:drawablePadding="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:drawableLeft="@drawable/ic_question_answer_black"
+                android:drawableLeft="@drawable/ic_phone_black"
                 android:drawablePadding="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:drawableLeft="@drawable/ic_question_answer_black"
+                android:drawableLeft="@drawable/ic_email_black"
                 android:drawablePadding="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:drawableLeft="@drawable/ic_question_answer_black"
+                android:drawableLeft="@drawable/ic_person_black"
                 android:drawablePadding="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:drawableLeft="@drawable/ic_question_answer_black"
+                android:drawableLeft="@drawable/ic_date_range_black"
                 android:drawablePadding="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />

@@ -10,4 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 
+
+    <ProgressBar
+        android:id="@+id/progress_register"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true" />
+
+
+    <TextView
+        android:id="@+id/txt_no_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No any Scheduled Appointment Found"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:textSize="18sp"
+        />
+
 </RelativeLayout>

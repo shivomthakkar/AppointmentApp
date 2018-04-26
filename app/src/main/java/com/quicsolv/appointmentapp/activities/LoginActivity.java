@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,12 +43,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Context mContext;
     private TextView txtFrogotPswd;
+    private TextView txt_register;
     private EditText edttxtEmail, edttxtPassword;
     private CheckBox cbRememberMe;
     private Button btnLogin;
     private LoginInterface loginInterface;
     private ProgressBar progressLogin;
     private boolean isRememberMeIsChecked;
+    private CheckBox check_show_pass;
 
 
     /**********************************************************************
@@ -73,9 +77,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void getIds() {
         edttxtEmail = (EditText) findViewById(R.id.edttxt_email);
         edttxtPassword = (EditText) findViewById(R.id.edttxt_password);
+        check_show_pass = (CheckBox) findViewById(R.id.check_show_pass);
 
         txtFrogotPswd = (TextView) findViewById(R.id.txt_forgot_pswd);
         txtFrogotPswd.setOnClickListener(this);
+
+        txt_register = (TextView) findViewById(R.id.txt_register);
+        txt_register.setOnClickListener(this);
+
 
         cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
         cbRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -110,12 +119,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }
-    }
 
+
+        check_show_pass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    edttxtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else {
+                    edttxtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
+    }
 
     /**********************************************************************
      * OnClicklisteners for Buttons, TextView.
      ***********************************************************************/
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
@@ -166,9 +187,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent forgotPswdIntent = new Intent(mContext, ForgotPswdActivity.class);
                 startActivity(forgotPswdIntent);
                 break;
+
+            case R.id.txt_register:
+                Intent register_Intent = new Intent(mContext, RegistrationActivity.class);
+                startActivity(register_Intent);
+                break;
         }
     }
-
 
     /**********************************************************************
      * Login api call with providing all necessary parameters

@@ -29,6 +29,7 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical">
 
+
             <EditText
                 android:id="@+id/edttxt_email"
                 android:layout_width="match_parent"
@@ -41,22 +42,42 @@
                 android:padding="@dimen/edttxt_padding"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color">
 
-            <EditText
-                android:id="@+id/edttxt_password"
+                <requestFocus />
+            </EditText>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_outline"
-                android:drawableLeft="@drawable/ic_password"
-                android:drawablePadding="10dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="@dimen/edttxt_padding"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textColorHint="@color/hint_color" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edttxt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_outline"
+                    android:drawableLeft="@drawable/ic_password"
+                    android:drawablePadding="10dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="@dimen/edttxt_padding"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/hint_color" />
+
+                <CheckBox
+                    android:id="@+id/check_show_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@drawable/hide_password" />
+
+
+            </RelativeLayout>
+
 
             <CheckBox
                 android:id="@+id/cb_remember_me"
@@ -85,6 +106,7 @@
                 android:weightSum="2">
 
                 <TextView
+                    android:id="@+id/txt_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -115,9 +137,9 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

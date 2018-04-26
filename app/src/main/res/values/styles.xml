@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--<item name="android:activatedBackgroundIndicator">@drawable/drawer_list_selector</item>-->
+
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/splash_color</item>
     </style>

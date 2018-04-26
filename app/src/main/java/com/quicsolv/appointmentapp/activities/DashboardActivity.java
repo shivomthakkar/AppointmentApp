@@ -1,7 +1,10 @@
 package com.quicsolv.appointmentapp.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -27,29 +30,36 @@ import com.quicsolv.appointmentapp.fragments.LogoutFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
 import com.quicsolv.appointmentapp.fragments.ProfileFragment;
 import com.quicsolv.appointmentapp.utils.Connectivity;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Context mContext;
     private DrawerLayout drawer;
+    private FloatingActionButton fab;
 
+    private TextView txt_title_name_nav;
+    private TextView txt_title_email_nav;
+
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mContext = DashboardActivity.this;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-
                 Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
                 startActivity(intent);
             }
@@ -63,6 +73,10 @@ public class DashboardActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+
+        txt_title_name_nav = (TextView) header.findViewById(R.id.txt_title_name_nav);
+        txt_title_email_nav = (TextView) header.findViewById(R.id.txt_title_email_nav);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,16 +84,61 @@ public class DashboardActivity extends AppCompatActivity
                 drawer.openDrawer(GravityCompat.START);
             }
         });
+
+        openDefaultFragment();
+
+        txt_title_name_nav.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, ""));
+        txt_title_email_nav.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, ""));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
+    private void openDefaultFragment() {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+            fragmentClass = AppointmentListFragment.class;
+        } else {
+            fragmentClass = NoInternetConnectionFragment.class;
+        }
+        openFragment(fragment, fragmentClass);
     }
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
+//        else {
+//            super.onBackPressed();
+//        }
+
+// TODO Auto-generated method stub
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        // builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+//                Toast.makeText(mContext, "Yes i wanna exit", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+//        super.onBackPressed();
     }
 
     @Override
@@ -124,17 +183,23 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass);
         } else if (id == R.id.nav_my_questionnarie) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = AppointmentListFragment.class;
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                Intent intent = new Intent(mContext, QuestionariesActivity.class);
+                startActivity(intent);
             } else {
-                fragmentClass = NoInternetConnectionFragment.class;
+                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
-            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_my_appointments) {
+            fab.setVisibility(View.VISIBLE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = AppointmentListFragment.class;
+
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
+
             }
             openFragment(fragment, fragmentClass);
 
@@ -188,5 +253,7 @@ public class DashboardActivity extends AppCompatActivity
         TextView txtTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         txtTitle.setText(toolBarTitle);
+
+
     }
 }

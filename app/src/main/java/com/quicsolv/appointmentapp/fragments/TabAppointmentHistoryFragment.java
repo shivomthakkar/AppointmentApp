@@ -2,12 +2,15 @@ package com.quicsolv.appointmentapp.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
@@ -39,6 +42,9 @@ public class TabAppointmentHistoryFragment extends Fragment {
     private ListView listviewAppointmentHistory;
     private AppointmentListInterface appointmentListInterface;
     private List<_3> listHistory;
+    private ProgressBar progressLogin;
+    private TextView txt_no_appointment;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,37 +54,60 @@ public class TabAppointmentHistoryFragment extends Fragment {
         appointmentListInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(AppointmentListInterface.class);
 
         getIds(view);
-        fetchAppointmentList();
+        progressLogin.setVisibility(View.VISIBLE);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fetchAppointmentList();
+
+            }
+        }, 1000);
         return view;
     }
 
 
     private void getIds(View view) {
         listviewAppointmentHistory = (ListView) view.findViewById(R.id.listview_appointment_history);
-
+        progressLogin = (ProgressBar) view.findViewById(R.id.progress_register);
+        txt_no_appointment = (TextView) view.findViewById(R.id.txt_no_appointment);
     }
 
-
     private void fetchAppointmentList() {
-        appointmentListInterface.getAllAppointments(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<AppointmentListResponse>() {
+        progressLogin.setVisibility(View.VISIBLE);
+
+        appointmentListInterface.getAllAppointments(
+                Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<AppointmentListResponse>() {
             @Override
             public void onResponse(Call<AppointmentListResponse> call, Response<AppointmentListResponse> response) {
+
                 if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
 
                     listHistory = new ArrayList<>();
 
                     if (response.body().getApList().get3() != null) {
-
                         listHistory = response.body().getApList().get3();
 
                         HistoryAppointmentListAdapter customAdapter = new HistoryAppointmentListAdapter(mContext, R.layout.row_appointment_history, listHistory);
                         listviewAppointmentHistory.setAdapter(customAdapter);
+                        progressLogin.setVisibility(View.GONE);
 
-                    } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
-                        //failure
-                        Toast.makeText(mContext, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                        // records found
+                        listviewAppointmentHistory.setVisibility(View.VISIBLE);
+                        txt_no_appointment.setVisibility(View.GONE);
+                    } else {
+                        // No records found
+                        listviewAppointmentHistory.setVisibility(View.GONE);
+                        txt_no_appointment.setVisibility(View.VISIBLE);
                     }
+                } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
+                    //failure
+                    Toast.makeText(mContext, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                    progressLogin.setVisibility(View.GONE);
+
+                    // records found
+                    listviewAppointmentHistory.setVisibility(View.VISIBLE);
+                    txt_no_appointment.setVisibility(View.GONE);
                 }
             }
 

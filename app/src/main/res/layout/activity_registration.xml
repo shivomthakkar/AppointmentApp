@@ -81,6 +81,10 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/edttxt_password"
                     android:layout_width="match_parent"
@@ -94,6 +98,16 @@
                     android:textColor="@color/white"
                     android:inputType="textPassword"
                     android:textColorHint="@color/hint_color" />
+
+                    <CheckBox
+                        android:id="@+id/check_show_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginRight="20dp"
+                        android:button="@drawable/hide_password" />
+                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/edttxt_dob"
@@ -212,5 +226,6 @@
             android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

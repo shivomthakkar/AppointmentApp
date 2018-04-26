@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_login:
                 Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(loginIntent);
                 break;
 

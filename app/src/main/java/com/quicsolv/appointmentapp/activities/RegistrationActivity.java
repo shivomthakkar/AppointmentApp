@@ -7,10 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -57,6 +61,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     Calendar myCalendar = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener selectedStartDate;
     private ProgressBar progressLogin;
+    private CheckBox check_show_pass;
 
 
     /**********************************************************************
@@ -87,6 +92,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         edttxtPassword = (EditText) findViewById(R.id.edttxt_password);
         edttxtDOB = (EditText) findViewById(R.id.edttxt_dob);
         edttxtDOB.setOnClickListener(this);
+        check_show_pass = (CheckBox) findViewById(R.id.check_show_pass);
+
 
         progressLogin = (ProgressBar) findViewById(R.id.progress_register);
 
@@ -113,6 +120,17 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             }
         };
 
+
+        check_show_pass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    edttxtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else {
+                    edttxtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
     }
 
 
@@ -179,6 +197,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.txt_login:
+                Intent login_Intent = new Intent(mContext, LoginActivity.class);
+                startActivity(login_Intent);
                 break;
 
             case R.id.txt_help:
@@ -227,6 +247,14 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid().toString());
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);
+
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
+
+
                     Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
                     startActivity(mainIntent);
                 } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {

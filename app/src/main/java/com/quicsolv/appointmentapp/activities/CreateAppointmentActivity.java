@@ -1,13 +1,17 @@
 package com.quicsolv.appointmentapp.activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,11 +28,14 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.GetSpecialityInter
 import com.quicsolv.appointmentapp.retrofit.models.pojo.createappointment.CreateAppointmentResponse;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.getspeciality.ApsList;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.getspeciality.GetSpecialityResponse;
+import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -45,6 +52,8 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     private CheckBox cbNeedImmidiate;
     private EditText edttxtDate, edttxtTime;
     private Button btnCreateAppointment;
+    String imdit_apptmnt_count = "";
+    String sp_id = "";
     Calendar myCalendar = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener selectedStartDate;
 
@@ -66,6 +75,8 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
 
 
     private void getIds() {
+        mContext = CreateAppointmentActivity.this;
+
         spinnerSpeciality = (Spinner) findViewById(R.id.spinner_speciality);
         edttxtDescription = (EditText) findViewById(R.id.edttxt_description);
         cbNeedImmidiate = (CheckBox) findViewById(R.id.cb_need_immidiate);
@@ -90,16 +101,14 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                 updateDateLabel();
             }
         };
-
     }
-
 
     private void fetchSpeciality() {
         getSpecialityInterface.getSpecialityList().enqueue(new Callback<GetSpecialityResponse>() {
             @Override
             public void onResponse(Call<GetSpecialityResponse> call, Response<GetSpecialityResponse> response) {
                 if (response.body() != null) {
-                    ArrayList<ApsList> specList = new ArrayList<>();
+                    final ArrayList<ApsList> specList = new ArrayList<>();
                     ApsList apsList = null;
                     if (response.body().getApsList() != null && response.body().getApsList().size() > 0) {
                         for (int i = 0; i < response.body().getApsList().size(); i++) {
@@ -107,6 +116,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                             apsList.setSpId(response.body().getApsList().get(i).getSpId());
                             apsList.setSpName(response.body().getApsList().get(i).getSpName());
                             specList.add(apsList);
+
                         }
                     }
 
@@ -115,6 +125,22 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                     adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
 
                     spinnerSpeciality.setAdapter(adapter);
+
+
+                    spinnerSpeciality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                            // your code here
+                            sp_id = specList.get(position).getSpId();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parentView) {
+                            // your code here
+                        }
+
+                    });
+
                 }
             }
 
@@ -169,10 +195,39 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     }
 
     private void createNewAppointment() {
-        createAppointmentInterface.createNewAppointment(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""), "1", "test desc", "", "", "1").enqueue(new Callback<CreateAppointmentResponse>() {
+
+        String str_Date = edttxtDate.getText().toString().trim();
+        String strCurrentDate = str_Date;
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+        Date newDate = null;
+        String date = "";
+        try {
+            newDate = format.parse(strCurrentDate);
+            format = new SimpleDateFormat("yyyy-MM-dd");
+            date = format.format(newDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (cbNeedImmidiate.isChecked()) {
+            imdit_apptmnt_count = "1";
+        } else {
+            imdit_apptmnt_count = "2";
+        }
+
+        createAppointmentInterface.createNewAppointment(
+                Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
+                sp_id,
+                edttxtDescription.getText().toString(),
+                date,
+                edttxtTime.getText().toString(),
+                imdit_apptmnt_count).enqueue(new Callback<CreateAppointmentResponse>() {
             @Override
             public void onResponse(Call<CreateAppointmentResponse> call, Response<CreateAppointmentResponse> response) {
                 Log.d("", "");
+
+                SuccessResponse_Dialog_Create_Appointment();
+
             }
 
             @Override
@@ -180,6 +235,24 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                 Log.d("", "");
             }
         });
+    }
+
+    private void SuccessResponse_Dialog_Create_Appointment() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
+        // builder.setCancelable(false);
+        builder.setTitle("Success");
+        builder.setMessage("Appointment Created Successfully");
+        builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+//                        finish();
+                Intent intent_dashboard_activity=new Intent(mContext,DashboardActivity.class);
+                startActivity(intent_dashboard_activity);
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
     }
 
     private void updateDateLabel() {

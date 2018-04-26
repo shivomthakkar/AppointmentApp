@@ -22,6 +22,7 @@
         app:civ_border_width="2dp" />
 
     <TextView
+        android:id="@+id/txt_title_name_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -32,7 +33,7 @@
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txt_title_email_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
