@@ -12,6 +12,10 @@ import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -67,6 +71,15 @@ public class ProfileFragment extends Fragment {
             gender = "FeMale";
         }
         mTxt_gender.setText(gender);
-        mTxt_dob.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, ""));
+
+        String date = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, "");
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat output = new SimpleDateFormat("MM-dd-yyyy");
+        try {
+            Date oneWayTripDate = input.parse(date);                 // parse input
+            mTxt_dob.setText(output.format(oneWayTripDate));// format output
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
