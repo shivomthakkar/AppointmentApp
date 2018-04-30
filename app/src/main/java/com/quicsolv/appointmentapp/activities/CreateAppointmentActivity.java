@@ -240,20 +240,20 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     }
 
     private void SuccessResponse_Dialog_Create_Appointment() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         // builder.setCancelable(false);
         builder.setTitle("Success");
-        builder.setMessage("Appointment Created Successfully");
-        builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+        builder.setMessage("Your appointment request has been submitted successfully.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
 //                        finish();
-                Intent intent_dashboard_activity=new Intent(mContext,DashboardActivity.class);
+                Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
                 startActivity(intent_dashboard_activity);
             }
         });
-        AlertDialog alert=builder.create();
+        AlertDialog alert = builder.create();
         alert.show();
     }
 
