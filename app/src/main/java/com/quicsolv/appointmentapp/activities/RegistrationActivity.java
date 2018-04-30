@@ -255,7 +255,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
 
 
-                    Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                    Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
                     startActivity(mainIntent);
                 } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                     //failure

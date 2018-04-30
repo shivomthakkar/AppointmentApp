@@ -190,6 +190,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.txt_register:
                 Intent register_Intent = new Intent(mContext, RegistrationActivity.class);
+                register_Intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(register_Intent);
                 break;
         }

@@ -34,7 +34,6 @@
         <activity
             android:name=".activities.RegistrationActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.ForgotPswdActivity"
@@ -53,7 +52,10 @@
         <activity
             android:name=".activities.CreateAppointmentActivity"
             android:label="Create Appointment"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.RegistrationSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

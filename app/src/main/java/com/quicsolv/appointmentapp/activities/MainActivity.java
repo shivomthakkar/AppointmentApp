@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_register:
                 Intent regIntent = new Intent(mContext, RegistrationActivity.class);
+                regIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(regIntent);
                 break;
 
