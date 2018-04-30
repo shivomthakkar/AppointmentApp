@@ -13,4 +13,6 @@
     <string name="my_account">My Account</string>
     <string name="acccount">Account</string>
 
+    <string name="str_btn_proceed">"Submit &amp; proceed to next question"</string>
+
 </resources>

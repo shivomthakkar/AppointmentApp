@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 progressLogin.setVisibility(View.GONE);
-                if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
+                if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
                     Toast.makeText(mContext, "Login Successful", Toast.LENGTH_SHORT).show();
 
@@ -222,6 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
                         Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
                     } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
                         Intent mainIntent = new Intent(mContext, DashboardActivity.class);

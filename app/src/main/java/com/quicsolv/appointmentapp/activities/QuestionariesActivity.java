@@ -75,6 +75,7 @@ public class QuestionariesActivity extends FragmentActivity {
 
         if (pager.getCurrentItem() == 0) {
             btnBack.setVisibility(View.GONE);
+            btnNextQuestion.setText(getString(R.string.str_btn_proceed));
         } else {
             btnBack.setVisibility(View.VISIBLE);
         }
@@ -94,8 +95,11 @@ public class QuestionariesActivity extends FragmentActivity {
                     if (pager.getCurrentItem() == 1) {
                         btnBack.setVisibility(View.GONE);
                         btnNextQuestion.setVisibility(View.VISIBLE);
+                        btnNextQuestion.setText(getString(R.string.str_btn_proceed));
                     }
                     pager.setCurrentItem(pager.getCurrentItem() - 1);
+                } else {
+                    btnNextQuestion.setText(getString(R.string.str_btn_proceed));
                 }
             }
         });
@@ -107,6 +111,8 @@ public class QuestionariesActivity extends FragmentActivity {
                 btnBack.setVisibility(View.VISIBLE);
 
                 if (isOption1Selected || isOption2Selected || isOption3Selected || isOption4Selected) {
+
+                    btnNextQuestion.setText("Next question");
 
                     if (pager.getCurrentItem() == listQuestionnarie.size() - 1 && questionnarieNewListObject.get(pager.getCurrentItem()).getPAnswer() == null) {
                         Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
