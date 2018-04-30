@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,7 +29,6 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.GetSpecialityInter
 import com.quicsolv.appointmentapp.retrofit.models.pojo.createappointment.CreateAppointmentResponse;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.getspeciality.ApsList;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.getspeciality.GetSpecialityResponse;
-import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
 import java.text.ParseException;
@@ -66,6 +66,8 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mContext = CreateAppointmentActivity.this;
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         getSpecialityInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetSpecialityInterface.class);
         createAppointmentInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(CreateAppointmentInterface.class);
 
