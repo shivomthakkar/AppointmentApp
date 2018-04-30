@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quicsolv.appointmentapp.activities.RegistrationSuccessActivity">
+    tools:context="com.quicsolv.appointmentapp.activities.QuestionnarieCompletedActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="You are successfully registered with us, to complete this process please proceed to questionnaire."
+                android:text="Thank you for questionnaire, you are all set to use application."
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -46,6 +46,5 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
     </RelativeLayout>
-
 
 </android.support.constraint.ConstraintLayout>

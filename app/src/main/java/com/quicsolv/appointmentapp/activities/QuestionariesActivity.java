@@ -112,8 +112,6 @@ public class QuestionariesActivity extends FragmentActivity {
 
                 if (isOption1Selected || isOption2Selected || isOption3Selected || isOption4Selected) {
 
-                    btnNextQuestion.setText("Next question");
-
                     if (pager.getCurrentItem() == listQuestionnarie.size() - 1 && questionnarieNewListObject.get(pager.getCurrentItem()).getPAnswer() == null) {
                         Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
                         return;
@@ -122,8 +120,8 @@ public class QuestionariesActivity extends FragmentActivity {
                     if (btnNextQuestion.getText().toString().trim().equalsIgnoreCase("Finish")) {
                         questionnarieNewListObject.get(0);
                         saveQuestionnarieToServer();
-                        Intent mainIntent = new Intent(mContext, DashboardActivity.class);
-                        startActivity(mainIntent);
+                    }else{
+                        btnNextQuestion.setText("Next question");
                     }
 
                     if (pager.getCurrentItem() != listQuestionnarie.size()) {
@@ -176,6 +174,8 @@ public class QuestionariesActivity extends FragmentActivity {
             @Override
             public void onResponse(Call<SubmitQuesAnsResponse> call, Response<SubmitQuesAnsResponse> response) {
                 Log.d("", "");
+                Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
+                startActivity(intent);
             }
 
             @Override

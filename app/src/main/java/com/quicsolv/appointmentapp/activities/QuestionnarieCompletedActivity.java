@@ -10,24 +10,22 @@ import android.widget.Button;
 
 import com.quicsolv.appointmentapp.R;
 
-public class RegistrationSuccessActivity extends AppCompatActivity implements View.OnClickListener {
+public class QuestionnarieCompletedActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;
     private Button btnProceed;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_success);
+        setContentView(R.layout.activity_questionnarie_completed);
 
-        mContext = RegistrationSuccessActivity.this;
+        mContext = QuestionnarieCompletedActivity.this;
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         getIds();
     }
-
 
     private void getIds() {
         btnProceed = (Button) findViewById(R.id.btn_proceed);
@@ -39,7 +37,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_proceed:
-                Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                Intent mainIntent = new Intent(mContext, DashboardActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(mainIntent);
                 break;
