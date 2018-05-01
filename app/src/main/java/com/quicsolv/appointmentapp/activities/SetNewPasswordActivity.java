@@ -19,61 +19,82 @@ import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
-import com.quicsolv.appointmentapp.retrofit.models.interfaces.ResetPasswordInterface;
-import com.quicsolv.appointmentapp.retrofit.models.pojo.resetpassword.ResetPasswordResponse;
+import com.quicsolv.appointmentapp.retrofit.models.interfaces.SetNewPasswordInterface;
+import com.quicsolv.appointmentapp.retrofit.models.pojo.resetpassword.SetNewPasswordResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**********************************************************************
- * Created by   -  Tushar Patil
- * Organization -  QuicSolv Technologies Pvt.Ltd
- * Date         -  18 Apr 2018
- ***********************************************************************/
-
-public class ForgotPswdActivity extends AppCompatActivity implements View.OnClickListener {
+public class SetNewPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;
-    private Button btnSendEmail;
-    private EditText edttxtEmail;
+    private EditText edttxtEmail, edttxtNewPswd, edttxtDynamicAccessCode;
+    private Button btnResetPswd;
+    private SetNewPasswordInterface setNewPasswordInterface;
     private ProgressBar progressResetPswd;
-    private ResetPasswordInterface resetPasswordInterface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_pswd);
+        setContentView(R.layout.activity_set_new_password);
 
-        mContext = ForgotPswdActivity.this;
+        mContext = SetNewPasswordActivity.this;
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        resetPasswordInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(ResetPasswordInterface.class);
+        setNewPasswordInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(SetNewPasswordInterface.class);
+
 
         getIds();
-
     }
 
     private void getIds() {
-        edttxtEmail = (EditText) findViewById(R.id.edttxt_reset_pswd);
+        edttxtEmail = (EditText) findViewById(R.id.edttxt_email);
+        edttxtNewPswd = (EditText) findViewById(R.id.edttxt_password);
+        edttxtDynamicAccessCode = (EditText) findViewById(R.id.edttxt_dymanic_access_code);
+        progressResetPswd = (ProgressBar) findViewById(R.id.progress_set_new_pswd);
 
-        progressResetPswd = (ProgressBar) findViewById(R.id.progress_reset_pswd);
-
-        btnSendEmail = (Button) findViewById(R.id.btn_send_email);
-        btnSendEmail.setOnClickListener(this);
+        btnResetPswd = (Button) findViewById(R.id.btn_reset_pswd);
+        btnResetPswd.setOnClickListener(this);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_send_email:
+            case R.id.btn_reset_pswd:
+
+                String email = "";
+                if (!edttxtEmail.getText().toString().trim().equals("")) {
+                    email = edttxtEmail.getText().toString();
+                } else {
+                    edttxtEmail.setError("Enter email id");
+                }
+
+                String newPswd = "";
+                if (!edttxtEmail.getText().toString().trim().equals("")) {
+                    newPswd = edttxtNewPswd.getText().toString();
+                } else {
+                    edttxtNewPswd.setError("Enter new password");
+                }
+
+                String resetCode = "";
+                if (!edttxtEmail.getText().toString().trim().equals("")) {
+                    resetCode = edttxtDynamicAccessCode.getText().toString();
+                } else {
+                    edttxtDynamicAccessCode.setError("Enter dynamic access code");
+                }
+
                 if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                    String email = edttxtEmail.getText().toString();
-                    if (!email.trim().equals("")) {
+
+                    if (!email.equals("") && !newPswd.equals("") && !resetCode.equals("")) {
                         progressResetPswd.setVisibility(View.VISIBLE);
-                        resetPassword(email);
+                        setNewPassword(email, newPswd, resetCode);
                     } else {
                         edttxtEmail.setError("Please enter email id");
                     }
@@ -81,15 +102,16 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                     progressResetPswd.setVisibility(View.GONE);
                     Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
+
                 break;
         }
     }
 
 
-    private void resetPassword(String email) {
-        resetPasswordInterface.resetPassword(email).enqueue(new Callback<ResetPasswordResponse>() {
+    private void setNewPassword(String email, String newPswd, String resetCode) {
+        setNewPasswordInterface.setNewPassword(email, newPswd, resetCode).enqueue(new Callback<SetNewPasswordResponse>() {
             @Override
-            public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
+            public void onResponse(Call<SetNewPasswordResponse> call, Response<SetNewPasswordResponse> response) {
                 progressResetPswd.setVisibility(View.GONE);
                 if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
@@ -101,11 +123,12 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
             }
 
             @Override
-            public void onFailure(Call<ResetPasswordResponse> call, Throwable t) {
+            public void onFailure(Call<SetNewPasswordResponse> call, Throwable t) {
 
             }
         });
     }
+
 
     private void showSuccessAlert(String message) {
         AlertDialog.Builder builder;
@@ -114,12 +137,14 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
         } else {
             builder = new AlertDialog.Builder(mContext);
         }
-        builder.setTitle("Reset Password")
+        builder.setTitle("Password Reset Successfully")
                 .setMessage(message.toString())
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent mainIntent = new Intent(mContext, SetNewPasswordActivity.class);
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
+                        Intent mainIntent = new Intent(mContext, LoginActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
                     }

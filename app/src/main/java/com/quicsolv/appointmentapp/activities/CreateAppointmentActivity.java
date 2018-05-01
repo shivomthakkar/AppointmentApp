@@ -250,6 +250,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                 // TODO Auto-generated method stub
 //                        finish();
                 Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
+                intent_dashboard_activity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent_dashboard_activity);
             }
         });

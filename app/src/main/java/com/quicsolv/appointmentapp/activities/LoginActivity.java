@@ -185,6 +185,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.txt_forgot_pswd:
                 Intent forgotPswdIntent = new Intent(mContext, ForgotPswdActivity.class);
+                forgotPswdIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(forgotPswdIntent);
                 break;
 
@@ -226,6 +227,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         startActivity(mainIntent);
                     } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
                         Intent mainIntent = new Intent(mContext, DashboardActivity.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
                     }
 
@@ -234,6 +236,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
                 } else {
                     //failure
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
                     Toast.makeText(mContext, "Please enter correct credentials..", Toast.LENGTH_SHORT).show();
                 }
             }

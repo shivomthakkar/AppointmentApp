@@ -218,11 +218,15 @@ public class DashboardActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_reset_password) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = AppointmentListFragment.class;
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                Intent intent = new Intent(mContext, ForgotPswdActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
             } else {
-                fragmentClass = NoInternetConnectionFragment.class;
+                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
-            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_logout) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {

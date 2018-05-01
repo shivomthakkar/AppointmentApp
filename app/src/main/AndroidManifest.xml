@@ -57,7 +57,11 @@
             android:name=".activities.RegistrationSuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.QuestionnarieCompletedActivity"></activity>
+        <activity
+            android:name=".activities.QuestionnarieCompletedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.SetNewPasswordActivity"></activity>
     </application>
 
 </manifest>
