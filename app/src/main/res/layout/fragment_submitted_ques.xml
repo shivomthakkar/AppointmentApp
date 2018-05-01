@@ -1,6 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,14 +7,20 @@
         android:layout_height="match_parent"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/lbl"
+        <ListView
+            android:id="@+id/listview_questionnaries"
             android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_questionnarie"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="Select menu from left drawer."
-            android:textColor="@color/black" />
+            android:indeterminateTint="@color/splash_color"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </FrameLayout>

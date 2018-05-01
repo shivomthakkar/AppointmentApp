@@ -29,6 +29,7 @@ import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
 import com.quicsolv.appointmentapp.fragments.LogoutFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
 import com.quicsolv.appointmentapp.fragments.ProfileFragment;
+import com.quicsolv.appointmentapp.fragments.SubmittedQuestionnarieFragment;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
@@ -185,14 +186,11 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass);
         } else if (id == R.id.nav_my_questionnarie) {
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-
-                Intent intent = new Intent(mContext, QuestionariesActivity.class);
-                startActivity(intent);
+                fragmentClass = SubmittedQuestionnarieFragment.class;
             } else {
-                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_my_appointments) {
             fab.setVisibility(View.VISIBLE);
