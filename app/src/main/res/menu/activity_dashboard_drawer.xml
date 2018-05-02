@@ -3,39 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/my_account">
-        <menu>
-            <item
-                android:id="@+id/nav_my_profile"
-                android:icon="@drawable/ic_person_white"
-                android:title="My Profile" />
-            <item
-                android:id="@+id/nav_my_questionnarie"
-                android:icon="@drawable/ic_question_answer_black"
-                android:title="My Questionnarie" />
-            <item
-                android:id="@+id/nav_my_appointments"
-                android:icon="@drawable/ic_appointment_black"
-                android:title="My Appointments" />
-            <item
-                android:id="@+id/nav_request_appointment"
-                android:icon="@drawable/ic_request_appointment_black"
-                android:title="Request Appointment" />
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_profile"
+            android:icon="@drawable/ic_person_white"
+            android:title="My Profile" />
+        <item
+            android:id="@+id/nav_my_questionnarie"
+            android:icon="@drawable/ic_question_answer_black"
+            android:title="My Questionnarie" />
+        <item
+            android:id="@+id/nav_my_appointments"
+            android:icon="@drawable/ic_appointment_black"
+            android:title="My Appointments" />
+        <item
+            android:id="@+id/nav_request_appointment"
+            android:icon="@drawable/ic_request_appointment_black"
+            android:title="Request Appointment" />
 
-            <item
-                android:id="@+id/nav_reset_password"
-                android:icon="@drawable/ic_reset_pswd_black"
-                android:title="Reset Password" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_reset_password"
+            android:icon="@drawable/ic_reset_pswd_black"
+            android:title="Reset Password" />
+    </group>
 
-    <item android:title="@string/acccount">
-        <menu>
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_logout_black"
-                android:title="Logout" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout_black"
+            android:title="Logout" />
+    </group>
+
 
 </menu>
