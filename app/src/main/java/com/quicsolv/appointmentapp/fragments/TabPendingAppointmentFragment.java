@@ -138,6 +138,11 @@ public class TabPendingAppointmentFragment extends Fragment implements View.OnCl
                     // records found
                     listviewAppointmentHistory.setVisibility(View.VISIBLE);
                     no_pending.setVisibility(View.GONE);
+                } else {
+                    progressLogin.setVisibility(View.GONE);
+                    listviewAppointmentHistory.setVisibility(View.GONE);
+                    noAptLayout.setVisibility(View.VISIBLE);
+                    no_pending.setVisibility(View.VISIBLE);
                 }
             }
 

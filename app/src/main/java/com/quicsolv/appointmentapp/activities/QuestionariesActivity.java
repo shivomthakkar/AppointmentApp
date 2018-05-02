@@ -178,6 +178,7 @@ public class QuestionariesActivity extends FragmentActivity {
             public void onResponse(Call<SubmitQuesAnsResponse> call, Response<SubmitQuesAnsResponse> response) {
                 Log.d("", "");
                 Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
 

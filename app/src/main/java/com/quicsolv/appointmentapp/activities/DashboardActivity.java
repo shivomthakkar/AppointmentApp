@@ -100,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity
         Fragment fragment = null;
         Class fragmentClass = null;
         if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-            fab.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.GONE);
             fragmentClass = AppointmentListFragment.class;
         } else {
             fragmentClass = NoInternetConnectionFragment.class;
@@ -196,7 +196,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_my_appointments) {
-            fab.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = AppointmentListFragment.class;
 
@@ -265,7 +265,15 @@ public class DashboardActivity extends AppCompatActivity
         txtTitle.setText(toolBarTitle);
     }
 
-    public void setNavDrawerUserName(String name){
+    public void setNavDrawerUserName(String name) {
         txt_title_name_nav.setText(name);
+    }
+
+    public void showHideFabButton(boolean isDisplay) {
+        if (isDisplay) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
     }
 }

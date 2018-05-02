@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Appointment history not found"
+                android:text="No record found"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -50,6 +50,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_filled"
                 android:padding="10dp"
+                android:textAllCaps="false"
                 android:text="Request Appointment"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

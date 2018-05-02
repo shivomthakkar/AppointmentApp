@@ -51,7 +51,7 @@ public class ScheduledAppointmentListAdapter extends ArrayAdapter<_1> {
             TextView tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
 
             if (tt1 != null && p.getDName() != null) {
-                tt1.setText(p.getDName().toString());
+                tt1.setText("Dr. " + p.getDName().toString());
             }
 
             if (tt2 != null && p.getSpName() != null) {

@@ -105,9 +105,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         txtLogin = (TextView) findViewById(R.id.txt_login);
         txtLogin.setOnClickListener(this);
 
-        txtHelp = (TextView) findViewById(R.id.txt_help);
-        txtHelp.setOnClickListener(this);
-
         rgGender = (RadioGroup) findViewById(R.id.rg_gender);
 
         selectedStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -190,7 +187,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 }
 
 
-                if (!strFullName.equals("") && !strMobNo.equals("") && !strEmail.equals("") && isValidEmail && !strPswd.equals("") && !strDOB.equals("")) {
+                if (!strFullName.equals("") && !strEmail.equals("") && isValidEmail && !strPswd.equals("") && !strDOB.equals("")) {
                     edttxtFullName.setError(null);
                     edttxtMobNo.setError(null);
                     edttxtEmail.setError(null);
@@ -210,9 +207,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             case R.id.txt_login:
                 Intent login_Intent = new Intent(mContext, LoginActivity.class);
                 startActivity(login_Intent);
-                break;
-
-            case R.id.txt_help:
                 break;
 
             case R.id.edttxt_dob:
@@ -273,10 +267,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
                     Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
+                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(mainIntent);
                 } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                     //failure
-                    Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, response.body().getMessage().toString().replace("<br>", ""), Toast.LENGTH_SHORT).show();
                 }
             }
 

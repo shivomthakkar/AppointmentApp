@@ -50,6 +50,7 @@ public class AppointmentListFragment extends Fragment {
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         PagersAdapter adapter = new PagersAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

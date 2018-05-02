@@ -150,6 +150,11 @@ public class TabScheduledAppointmentFragment extends Fragment implements View.On
                     // records found
                     listviewAppointmentHistory.setVisibility(View.VISIBLE);
                     txt_no_schedule.setVisibility(View.GONE);
+                } else {
+                    progressLogin.setVisibility(View.GONE);
+                    listviewAppointmentHistory.setVisibility(View.GONE);
+                    noAptLayout.setVisibility(View.VISIBLE);
+                    txt_no_schedule.setVisibility(View.VISIBLE);
                 }
             }
 
