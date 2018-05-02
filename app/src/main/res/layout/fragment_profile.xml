@@ -109,6 +109,8 @@
                         android:drawableLeft="@drawable/ic_person_black"
                         android:drawablePadding="10dp"
                         android:textColor="@color/black"
+                        android:hint="Full Name"
+                        android:textColorHint="#8C000000"
                         android:textSize="18sp" />
 
 
@@ -121,6 +123,8 @@
                         android:inputType="number"
                         android:drawableLeft="@drawable/ic_phone_black"
                         android:drawablePadding="10dp"
+                        android:hint="Mobile Number"
+                        android:textColorHint="#8C000000"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
@@ -134,6 +138,8 @@
                         android:drawablePadding="10dp"
                         android:editable="false"
                         android:focusable="false"
+                        android:hint="Email"
+                        android:textColorHint="#8C000000"
                         android:clickable="false"
                         android:focusableInTouchMode="false"
                         android:textColor="@color/black"

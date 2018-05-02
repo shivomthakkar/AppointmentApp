@@ -32,7 +32,7 @@ import retrofit2.Response;
 public class SetNewPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;
-    private EditText edttxtEmail, edttxtNewPswd, edttxtDynamicAccessCode;
+    private EditText edttxtEmail, edttxtNewPswd, edttxtConfirmPswd, edttxtDynamicAccessCode;
     private Button btnResetPswd;
     private SetNewPasswordInterface setNewPasswordInterface;
     private ProgressBar progressResetPswd;
@@ -55,8 +55,12 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
     private void getIds() {
         edttxtEmail = (EditText) findViewById(R.id.edttxt_email);
         edttxtNewPswd = (EditText) findViewById(R.id.edttxt_password);
+        edttxtConfirmPswd = (EditText) findViewById(R.id.edttxt_confirm_password);
         edttxtDynamicAccessCode = (EditText) findViewById(R.id.edttxt_dymanic_access_code);
         progressResetPswd = (ProgressBar) findViewById(R.id.progress_set_new_pswd);
+
+        String email = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, "");
+        edttxtEmail.setText(email);
 
         btnResetPswd = (Button) findViewById(R.id.btn_reset_pswd);
         btnResetPswd.setOnClickListener(this);
@@ -72,31 +76,46 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                 String email = "";
                 if (!edttxtEmail.getText().toString().trim().equals("")) {
                     email = edttxtEmail.getText().toString();
+                    edttxtEmail.setError(null);
                 } else {
                     edttxtEmail.setError("Enter email id");
                 }
 
                 String newPswd = "";
-                if (!edttxtEmail.getText().toString().trim().equals("")) {
+                if (!edttxtNewPswd.getText().toString().trim().equals("")) {
                     newPswd = edttxtNewPswd.getText().toString();
+                    edttxtNewPswd.setError(null);
                 } else {
                     edttxtNewPswd.setError("Enter new password");
                 }
 
+                String confirmPswd = "";
+                if (!edttxtConfirmPswd.getText().toString().trim().equals("")) {
+                    confirmPswd = edttxtConfirmPswd.getText().toString();
+                    edttxtConfirmPswd.setError(null);
+                } else {
+                    edttxtConfirmPswd.setError("Enter confirm password");
+                }
+
                 String resetCode = "";
-                if (!edttxtEmail.getText().toString().trim().equals("")) {
+                if (!edttxtDynamicAccessCode.getText().toString().trim().equals("")) {
                     resetCode = edttxtDynamicAccessCode.getText().toString();
+                    edttxtDynamicAccessCode.setError(null);
                 } else {
                     edttxtDynamicAccessCode.setError("Enter dynamic access code");
                 }
 
                 if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
 
-                    if (!email.equals("") && !newPswd.equals("") && !resetCode.equals("")) {
-                        progressResetPswd.setVisibility(View.VISIBLE);
-                        setNewPassword(email, newPswd, resetCode);
+                    if (newPswd.trim().equals(confirmPswd)) {
+                        if (!email.equals("") && !newPswd.equals("") && !confirmPswd.equals("") && !resetCode.equals("")) {
+                            progressResetPswd.setVisibility(View.VISIBLE);
+                            setNewPassword(email, newPswd, resetCode);
+                        } else {
+                            Toast.makeText(mContext, "All fields are required", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        edttxtEmail.setError("Please enter email id");
+                        edttxtConfirmPswd.setError("Password does not");
                     }
                 } else {
                     progressResetPswd.setVisibility(View.GONE);
@@ -154,7 +173,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                         dialog.dismiss();
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_password)
                 .show();
     }
 }

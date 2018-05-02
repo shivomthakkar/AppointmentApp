@@ -23,6 +23,7 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.ResetPasswordInter
 import com.quicsolv.appointmentapp.retrofit.models.pojo.resetpassword.ResetPasswordResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +58,8 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
 
     private void getIds() {
         edttxtEmail = (EditText) findViewById(R.id.edttxt_reset_pswd);
+        String email = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, "");
+        edttxtEmail.setText(email);
 
         progressResetPswd = (ProgressBar) findViewById(R.id.progress_reset_pswd);
 
@@ -129,7 +132,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                         dialog.dismiss();
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_password)
                 .show();
     }
 }
