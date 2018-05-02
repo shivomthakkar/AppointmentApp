@@ -1,6 +1,7 @@
 package com.quicsolv.appointmentapp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -8,12 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.activities.CreateAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.PendingAppointmentListAdapter;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
@@ -36,7 +40,7 @@ import retrofit2.Response;
  * Date         -  23 Apr 2018
  ***********************************************************************/
 
-public class TabPendingAppointmentFragment extends Fragment {
+public class TabPendingAppointmentFragment extends Fragment implements View.OnClickListener{
 
     private Context mContext;
     private ListView listviewAppointmentHistory;
@@ -44,7 +48,9 @@ public class TabPendingAppointmentFragment extends Fragment {
     private List<_2> listHistory;
     private ProgressBar progressLogin;
     private TextView no_pending;
-
+    private TextView txt_no_appointment;
+    private LinearLayout noAptLayout;
+    private Button btnRequestAppointment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,15 +67,17 @@ public class TabPendingAppointmentFragment extends Fragment {
             public void run() {
                 fetchAppointmentList();
             }
-        }, 1000);
+        }, 600);
         return view;
     }
 
     private void getIds(View view) {
         listviewAppointmentHistory = (ListView) view.findViewById(R.id.listview_appointment_history);
         progressLogin = (ProgressBar) view.findViewById(R.id.progress_register);
-        no_pending = (TextView) view.findViewById(R.id.no_pending);
-
+        no_pending = (TextView) view.findViewById(R.id.txt_no_appointment);
+        noAptLayout = (LinearLayout) view.findViewById(R.id.layout_no_appointments);
+        btnRequestAppointment = (Button) view.findViewById(R.id.btn_request_appointment);
+        btnRequestAppointment.setOnClickListener(this);
     }
 
 
@@ -90,12 +98,15 @@ public class TabPendingAppointmentFragment extends Fragment {
                         PendingAppointmentListAdapter customAdapter = new PendingAppointmentListAdapter(mContext, R.layout.row_appointment_history, listHistory);
                         listviewAppointmentHistory.setAdapter(customAdapter);
                         progressLogin.setVisibility(View.GONE);
+                        noAptLayout.setVisibility(View.GONE);
 
                         // records found
                         listviewAppointmentHistory.setVisibility(View.VISIBLE);
                         no_pending.setVisibility(View.GONE);
                     } else {
                         // No records found
+                        progressLogin.setVisibility(View.GONE);
+                        noAptLayout.setVisibility(View.VISIBLE);
                         listviewAppointmentHistory.setVisibility(View.GONE);
                         no_pending.setVisibility(View.VISIBLE);
                     }
@@ -119,5 +130,15 @@ public class TabPendingAppointmentFragment extends Fragment {
                 Log.d("", "");
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_request_appointment:
+                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

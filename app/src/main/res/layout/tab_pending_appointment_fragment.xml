@@ -10,25 +10,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 
-
-    <ProgressBar
-        android:id="@+id/progress_register"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/no_pending"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="No Pending Appointments Found"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        android:textSize="18sp"
-        />
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progress_register"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layout_no_appointments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txt_no_appointment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="No pending appointments found"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_request_appointment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_filled"
+                android:padding="10dp"
+                android:text="Request Appointment"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

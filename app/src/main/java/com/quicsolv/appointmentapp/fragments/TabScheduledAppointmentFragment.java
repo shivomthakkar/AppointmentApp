@@ -9,13 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
-import com.quicsolv.appointmentapp.activities.MainActivity;
+import com.quicsolv.appointmentapp.activities.CreateAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.ScheduledAppointmentListAdapter;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
@@ -38,7 +40,7 @@ import retrofit2.Response;
  * Date         -  23 Apr 2018
  ***********************************************************************/
 
-public class TabScheduledAppointmentFragment extends Fragment {
+public class TabScheduledAppointmentFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private ListView listviewAppointmentHistory;
@@ -46,7 +48,9 @@ public class TabScheduledAppointmentFragment extends Fragment {
     private List<_1> listHistory;
     private ProgressBar progressLogin;
     private TextView txt_no_schedule;
-
+    private TextView txt_no_appointment;
+    private LinearLayout noAptLayout;
+    private Button btnRequestAppointment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class TabScheduledAppointmentFragment extends Fragment {
             public void run() {
                 fetchAppointmentList();
             }
-        }, 1000);
+        }, 600);
         return view;
     }
 
@@ -81,8 +85,10 @@ public class TabScheduledAppointmentFragment extends Fragment {
     private void getIds(View view) {
         listviewAppointmentHistory = (ListView) view.findViewById(R.id.listview_appointment_history);
         progressLogin = (ProgressBar) view.findViewById(R.id.progress_register);
-        txt_no_schedule= (TextView) view.findViewById(R.id.txt_no_schedule);
-
+        txt_no_schedule = (TextView) view.findViewById(R.id.txt_no_appointment);
+        noAptLayout = (LinearLayout) view.findViewById(R.id.layout_no_appointments);
+        btnRequestAppointment = (Button) view.findViewById(R.id.btn_request_appointment);
+        btnRequestAppointment.setOnClickListener(this);
     }
 
 
@@ -103,22 +109,23 @@ public class TabScheduledAppointmentFragment extends Fragment {
                         ScheduledAppointmentListAdapter customAdapter = new ScheduledAppointmentListAdapter(mContext, R.layout.row_appointment_history, listHistory);
                         listviewAppointmentHistory.setAdapter(customAdapter);
                         progressLogin.setVisibility(View.GONE);
-
+                        noAptLayout.setVisibility(View.GONE);
 
                         // records found
                         listviewAppointmentHistory.setVisibility(View.VISIBLE);
                         txt_no_schedule.setVisibility(View.GONE);
                     } else {
                         // No records found
+                        progressLogin.setVisibility(View.GONE);
+                        noAptLayout.setVisibility(View.VISIBLE);
                         listviewAppointmentHistory.setVisibility(View.GONE);
                         txt_no_schedule.setVisibility(View.VISIBLE);
                     }
 
-                }
-                else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
-                        //failure
-                        Toast.makeText(mContext, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
-                        progressLogin.setVisibility(View.GONE);
+                } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
+                    //failure
+                    Toast.makeText(mContext, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                    progressLogin.setVisibility(View.GONE);
 
                     // records found
                     listviewAppointmentHistory.setVisibility(View.VISIBLE);
@@ -131,5 +138,15 @@ public class TabScheduledAppointmentFragment extends Fragment {
                 Log.d("", "");
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_request_appointment:
+                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

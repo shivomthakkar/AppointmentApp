@@ -100,6 +100,7 @@ public class DashboardActivity extends AppCompatActivity
         Fragment fragment = null;
         Class fragmentClass = null;
         if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+            fab.setVisibility(View.VISIBLE);
             fragmentClass = AppointmentListFragment.class;
         } else {
             fragmentClass = NoInternetConnectionFragment.class;
@@ -178,6 +179,7 @@ public class DashboardActivity extends AppCompatActivity
         Class fragmentClass = null;
 
         if (id == R.id.nav_my_profile) {
+            fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = ProfileFragment.class;
             } else {
@@ -185,6 +187,7 @@ public class DashboardActivity extends AppCompatActivity
             }
             openFragment(fragment, fragmentClass);
         } else if (id == R.id.nav_my_questionnarie) {
+            fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = SubmittedQuestionnarieFragment.class;
             } else {
@@ -204,6 +207,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_request_appointment) {
+            fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -215,6 +219,7 @@ public class DashboardActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_reset_password) {
+            fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -227,6 +232,7 @@ public class DashboardActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_logout) {
+            fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = LogoutFragment.class;
             } else {
