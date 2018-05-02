@@ -45,20 +45,20 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
 
             viewHolder.txtQue = (TextView) convertView.findViewById(R.id.txt_que);
             viewHolder.op1 = (TextView) convertView.findViewById(R.id.txt_op1);
-            viewHolder.op2 = (TextView) convertView.findViewById(R.id.txt_op2);
-            viewHolder.op3 = (TextView) convertView.findViewById(R.id.txt_op3);
-            viewHolder.op4 = (TextView) convertView.findViewById(R.id.txt_op4);
+//            viewHolder.op2 = (TextView) convertView.findViewById(R.id.txt_op2);
+//            viewHolder.op3 = (TextView) convertView.findViewById(R.id.txt_op3);
+//            viewHolder.op4 = (TextView) convertView.findViewById(R.id.txt_op4);
 
-            Datum p = getItem(position);
-            if (p.getPAnswer() != null && p.getPAnswer().equals("1")) {
-                viewHolder.op1.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
-            } else if (p.getPAnswer() != null && p.getPAnswer().equals("2")) {
-                viewHolder.op2.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
-            } else if (p.getPAnswer() != null && p.getPAnswer().equals("3")) {
-                viewHolder.op3.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
-            } else if (p.getPAnswer() != null && p.getPAnswer().equals("4")) {
-                viewHolder.op4.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
-            }
+//            Datum p = getItem(position);
+//            if (p.getPAnswer() != null && p.getPAnswer().equals("1")) {
+//                viewHolder.op1.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
+//            } else if (p.getPAnswer() != null && p.getPAnswer().equals("2")) {
+//                viewHolder.op2.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
+//            } else if (p.getPAnswer() != null && p.getPAnswer().equals("3")) {
+//                viewHolder.op3.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
+//            } else if (p.getPAnswer() != null && p.getPAnswer().equals("4")) {
+//                viewHolder.op4.setBackgroundColor(mContext.getResources().getColor(R.color.splash_color));
+//            }
 
             convertView.setTag(viewHolder);
         } else {
@@ -70,25 +70,35 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
 
         if (p != null) {
             if (viewHolder.txtQue != null && p.getQuestion() != null) {
-                viewHolder.txtQue.setText("Que " + (position + 1) + " . " + p.getQuestion().toString());
+                viewHolder.txtQue.setText("Que. " + (position + 1) + " . " + p.getQuestion().toString());
             }
 
-            if (viewHolder.op1 != null && p.getOption1() != null) {
-                viewHolder.op1.setText(p.getOption1().toString());
-            }
+            if (p.getPAnswer() != null) {
 
-            if (viewHolder.op2 != null && p.getOption2() != null) {
-                viewHolder.op2.setText(p.getOption2());
-            }
+                if (p.getPAnswer().equals("1")) {
+                    if (viewHolder.op1 != null && p.getOption1() != null) {
+                        viewHolder.op1.setText("Ans - " + p.getOption1().toString());
+                    }
+                }
 
-            if (viewHolder.op3 != null && p.getOption3() != null) {
-                viewHolder.op3.setText(p.getOption3());
-            }
+                if (p.getPAnswer().equals("2")) {
+                    if (viewHolder.op1 != null && p.getOption2() != null) {
+                        viewHolder.op1.setText("Ans - " + p.getOption2().toString());
+                    }
+                }
 
-            if (viewHolder.op4 != null && p.getOption4() != null) {
-                viewHolder.op4.setText(p.getOption4());
-            }
+                if (p.getPAnswer().equals("3")) {
+                    if (viewHolder.op1 != null && p.getOption3() != null) {
+                        viewHolder.op1.setText("Ans - " + p.getOption3().toString());
+                    }
+                }
 
+                if (p.getPAnswer().equals("4")) {
+                    if (viewHolder.op1 != null && p.getOption4() != null) {
+                        viewHolder.op1.setText("Ans - " + p.getOption4().toString());
+                    }
+                }
+            }
         }
 
         return convertView;
@@ -97,9 +107,9 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
     static class ViewHolderItem {
         TextView txtQue;
         TextView op1;
-        TextView op2;
-        TextView op3;
-        TextView op4;
+//        TextView op2;
+//        TextView op3;
+//        TextView op4;
     }
 
 }
