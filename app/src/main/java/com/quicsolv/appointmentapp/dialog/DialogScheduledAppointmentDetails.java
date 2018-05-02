@@ -53,16 +53,14 @@ public class DialogScheduledAppointmentDetails extends Dialog implements
         txtStatus = (TextView) findViewById(R.id.txt_status);
 
         if (param.getDName() != null) {
-            txtDoctorName.setText(param.getDName() + "");
-        } else {
-            txtDoctorName.setText("Pending status");
+            txtDoctorName.setText("Dr." + param.getDName() + "");
         }
 
         if (param.getSpName() != null) {
             txtSpecialityName.setText(param.getSpName() + "");
         }
 
-        if (param.getPrfDate() != null) {
+        if (param.getAppitDate() != null) {
             Date parsed = null;
             String outputDate = "";
 
@@ -70,7 +68,7 @@ public class DialogScheduledAppointmentDetails extends Dialog implements
             SimpleDateFormat df_output = new SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault());
 
             try {
-                parsed = df_input.parse(param.getPrfDate());
+                parsed = df_input.parse(param.getAppitDate());
                 outputDate = df_output.format(parsed);
             } catch (ParseException e) {
 
@@ -79,8 +77,8 @@ public class DialogScheduledAppointmentDetails extends Dialog implements
             txtPrfdate.setText(outputDate + "");
         }
 
-        if (param.getPrfTime() != null) {
-            txtPrfTime.setText(param.getPrfTime() + "");
+        if (param.getAppitDate() != null) {
+            txtPrfTime.setText(param.getAppitDate() + "");
         }
 
         if (param.getDescription() != null) {

@@ -29,7 +29,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Problem Related To"
+                        android:text="Problem related to"
                         android:textColor="@color/splash_color"
                         android:textSize="16sp" />
 
@@ -105,7 +105,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Prefered Date"
+                                android:text="Prefered date"
                                 android:textColor="@color/splash_color"
                                 android:textSize="16sp" />
 
@@ -137,7 +137,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Prefered Time"
+                                android:text="Prefered time"
                                 android:textColor="@color/splash_color"
                                 android:textSize="16sp" />
 
