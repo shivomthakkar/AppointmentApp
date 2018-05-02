@@ -216,9 +216,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.edttxt_dob:
-                new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
+//                new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate,myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialog.show();
                 break;
         }
     }

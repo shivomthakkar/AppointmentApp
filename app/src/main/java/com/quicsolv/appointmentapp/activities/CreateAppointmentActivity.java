@@ -97,9 +97,14 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.HOUR_OF_DAY, myCalendar.getMinimum(Calendar.HOUR_OF_DAY));
+//                myCalendar.set(Calendar.MINUTE, myCalendar.getMinimum(Calendar.MINUTE));
+//                myCalendar.set(Calendar.SECOND, myCalendar.getMinimum(Calendar.SECOND));
+//                myCalendar.set(Calendar.MILLISECOND, myCalendar.getMinimum(Calendar.MILLISECOND));
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
                 updateDateLabel();
             }
         };
@@ -173,9 +178,14 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                 createNewAppointment();
                 break;
             case R.id.edttxt_date:
-                new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
+//                new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate,myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.show();
                 break;
             case R.id.edttxt_time:
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -188,7 +198,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
                         boolean isPM = (hourOfDay >= 12);
                         edttxtTime.setText(String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM"));
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 

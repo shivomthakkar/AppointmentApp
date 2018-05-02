@@ -168,6 +168,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        ((DashboardActivity) getActivity()).setNavDrawerUserName(data.getPName().toString());
     }
 
     @Override
@@ -183,9 +185,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.txt_dob:
                 if (btnEdit.getText().toString().equalsIgnoreCase("Cancel")) {
-                    new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate,myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                            myCalendar.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                    datePickerDialog.show();
                 }
                 break;
             case R.id.btn_edit:
@@ -255,6 +259,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     btnEdit.setText("Edit");
                     progressBar.setVisibility(View.VISIBLE);
                     fetchPatientProfileData();
+
+                    mTxt_name.setFocusable(false);
+                    mTxt_name.setFocusableInTouchMode(false);
+                    mTxt_name.setClickable(false);
+
+                    mTxt_mob_no.setFocusable(false);
+                    mTxt_mob_no.setFocusableInTouchMode(false);
+                    mTxt_mob_no.setClickable(false);
                 }
             }
 

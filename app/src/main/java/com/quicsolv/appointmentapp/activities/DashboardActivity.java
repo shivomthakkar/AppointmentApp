@@ -263,7 +263,9 @@ public class DashboardActivity extends AppCompatActivity
         TextView txtTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
         txtTitle.setText(toolBarTitle);
+    }
 
-
+    public void setNavDrawerUserName(String name){
+        txt_title_name_nav.setText(name);
     }
 }

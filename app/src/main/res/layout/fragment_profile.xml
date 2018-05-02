@@ -41,6 +41,10 @@
                         android:layout_centerInParent="true"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
+                        android:shadowColor="@color/splash_color"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="3"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
@@ -83,7 +87,8 @@
                             android:shadowDy="1"
                             android:shadowRadius="2"
                             android:text="Edit"
-                            android:textColor="@color/white"
+                            android:padding="2dp"
+                            android:textColor="@color/black"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -100,6 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
+                        android:singleLine="true"
                         android:drawableLeft="@drawable/ic_person_black"
                         android:drawablePadding="10dp"
                         android:textColor="@color/black"
@@ -111,6 +117,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:singleLine="true"
+                        android:inputType="number"
                         android:drawableLeft="@drawable/ic_phone_black"
                         android:drawablePadding="10dp"
                         android:textColor="@color/black"
@@ -125,6 +133,9 @@
                         android:drawableLeft="@drawable/ic_email_black"
                         android:drawablePadding="10dp"
                         android:editable="false"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:focusableInTouchMode="false"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
