@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -57,6 +58,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private RadioGroup rgGender;
     private RadioButton rbGenderType;
     private RadioButton rbMale, rbFemale;
+    private LinearLayout layoutGender;
+    private TextView txtGender;
 
 
     public ProfileFragment() {
@@ -79,6 +82,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         getIds(view);
 
         progressBar.setVisibility(View.VISIBLE);
+        layoutGender.setVisibility(View.GONE);
+        txtGender.setVisibility(View.VISIBLE);
+
         fetchPatientProfileData();
 
         return view;
@@ -108,6 +114,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mTxt_mob_no = (EditText) view.findViewById(R.id.txt_mob_no);
         mTxt_email = (EditText) view.findViewById(R.id.txt_email);
         mTxt_dob = (EditText) view.findViewById(R.id.txt_dob);
+        txtGender = (EditText) view.findViewById(R.id.txt_gender);
+        layoutGender = (LinearLayout) view.findViewById(R.id.layout_gender);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progress_profile);
 
@@ -152,11 +160,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mTxt_mob_no.setText(data.getPPhone());
         mTxt_email.setText(data.getPEmail());
 
+
+        layoutGender.setVisibility(View.GONE);
+        txtGender.setVisibility(View.VISIBLE);
+
         String genderId = data.getGender();
         if (genderId.equals("1")) {
             rgGender.check(R.id.rb_male);
+            txtGender.setText("Male");
         } else {
             rgGender.check(R.id.rb_female);
+            txtGender.setText("Female");
         }
 
         String date = data.getDob();
@@ -165,6 +179,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         try {
             Date oneWayTripDate = input.parse(date);                 // parse input
             mTxt_dob.setText(output.format(oneWayTripDate));// format output
+
+
+            String[] str = mTxt_dob.getText().toString().split("-");
+            myCalendar.set(Integer.parseInt(str[2]), (Integer.parseInt(str[0]) - 1), Integer.parseInt(str[1]));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -185,9 +203,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.txt_dob:
                 if (btnEdit.getText().toString().equalsIgnoreCase("Cancel")) {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate,myCalendar
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                             myCalendar.get(Calendar.DAY_OF_MONTH));
+                    myCalendar.set(myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
                     datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
@@ -196,6 +215,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (btnEdit.getText().toString().equalsIgnoreCase("Edit")) {
                     btnUpdateProfile.setVisibility(View.VISIBLE);
                     btnEdit.setText("Cancel");
+
+                    layoutGender.setVisibility(View.VISIBLE);
+                    txtGender.setVisibility(View.GONE);
 
                     mTxt_name.setFocusable(true);
                     mTxt_name.setFocusableInTouchMode(true);
@@ -208,6 +230,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 } else {
                     btnUpdateProfile.setVisibility(View.GONE);
                     btnEdit.setText("Edit");
+
+                    layoutGender.setVisibility(View.GONE);
+                    txtGender.setVisibility(View.VISIBLE);
 
                     mTxt_name.setFocusable(false);
                     mTxt_name.setFocusableInTouchMode(false);

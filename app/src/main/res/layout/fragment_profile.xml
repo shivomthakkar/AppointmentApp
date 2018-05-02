@@ -160,11 +160,28 @@
                         android:textColorHint="#8C000000"
                         android:textSize="18sp" />
 
+                    <EditText
+                        android:id="@+id/txt_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:clickable="false"
+                        android:drawableLeft="@drawable/ic_person_black"
+                        android:drawablePadding="10dp"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Gender"
+                        android:textColor="@color/black"
+                        android:textColorHint="#8C000000"
+                        android:textSize="18sp" />
+
                     <LinearLayout
+                        android:id="@+id/layout_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:weightSum="2">
 
                         <TextView
