@@ -19,5 +19,6 @@ public interface UpdatePatientProfileInterface {
     Call<UpdatePatientProfileResponse> updatePatientProfile(@Field("pid") String patientId,
                                                             @Field("un") String userName,
                                                             @Field("g") String gender,
-                                                            @Field("dob") String dob);
+                                                            @Field("dob") String dob,
+                                                            @Field("m") String mobNo);
 }

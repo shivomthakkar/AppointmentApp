@@ -6,9 +6,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -169,7 +171,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     edttxtPassword.setError("Password required");
                 }
 
-                if (!strEmail.equals("") && !strPswd.equals("")) {
+                boolean isValidEmail = false;
+                if (isValidEmail(edttxtEmail.getText().toString())) {
+                    isValidEmail = true;
+                } else {
+                    isValidEmail = false;
+                    edttxtEmail.setError("Enter correct email");
+                }
+
+                if (!strEmail.equals("") && !strPswd.equals("") && isValidEmail) {
                     edttxtEmail.setError(null);
                     edttxtPassword.setError(null);
                     progressLogin.setVisibility(View.VISIBLE);
@@ -180,6 +190,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressLogin.setVisibility(View.GONE);
                         Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    edttxtEmail.setError("Enter correct email");
                 }
                 break;
 
@@ -246,6 +258,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.d("", "");
             }
         });
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
 }

@@ -7,9 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -148,6 +150,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 String strPswd = edttxtPassword.getText().toString().trim();
                 String strDOB = edttxtDOB.getText().toString().trim();
 
+                boolean isValidEmail = false;
+
                 if (strFullName.equals("")) {
                     edttxtFullName.setError("Full name missing");
                 }
@@ -158,6 +162,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                 if (strEmail.equals("")) {
                     edttxtEmail.setError("Email address missing");
+                } else {
+                    if (isValidEmail(edttxtEmail.getText().toString())) {
+                        isValidEmail = true;
+                    } else {
+                        isValidEmail = false;
+                        edttxtEmail.setError("Enter correct email");
+                    }
                 }
 
                 if (strPswd.equals("")) {
@@ -179,7 +190,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 }
 
 
-                if (!strFullName.equals("") && !strMobNo.equals("") && !strEmail.equals("") && !strPswd.equals("") && !strDOB.equals("")) {
+                if (!strFullName.equals("") && !strMobNo.equals("") && !strEmail.equals("") && isValidEmail && !strPswd.equals("") && !strDOB.equals("")) {
                     edttxtFullName.setError(null);
                     edttxtMobNo.setError(null);
                     edttxtEmail.setError(null);
@@ -276,5 +287,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         edttxtDOB.setText(sdf.format(myCalendar.getTime()));
         edttxtDOB.setError(null);
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }
