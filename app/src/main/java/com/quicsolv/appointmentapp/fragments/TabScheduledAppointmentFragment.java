@@ -2,6 +2,7 @@ package com.quicsolv.appointmentapp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.activities.CreateAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.ScheduledAppointmentListAdapter;
+import com.quicsolv.appointmentapp.dialog.DialogScheduledAppointmentDetails;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.AppointmentListInterface;
@@ -89,6 +93,22 @@ public class TabScheduledAppointmentFragment extends Fragment implements View.On
         noAptLayout = (LinearLayout) view.findViewById(R.id.layout_no_appointments);
         btnRequestAppointment = (Button) view.findViewById(R.id.btn_request_appointment);
         btnRequestAppointment.setOnClickListener(this);
+
+        listviewAppointmentHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DialogScheduledAppointmentDetails cdd = new DialogScheduledAppointmentDetails(getActivity(), listHistory.get(position));
+                cdd.show();
+
+                Rect displayRectangle = new Rect();
+                Window window = getActivity().getWindow();
+
+                window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+
+                cdd.getWindow().setLayout((int) (displayRectangle.width() *
+                        1.0f), (int) (displayRectangle.height() * 1.0f));
+            }
+        });
     }
 
 

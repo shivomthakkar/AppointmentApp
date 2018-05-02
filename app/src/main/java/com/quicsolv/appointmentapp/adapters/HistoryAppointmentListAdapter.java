@@ -58,7 +58,29 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
                 tt2.setText(p.getSpName());
             }
 
-            if (tt3 != null && p.getAppitDate() != null) {
+//            if (tt3 != null && p.getAppitDate() != null) {
+//
+//                Date parsed = null;
+//                String outputDate = "";
+//
+//                SimpleDateFormat df_input = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+//                SimpleDateFormat df_output = new SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault());
+//
+//                try {
+//                    parsed = df_input.parse(p.getAppitDate());
+//                    outputDate = df_output.format(parsed);
+//                } catch (ParseException e) {
+//
+//                }
+//
+//                tt3.setText(outputDate);
+//            }
+//
+//            if (tt4 != null && p.getAppitTime() != null) {
+//                tt4.setText(p.getAppitTime());
+//            }
+
+            if (tt3 != null && p.getPrfDate() != null) {
 
                 Date parsed = null;
                 String outputDate = "";
@@ -67,7 +89,7 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
                 SimpleDateFormat df_output = new SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault());
 
                 try {
-                    parsed = df_input.parse(p.getAppitDate());
+                    parsed = df_input.parse(p.getPrfDate());
                     outputDate = df_output.format(parsed);
                 } catch (ParseException e) {
 
@@ -76,8 +98,8 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
                 tt3.setText(outputDate);
             }
 
-            if (tt4 != null && p.getAppitTime() != null) {
-                tt4.setText(p.getAppitTime());
+            if (tt4 != null && p.getPrfTime() != null) {
+                tt4.setText(p.getPrfTime());
             }
         }
 
