@@ -16,6 +16,6 @@ import retrofit2.http.POST;
 public interface VerifyEmailInterface {
     @FormUrlEncoded
     @POST("e_varify")
-    Call<ResetPasswordResponse> forgotPassword(@Field("pe") String patientEmailId,
+    Call<ResetPasswordResponse> verifyEmail(@Field("pe") String patientEmailId,
                                                @Field("rc") String resetCode);
 }

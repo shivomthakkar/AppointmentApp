@@ -126,13 +126,15 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
             @Override
             public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
                 progressResetPswd.setVisibility(View.GONE);
-                if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, newPswd);
-                    dialogPswdResetSuccess(response.body().getMessage().toString());
-                } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
-                    Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, newPswd);
+                        dialogPswdResetSuccess(response.body().getMessage().toString());
+                    } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
+                        Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

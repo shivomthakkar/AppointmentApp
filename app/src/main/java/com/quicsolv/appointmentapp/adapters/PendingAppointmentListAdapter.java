@@ -73,10 +73,14 @@ public class PendingAppointmentListAdapter extends ArrayAdapter<_2> {
                 }
 
                 tt3.setText(outputDate);
+            }else{
+                tt3.setText("");
             }
 
             if (tt4 != null && p.getPrfTime() != null) {
                 tt4.setText(p.getPrfTime());
+            }else{
+                tt4.setText("");
             }
         }
 

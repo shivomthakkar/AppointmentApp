@@ -139,12 +139,14 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
             @Override
             public void onResponse(Call<SetNewPasswordResponse> call, Response<SetNewPasswordResponse> response) {
                 progressResetPswd.setVisibility(View.GONE);
-                if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    //success
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        //success
 //                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    showSuccessAlert(response.body().getMessage());
-                } else {
-                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        showSuccessAlert(response.body().getMessage());
+                    } else {
+                        Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

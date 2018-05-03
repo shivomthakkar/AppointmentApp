@@ -94,12 +94,14 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
                 progressResetPswd.setVisibility(View.GONE);
-                if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    //success
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        //success
 //                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    showSuccessAlert(response.body().getMessage());
-                } else {
-                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        showSuccessAlert(response.body().getMessage());
+                    } else {
+                        Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

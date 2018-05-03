@@ -25,8 +25,10 @@ import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
+import com.quicsolv.appointmentapp.retrofit.models.interfaces.ForgotPasswordInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.LoginInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.login.LoginResponse;
+import com.quicsolv.appointmentapp.retrofit.models.pojo.resetpassword.ResetPasswordResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressBar progressLogin;
     private boolean isRememberMeIsChecked;
     private CheckBox check_show_pass;
+    private ForgotPasswordInterface resetPasswordInterface;
 
 
     /**********************************************************************
@@ -67,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mContext = LoginActivity.this;
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         loginInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(LoginInterface.class);
+        resetPasswordInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(ForgotPasswordInterface.class);
 
         getIds();
     }
@@ -219,44 +223,75 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 progressLogin.setVisibility(View.GONE);
-                if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    //success
-                    Toast.makeText(mContext, "Login Successful", Toast.LENGTH_SHORT).show();
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        //success
+                        Toast.makeText(mContext, "Login Successful", Toast.LENGTH_SHORT).show();
 
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_AUTH_TOKEN, response.body().getAuthToken());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_QUESTION_COMPLETED, response.body().getQc());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_AUTH_TOKEN, response.body().getAuthToken());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_QUESTION_COMPLETED, response.body().getQc());
 
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
 
-                    if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
-                        Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
-                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(mainIntent);
-                    } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
-                        Intent mainIntent = new Intent(mContext, DashboardActivity.class);
-                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(mainIntent);
+                        if (response.body().getIsVerified().trim().equals("1")) {
+                            if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
+                                Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(mainIntent);
+                            } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
+                                Intent mainIntent = new Intent(mContext, DashboardActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(mainIntent);
+                            }
+                        } else if (response.body().getIsVerified().trim().equals("0")) {
+                            progressLogin.setVisibility(View.VISIBLE);
+                            sentVerificationMail();
+                        }
+
+                    } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
+                        //failure
+                        Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        //failure
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
+                        Toast.makeText(mContext, "Please enter correct credentials..", Toast.LENGTH_SHORT).show();
                     }
-
-                } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
-                    //failure
-                    Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
-                } else {
-                    //failure
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
-                    Toast.makeText(mContext, "Please enter correct credentials..", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("", "");
+            }
+        });
+    }
+
+    private void sentVerificationMail() {
+        resetPasswordInterface.forgotPassword(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_EMAIL, ""), "1").enqueue(new Callback<ResetPasswordResponse>() {
+            @Override
+            public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
+                progressLogin.setVisibility(View.GONE);
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        mainIntent.putExtra("Message", "To complete this process please enter email verification code, which we sent you on your registered email address.");
+                        startActivity(mainIntent);
+                    } else {
+                        Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResetPasswordResponse> call, Throwable t) {
+
             }
         });
     }

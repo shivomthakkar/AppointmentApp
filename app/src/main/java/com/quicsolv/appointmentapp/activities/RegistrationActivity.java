@@ -153,9 +153,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     edttxtFullName.setError("Full name missing");
                 }
 
-                if (strMobNo.equals("")) {
-                    edttxtMobNo.setError("Mobile number missing");
-                }
+//                if (strMobNo.equals("")) {
+//                    edttxtMobNo.setError("Mobile number missing");
+//                }
 
                 if (strEmail.equals("")) {
                     edttxtEmail.setError("Email address missing");
@@ -214,7 +214,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 //                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 //                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate,myCalendar
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -252,26 +252,29 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                 progressLogin.setVisibility(View.GONE);
-                if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    //success
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        //success
 //                    Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid().toString());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid().toString());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);
 
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
-                    Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
 
 
-                    Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
-                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(mainIntent);
-                } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
-                    //failure
-                    Toast.makeText(mContext, response.body().getMessage().toString().replace("<br>", ""), Toast.LENGTH_SHORT).show();
+                        Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
+                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        mainIntent.putExtra("Message", "You are successfully registered with us.\n\n To complete this process please enter email verification code, which we sent you on your registered email address.");
+                        startActivity(mainIntent);
+                    } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
+                        //failure
+                        Toast.makeText(mContext, response.body().getMessage().toString().replace("<br>", ""), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

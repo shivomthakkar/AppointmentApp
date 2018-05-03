@@ -53,7 +53,7 @@ public class DialogScheduledAppointmentDetails extends Dialog implements
         txtStatus = (TextView) findViewById(R.id.txt_status);
 
         if (param.getDName() != null) {
-            txtDoctorName.setText("Dr." + param.getDName() + "");
+            txtDoctorName.setText("Dr. " + param.getDName() + "");
         }
 
         if (param.getSpName() != null) {
