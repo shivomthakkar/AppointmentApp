@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
-import com.quicsolv.appointmentapp.activities.CreateAppointmentActivity;
+import com.quicsolv.appointmentapp.activities.RequestAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.PendingAppointmentListAdapter;
 import com.quicsolv.appointmentapp.dialog.DialogPendingAppointmentDetails;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -159,7 +159,7 @@ public class TabPendingAppointmentFragment extends Fragment implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_request_appointment:
-                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
                 startActivity(intent);
                 break;
         }

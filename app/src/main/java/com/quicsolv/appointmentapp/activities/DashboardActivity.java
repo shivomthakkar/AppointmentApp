@@ -63,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
                 startActivity(intent);
             }
         });
@@ -216,7 +216,7 @@ public class DashboardActivity extends AppCompatActivity
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
 
-                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
                 startActivity(intent);
             } else {
                 Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();

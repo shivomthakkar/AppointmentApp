@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
-import com.quicsolv.appointmentapp.activities.CreateAppointmentActivity;
+import com.quicsolv.appointmentapp.activities.RequestAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.ScheduledAppointmentListAdapter;
 import com.quicsolv.appointmentapp.dialog.DialogScheduledAppointmentDetails;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -169,7 +169,7 @@ public class TabScheduledAppointmentFragment extends Fragment implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_request_appointment:
-                Intent intent = new Intent(mContext, CreateAppointmentActivity.class);
+                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -41,7 +41,7 @@ public class DialogScheduledAppointmentDetails extends Dialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_appointment_details);
+        setContentView(R.layout.dialog_scheduled_appointment_details);
         ok = (Button) findViewById(R.id.btn_ok);
         ok.setOnClickListener(this);
 

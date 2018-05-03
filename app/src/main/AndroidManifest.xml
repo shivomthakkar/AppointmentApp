@@ -50,7 +50,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.CreateAppointmentActivity"
+            android:name=".activities.RequestAppointmentActivity"
             android:label="Request Appointment"
             android:screenOrientation="portrait" />
         <activity

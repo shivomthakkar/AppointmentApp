@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quicsolv.appointmentapp.activities.CreateAppointmentActivity">
+    tools:context="com.quicsolv.appointmentapp.activities.RequestAppointmentActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -158,21 +158,19 @@
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/hint_color" />
                         </LinearLayout>
-
-
                     </LinearLayout>
-                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_create_appointment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="15dp"
-                    android:background="@drawable/button_filled"
-                    android:text="Submit"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    <Button
+                        android:id="@+id/btn_create_appointment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:background="@drawable/button_filled"
+                        android:text="Submit"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
 
                 <ProgressBar
                     android:id="@+id/progress_create_appointment"

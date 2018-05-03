@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
+public class RequestAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;
     private GetSpecialityInterface getSpecialityInterface;
@@ -65,7 +65,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mContext = CreateAppointmentActivity.this;
+        mContext = RequestAppointmentActivity.this;
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         getSpecialityInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetSpecialityInterface.class);
@@ -77,7 +77,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
 
 
     private void getIds() {
-        mContext = CreateAppointmentActivity.this;
+        mContext = RequestAppointmentActivity.this;
 
         spinnerSpeciality = (Spinner) findViewById(R.id.spinner_speciality);
         edttxtDescription = (EditText) findViewById(R.id.edttxt_description);
