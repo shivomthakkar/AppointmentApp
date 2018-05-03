@@ -96,7 +96,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                 progressResetPswd.setVisibility(View.GONE);
                 if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
-                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     showSuccessAlert(response.body().getMessage());
                 } else {
                     Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -124,6 +124,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                     public void onClick(DialogInterface dialog, int which) {
                         Intent mainIntent = new Intent(mContext, SetNewPasswordActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        mainIntent.putExtra("Email", edttxtEmail.getText().toString());
                         startActivity(mainIntent);
                     }
                 })

@@ -60,7 +60,14 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
         progressResetPswd = (ProgressBar) findViewById(R.id.progress_set_new_pswd);
 
         String email = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, "");
-        edttxtEmail.setText(email);
+        if (!email.equals("")) {
+            edttxtEmail.setText(email);
+        } else {
+            if (getIntent() != null && getIntent().getExtras() != null) {
+                email = getIntent().getExtras().getString("Email");
+                edttxtEmail.setText(email);
+            }
+        }
 
         btnResetPswd = (Button) findViewById(R.id.btn_reset_pswd);
         btnResetPswd.setOnClickListener(this);
@@ -134,7 +141,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                 progressResetPswd.setVisibility(View.GONE);
                 if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
-                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     showSuccessAlert(response.body().getMessage());
                 } else {
                     Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
