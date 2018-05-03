@@ -19,7 +19,7 @@ import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
-import com.quicsolv.appointmentapp.retrofit.models.interfaces.ResetPasswordInterface;
+import com.quicsolv.appointmentapp.retrofit.models.interfaces.ForgotPasswordInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.resetpassword.ResetPasswordResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
@@ -41,7 +41,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
     private Button btnSendEmail;
     private EditText edttxtEmail;
     private ProgressBar progressResetPswd;
-    private ResetPasswordInterface resetPasswordInterface;
+    private ForgotPasswordInterface resetPasswordInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
 
         mContext = ForgotPswdActivity.this;
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        resetPasswordInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(ResetPasswordInterface.class);
+        resetPasswordInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(ForgotPasswordInterface.class);
 
         getIds();
 
@@ -90,7 +90,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
 
 
     private void resetPassword(String email) {
-        resetPasswordInterface.resetPassword(email).enqueue(new Callback<ResetPasswordResponse>() {
+        resetPasswordInterface.forgotPassword(email).enqueue(new Callback<ResetPasswordResponse>() {
             @Override
             public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
                 progressResetPswd.setVisibility(View.GONE);

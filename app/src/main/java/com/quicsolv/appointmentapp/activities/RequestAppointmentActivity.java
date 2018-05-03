@@ -263,6 +263,7 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
             public void onClick(DialogInterface dialog, int which) {
                 Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, true);
                 Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
+                intent_dashboard_activity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent_dashboard_activity);
             }
         });

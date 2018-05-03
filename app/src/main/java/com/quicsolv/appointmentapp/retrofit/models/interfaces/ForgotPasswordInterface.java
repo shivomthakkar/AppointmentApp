@@ -13,10 +13,8 @@ import retrofit2.http.POST;
  * Date         -  18 Apr 2018
  ***********************************************************************/
 
-public interface ResetPasswordInterface {
+public interface ForgotPasswordInterface {
     @FormUrlEncoded
-    @POST("change_password")
-    Call<ResetPasswordResponse> resetPassword(@Field("pid") String patientId,
-                                              @Field("op") String oldPswd,
-                                              @Field("np") String newPswd);
+    @POST("fp")
+    Call<ResetPasswordResponse> forgotPassword(@Field("pe") String patientEmailId);
 }
