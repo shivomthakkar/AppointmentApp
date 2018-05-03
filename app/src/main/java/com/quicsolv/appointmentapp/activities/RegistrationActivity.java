@@ -254,7 +254,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 progressLogin.setVisibility(View.GONE);
                 if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                     //success
-                    Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "Registration Successful", Toast.LENGTH_SHORT).show();
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid().toString());
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, strEmail);
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, strPswd);

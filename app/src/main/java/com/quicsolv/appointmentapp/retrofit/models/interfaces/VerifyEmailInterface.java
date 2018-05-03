@@ -13,9 +13,9 @@ import retrofit2.http.POST;
  * Date         -  18 Apr 2018
  ***********************************************************************/
 
-public interface ForgotPasswordInterface {
+public interface VerifyEmailInterface {
     @FormUrlEncoded
-    @POST("fp")
+    @POST("e_varify")
     Call<ResetPasswordResponse> forgotPassword(@Field("pe") String patientEmailId,
-                                               @Field("v") String isVerified);
+                                               @Field("rc") String resetCode);
 }

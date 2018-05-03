@@ -1,4 +1,4 @@
-package com.quicsolv.appointmentapp.activities;
+package com.quicsolv.appointmentapp.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -7,10 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.CreateAppointmentInterface;
@@ -42,7 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequestAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class RequestAppointmentFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private GetSpecialityInterface getSpecialityInterface;
@@ -57,39 +60,41 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
     Calendar myCalendar = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener selectedStartDate;
 
+    public RequestAppointmentFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_appointment);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_request_appointment, container, false);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((DashboardActivity) getActivity()).setToolBarTitle("Request Appointment");
 
-        mContext = RequestAppointmentActivity.this;
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        mContext = getActivity();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         getSpecialityInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetSpecialityInterface.class);
         createAppointmentInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(CreateAppointmentInterface.class);
 
-        getIds();
+        getIds(view);
         fetchSpeciality();
+        return view;
     }
 
+    private void getIds(View view) {
+        spinnerSpeciality = (Spinner) view.findViewById(R.id.spinner_speciality);
+        edttxtDescription = (EditText) view.findViewById(R.id.edttxt_description);
+        cbNeedImmidiate = (CheckBox) view.findViewById(R.id.cb_need_immidiate);
 
-    private void getIds() {
-        mContext = RequestAppointmentActivity.this;
-
-        spinnerSpeciality = (Spinner) findViewById(R.id.spinner_speciality);
-        edttxtDescription = (EditText) findViewById(R.id.edttxt_description);
-        cbNeedImmidiate = (CheckBox) findViewById(R.id.cb_need_immidiate);
-
-        edttxtDate = (EditText) findViewById(R.id.edttxt_date);
+        edttxtDate = (EditText) view.findViewById(R.id.edttxt_date);
         edttxtDate.setOnClickListener(this);
 
-        edttxtTime = (EditText) findViewById(R.id.edttxt_time);
+        edttxtTime = (EditText) view.findViewById(R.id.edttxt_time);
         edttxtTime.setOnClickListener(this);
 
-        btnCreateAppointment = (Button) findViewById(R.id.btn_create_appointment);
+        btnCreateAppointment = (Button) view.findViewById(R.id.btn_create_appointment);
         btnCreateAppointment.setOnClickListener(this);
 
         selectedStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -128,7 +133,7 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
                     }
 
                     ArrayAdapter<ApsList> adapter =
-                            new ArrayAdapter<ApsList>(getApplicationContext(), R.layout.speciality_spinner_item, specList);
+                            new ArrayAdapter<ApsList>(mContext, R.layout.speciality_spinner_item, specList);
                     adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
 
                     spinnerSpeciality.setAdapter(adapter);
@@ -156,19 +161,6 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
                 Log.d("", "");
             }
         });
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
@@ -231,19 +223,11 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
             imdit_apptmnt_count = "2";
         }
 
-        createAppointmentInterface.createNewAppointment(
-                Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                sp_id,
-                edttxtDescription.getText().toString(),
-                date,
-                edttxtTime.getText().toString(),
-                imdit_apptmnt_count).enqueue(new Callback<CreateAppointmentResponse>() {
+        createAppointmentInterface.createNewAppointment(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""), sp_id, edttxtDescription.getText().toString(), date, edttxtTime.getText().toString(), imdit_apptmnt_count).enqueue(new Callback<CreateAppointmentResponse>() {
             @Override
             public void onResponse(Call<CreateAppointmentResponse> call, Response<CreateAppointmentResponse> response) {
                 Log.d("", "");
-
                 SuccessResponse_Dialog_Create_Appointment();
-
             }
 
             @Override

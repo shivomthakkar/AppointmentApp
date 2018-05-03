@@ -90,7 +90,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
 
 
     private void resetPassword(String email) {
-        resetPasswordInterface.forgotPassword(email).enqueue(new Callback<ResetPasswordResponse>() {
+        resetPasswordInterface.forgotPassword(email, "1").enqueue(new Callback<ResetPasswordResponse>() {
             @Override
             public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
                 progressResetPswd.setVisibility(View.GONE);

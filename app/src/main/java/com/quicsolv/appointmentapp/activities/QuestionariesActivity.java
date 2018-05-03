@@ -59,7 +59,7 @@ public class QuestionariesActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_q);
+        setContentView(R.layout.activity_questionnaire);
 
         mContext = QuestionariesActivity.this;
 

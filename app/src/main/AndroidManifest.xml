@@ -50,10 +50,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.RequestAppointmentActivity"
-            android:label="Request Appointment"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.RegistrationSuccessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -3,7 +3,6 @@ package com.quicsolv.appointmentapp.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -21,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
@@ -29,6 +27,7 @@ import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
 import com.quicsolv.appointmentapp.fragments.LogoutFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
 import com.quicsolv.appointmentapp.fragments.ProfileFragment;
+import com.quicsolv.appointmentapp.fragments.RequestAppointmentFragment;
 import com.quicsolv.appointmentapp.fragments.ResetPasswordFragment;
 import com.quicsolv.appointmentapp.fragments.SubmittedQuestionnarieFragment;
 import com.quicsolv.appointmentapp.utils.Connectivity;
@@ -64,8 +63,6 @@ public class DashboardActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -212,17 +209,12 @@ public class DashboardActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_request_appointment) {
             fab.setVisibility(View.GONE);
-            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-
-                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
+                fragmentClass = RequestAppointmentFragment.class;
             } else {
-                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                fragmentClass = NoInternetConnectionFragment.class;
             }
+            openFragment(fragment, fragmentClass);
 
         } else if (id == R.id.nav_reset_password) {
             fab.setVisibility(View.GONE);

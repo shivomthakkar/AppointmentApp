@@ -40,6 +40,9 @@ public class LoginResponse {
     @SerializedName("dob")
     @Expose
     private String dob;
+    @SerializedName("is_verified")
+    @Expose
+    private String isVerified;
     @SerializedName("message")
     @Expose
     private String message;
@@ -124,6 +127,14 @@ public class LoginResponse {
         this.dob = dob;
     }
 
+    public String getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(String isVerified) {
+        this.isVerified = isVerified;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -131,4 +142,5 @@ public class LoginResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

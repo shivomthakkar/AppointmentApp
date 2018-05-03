@@ -1,11 +1,13 @@
 package com.quicsolv.appointmentapp.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
-import com.quicsolv.appointmentapp.activities.RequestAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.PendingAppointmentListAdapter;
 import com.quicsolv.appointmentapp.dialog.DialogPendingAppointmentDetails;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -28,6 +30,7 @@ import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.AppointmentListInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.appointmentlist.AppointmentListResponse;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.appointmentlist._2;
+import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
@@ -155,12 +158,28 @@ public class TabPendingAppointmentFragment extends Fragment implements View.OnCl
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_request_appointment:
-                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
-                startActivity(intent);
+                Fragment fragment = null;
+                Class fragmentClass = null;
+                Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false);
+                if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+                    fragmentClass = RequestAppointmentFragment.class;
+                } else {
+                    fragmentClass = NoInternetConnectionFragment.class;
+                }
+
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "").commit();
                 break;
         }
     }
