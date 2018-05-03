@@ -175,13 +175,17 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_create_appointment:
-                createNewAppointment();
+                if (!edttxtDescription.getText().toString().trim().equals("")) {
+                    dialogAskBeforeRequestAppointment();
+                } else {
+                    edttxtDescription.setError("Description is required.");
+                }
                 break;
             case R.id.edttxt_date:
 //                new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
 //                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 //                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate,myCalendar
+                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext, R.style.DialogTheme, selectedStartDate, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -251,16 +255,35 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
 
     private void SuccessResponse_Dialog_Create_Appointment() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        // builder.setCancelable(false);
         builder.setTitle("Success");
         builder.setMessage("Your appointment request has been submitted successfully.");
+        builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-//                        finish();
                 Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
                 startActivity(intent_dashboard_activity);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void dialogAskBeforeRequestAppointment() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("Request Appointment");
+        builder.setMessage("Do you want to request appointment.?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                createNewAppointment();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
         AlertDialog alert = builder.create();
