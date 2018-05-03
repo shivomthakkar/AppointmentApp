@@ -261,6 +261,7 @@ public class CreateAppointmentActivity extends AppCompatActivity implements View
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, true);
                 Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
                 startActivity(intent_dashboard_activity);
             }

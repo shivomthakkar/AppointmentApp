@@ -99,6 +99,9 @@ public class DashboardActivity extends AppCompatActivity
     private void openDefaultFragment() {
         Fragment fragment = null;
         Class fragmentClass = null;
+        if (!Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false)) {
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false);
+        }
         if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
             fab.setVisibility(View.GONE);
             fragmentClass = AppointmentListFragment.class;
@@ -208,6 +211,7 @@ public class DashboardActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_request_appointment) {
             fab.setVisibility(View.GONE);
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);

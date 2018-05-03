@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.activities.LoginActivity;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
@@ -28,6 +29,8 @@ public class LogoutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_logout, container, false);
+
+        ((DashboardActivity) getActivity()).setToolBarTitle("Logout");
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
 

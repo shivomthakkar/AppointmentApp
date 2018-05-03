@@ -63,6 +63,8 @@ public class TabPendingAppointmentFragment extends Fragment implements View.OnCl
         mContext = getActivity();
         appointmentListInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(AppointmentListInterface.class);
 
+        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false);
+
         getIds(view);
         progressLogin.setVisibility(View.VISIBLE);
 

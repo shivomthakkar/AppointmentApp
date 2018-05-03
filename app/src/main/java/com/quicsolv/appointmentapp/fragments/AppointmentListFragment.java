@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.adapters.PagersAdapter;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 public class AppointmentListFragment extends Fragment {
 
@@ -50,7 +51,14 @@ public class AppointmentListFragment extends Fragment {
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         PagersAdapter adapter = new PagersAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
+
+        boolean isFromRequestApt = Prefs.getSharedPreferenceBoolean(getActivity(), Prefs.PREF_IS_FROM_REQUEST_APT, false);
+        if (isFromRequestApt) {
+            viewPager.setCurrentItem(2);
+        } else {
+            viewPager.setCurrentItem(1);
+        }
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

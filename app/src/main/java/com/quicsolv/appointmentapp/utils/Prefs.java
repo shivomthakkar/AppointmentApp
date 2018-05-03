@@ -25,6 +25,8 @@ public class Prefs {
     public final static String PREF_PATIENT_GENDER = "patient_gender";
     public final static String PREF_PATIENT_DOB = "patient_dob";
 
+    public final static String PREF_IS_FROM_REQUEST_APT = "isFromRequestApt";
+
     /**
      * Set a string shared preference
      *
