@@ -27,6 +27,7 @@ import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
 import com.quicsolv.appointmentapp.fragments.LogoutFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
 import com.quicsolv.appointmentapp.fragments.ProfileFragment;
+import com.quicsolv.appointmentapp.fragments.ReportsFragment;
 import com.quicsolv.appointmentapp.fragments.RequestAppointmentFragment;
 import com.quicsolv.appointmentapp.fragments.ResetPasswordFragment;
 import com.quicsolv.appointmentapp.fragments.SubmittedQuestionnarieFragment;
@@ -220,6 +221,15 @@ public class DashboardActivity extends AppCompatActivity
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = ResetPasswordFragment.class;
+            } else {
+                fragmentClass = NoInternetConnectionFragment.class;
+            }
+            openFragment(fragment, fragmentClass);
+
+        } else if (id == R.id.nav_reports) {
+            fab.setVisibility(View.GONE);
+            if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+                fragmentClass = ReportsFragment.class;
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
