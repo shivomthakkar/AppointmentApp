@@ -105,7 +105,8 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                 progressBar.setVisibility(View.GONE);
                 if (response != null && response.body() != null) {
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
-                        Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                        Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
+                        mainIntent.putExtra("EmailSuccessMessage", "You are successfully verified your email address. \n\n To complete this process please proceed to questionnaire.");
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
                     } else {

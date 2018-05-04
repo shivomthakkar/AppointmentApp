@@ -111,7 +111,7 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                             Toast.makeText(mContext, "All fields are required", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        edttxtConfirmPswd.setError("Password does not");
+                        edttxtConfirmPswd.setError("Password does not match");
                     }
                 } else {
                     progressResetPswd.setVisibility(View.GONE);

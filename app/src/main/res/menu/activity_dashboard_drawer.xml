@@ -11,10 +11,6 @@
             android:icon="@drawable/ic_person_white"
             android:title="My Profile" />
         <item
-            android:id="@+id/nav_my_questionnarie"
-            android:icon="@drawable/ic_question_answer_black"
-            android:title="My Questionnarie" />
-        <item
             android:id="@+id/nav_my_appointments"
             android:icon="@drawable/ic_appointment_black"
             android:title="My Appointments" />
@@ -22,7 +18,10 @@
             android:id="@+id/nav_request_appointment"
             android:icon="@drawable/ic_request_appointment_black"
             android:title="Request Appointment" />
-
+        <item
+            android:id="@+id/nav_my_questionnarie"
+            android:icon="@drawable/ic_question_answer_black"
+            android:title="My Questionnarie" />
         <item
             android:id="@+id/nav_reset_password"
             android:icon="@drawable/ic_reset_pswd_black"

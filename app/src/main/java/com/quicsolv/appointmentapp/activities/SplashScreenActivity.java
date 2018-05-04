@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.quicsolv.appointmentapp.R;
+import com.quicsolv.appointmentapp.utils.Prefs;
 
 /**********************************************************************
  * Created by   -  Tushar Patil
@@ -37,10 +38,21 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(mContext, MainActivity.class);
-                startActivity(mainIntent);
-                finish();
+
+                String strEmail = "";
+                String strPswd = "";
+                strEmail = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+                strPswd = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
+
+                if (!strEmail.trim().equals("") && !strPswd.trim().equals("")) {
+                    Intent mainIntent = new Intent(mContext, LoginActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                } else {
+                    Intent mainIntent = new Intent(mContext, MainActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                }
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

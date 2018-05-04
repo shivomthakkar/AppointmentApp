@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean isRememberMeIsChecked;
     private CheckBox check_show_pass;
     private ForgotPasswordInterface resetPasswordInterface;
+    private RelativeLayout loginMainLayout;
 
 
     /**********************************************************************
@@ -91,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txt_register = (TextView) findViewById(R.id.txt_register);
         txt_register.setOnClickListener(this);
 
+        loginMainLayout = (RelativeLayout) findViewById(R.id.login_main_layout);
 
         cbRememberMe = (CheckBox) findViewById(R.id.cb_remember_me);
         cbRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -117,6 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             edttxtEmail.setError(null);
             edttxtPassword.setError(null);
             progressLogin.setVisibility(View.VISIBLE);
+            loginMainLayout.setVisibility(View.GONE);
 
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 doLogin(strEmail, strPswd);
@@ -124,6 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 progressLogin.setVisibility(View.GONE);
                 Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
+        }else{
+            loginMainLayout.setVisibility(View.VISIBLE);
         }
 
 
@@ -226,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (response != null && response.body() != null) {
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
                         //success
-                        Toast.makeText(mContext, "Login Successful", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "Login Successful", Toast.LENGTH_SHORT).show();
 
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_AUTH_TOKEN, response.body().getAuthToken());
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PID, response.body().getPid());
@@ -240,8 +246,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (response.body().getIsVerified().trim().equals("1")) {
                             if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
-                                Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                                Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
                                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                mainIntent.putExtra("EmailSuccessMessage", "You are almost done. \n\n To complete this process please proceed to questionnaire.");
                                 startActivity(mainIntent);
                             } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
                                 Intent mainIntent = new Intent(mContext, DashboardActivity.class);

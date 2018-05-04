@@ -187,15 +187,6 @@ public class DashboardActivity extends AppCompatActivity
                 fragmentClass = NoInternetConnectionFragment.class;
             }
             openFragment(fragment, fragmentClass);
-        } else if (id == R.id.nav_my_questionnarie) {
-            fab.setVisibility(View.GONE);
-            if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = SubmittedQuestionnarieFragment.class;
-            } else {
-                fragmentClass = NoInternetConnectionFragment.class;
-            }
-            openFragment(fragment, fragmentClass);
-
         } else if (id == R.id.nav_my_appointments) {
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
@@ -211,6 +202,15 @@ public class DashboardActivity extends AppCompatActivity
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = RequestAppointmentFragment.class;
+            } else {
+                fragmentClass = NoInternetConnectionFragment.class;
+            }
+            openFragment(fragment, fragmentClass);
+
+        } else if (id == R.id.nav_my_questionnarie) {
+            fab.setVisibility(View.GONE);
+            if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+                fragmentClass = SubmittedQuestionnarieFragment.class;
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
