@@ -27,6 +27,8 @@ public class Prefs {
 
     public final static String PREF_IS_FROM_REQUEST_APT = "isFromRequestApt";
 
+    public final static String PREF_UPLOADED_FILE_BASE_URL = "uploadedFileBaseUrl";
+
     /**
      * Set a string shared preference
      *

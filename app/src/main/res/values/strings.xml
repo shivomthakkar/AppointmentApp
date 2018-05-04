@@ -15,4 +15,8 @@
 
     <string name="str_btn_proceed">"Submit &amp; proceed to next question"</string>
 
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

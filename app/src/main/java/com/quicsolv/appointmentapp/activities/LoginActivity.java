@@ -252,7 +252,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 startActivity(mainIntent);
                             } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
                                 Intent mainIntent = new Intent(mContext, DashboardActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(mainIntent);
                             }
                         } else if (response.body().getIsVerified().trim().equals("0")) {
