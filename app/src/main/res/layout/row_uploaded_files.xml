@@ -30,7 +30,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.7"
                     android:orientation="vertical">
 
                     <TextView
@@ -57,14 +57,14 @@
                     android:id="@+id/btn_view_report"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.3"
+                    android:background="@drawable/button_outline"
+                    android:layout_weight="1.2"
                     android:gravity="right">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_outline"
-                        android:gravity="right"
+                        android:gravity="center"
                         android:padding="8dp"
                         android:text="View"
                         android:textColor="@color/black" />

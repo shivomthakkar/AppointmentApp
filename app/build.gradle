@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    useLibrary  'org.apache.http.legacy'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.quicsolv.appointmentapp"
         minSdkVersion 15
@@ -45,4 +45,7 @@ dependencies {
 
     //Httpclient
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
 }
