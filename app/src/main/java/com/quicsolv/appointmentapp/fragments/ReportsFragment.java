@@ -77,8 +77,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getReportsList() {
-//        String pid = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "");
-        String pid = "1";
+        String pid = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "");
+//        String pid = "1";
         uploadedReportsListInterface.getReportsList(pid).enqueue(new Callback<UploadedReportsListResponse>() {
             @Override
             public void onResponse(Call<UploadedReportsListResponse> call, Response<UploadedReportsListResponse> response) {
