@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,6 +26,9 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.UploadReportInterf
 import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.List;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.ReportTypeListResponse;
 import com.quicsolv.appointmentapp.utils.Prefs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -62,6 +66,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     private static final String TAG = MainActivity.class.getSimpleName();
     private GetReportTypesListInterface getReportTypesListInterface;
     private String reportTypeId;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,8 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         spinnerReportType = (Spinner) findViewById(R.id.spinner_report_type);
 
         imageView = (ImageView) findViewById(R.id.imageView);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_upload_docs);
 
         btnChooseDocs = (Button) findViewById(R.id.btn_choose_docs);
         btnUploadDocs = (Button) findViewById(R.id.btn_upload_docs);
@@ -151,12 +158,25 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.btn_upload_docs:
                 //setup params
+                progressBar.setVisibility(View.VISIBLE);
                 String pid = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "");
                 Map<String, String> params = new HashMap<String, String>(2);
                 params.put("pid", pid);
                 params.put("rt_id", reportTypeId);
 
                 String result = multipartRequest(SERVER, params, imagePath, "file", "image/*");
+//                try {
+//                    JSONObject jsonObj = new JSONObject(result);
+//                    String code = jsonObj.getString("code");
+//                    progressBar.setVisibility(View.GONE);
+//                    if (code.equals("200")) {
+//                        String message = jsonObj.getString("message");
+//                        Toast.makeText(mContext, ""+message, Toast.LENGTH_SHORT).show();
+//                        finish();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
                 break;
         }
     }
@@ -185,8 +205,6 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             //get the current timeStamp and strore that in the time Variable
             Long tsLong = System.currentTimeMillis() / 1000;
             timestamp = tsLong.toString();
-
-            Toast.makeText(getApplicationContext(), timestamp, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -360,12 +378,14 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
 
             thread.start();
 
+            progressBar.setVisibility(View.GONE);
+            finish();
 
             return result[0];
         } catch (Exception e) {
             Log.d("", "");
         }
-        return "";
+        return result[0];
     }
 
     private String getRealPathFromURI(Uri contentUri) {
