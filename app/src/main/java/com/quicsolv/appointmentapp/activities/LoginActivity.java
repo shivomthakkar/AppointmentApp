@@ -244,6 +244,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
 
+                        if (response.body().getPpPath() != null && !response.body().getPpPath().toString().equals("")) {//set nav drawer profile picture
+                            Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, response.body().getPpPath());
+                        }else{
+                            Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, "");
+                        }
+
                         if (response.body().getIsVerified().trim().equals("1")) {
                             if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
                                 Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);

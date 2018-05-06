@@ -8,12 +8,23 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class GetPatientProfileResponse {
+    @SerializedName("base_url")
+    @Expose
+    private String baseUrl;
     @SerializedName("code")
     @Expose
     private Integer code;
     @SerializedName("data")
     @Expose
     private Data data;
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
 
     public Integer getCode() {
         return code;

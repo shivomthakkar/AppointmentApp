@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quicsolv.appointmentapp.MyApplication;
@@ -33,6 +34,9 @@ import com.quicsolv.appointmentapp.fragments.ResetPasswordFragment;
 import com.quicsolv.appointmentapp.fragments.SubmittedQuestionnarieFragment;
 import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Prefs;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +47,7 @@ public class DashboardActivity extends AppCompatActivity
 
     private TextView txt_title_name_nav;
     private TextView txt_title_email_nav;
+    private CircleImageView profileImage;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -80,6 +85,8 @@ public class DashboardActivity extends AppCompatActivity
         txt_title_name_nav = (TextView) header.findViewById(R.id.txt_title_name_nav);
         txt_title_email_nav = (TextView) header.findViewById(R.id.txt_title_email_nav);
 
+        profileImage = (CircleImageView) header.findViewById(R.id.profile_image);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +98,11 @@ public class DashboardActivity extends AppCompatActivity
 
         txt_title_name_nav.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, ""));
         txt_title_email_nav.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, ""));
+
+        String profileImgUrl = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, "");
+        if (!profileImgUrl.equals("")) {
+            Picasso.with(mContext).load(profileImgUrl).error(R.drawable.profile).into(profileImage);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -279,5 +291,9 @@ public class DashboardActivity extends AppCompatActivity
         } else {
             fab.setVisibility(View.GONE);
         }
+    }
+
+    public void setProfileImage(String profilePath){
+            Picasso.with(mContext).load(profilePath).error(R.drawable.profile).into(profileImage);
     }
 }

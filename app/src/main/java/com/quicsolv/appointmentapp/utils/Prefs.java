@@ -24,6 +24,7 @@ public class Prefs {
     public final static String PREF_PATIENT_PHONE = "patient_phone";
     public final static String PREF_PATIENT_GENDER = "patient_gender";
     public final static String PREF_PATIENT_DOB = "patient_dob";
+    public final static String PREF_PATIENT_PROFILE_IMAGE_URL_ = "patient_profile_image_url";
 
     public final static String PREF_IS_FROM_REQUEST_APT = "isFromRequestApt";
 

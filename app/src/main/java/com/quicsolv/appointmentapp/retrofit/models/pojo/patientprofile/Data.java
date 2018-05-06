@@ -17,6 +17,9 @@ public class Data {
     @SerializedName("p_email")
     @Expose
     private String pEmail;
+    @SerializedName("p_pp_path")
+    @Expose
+    private String pPpPath;
     @SerializedName("p_phone")
     @Expose
     private String pPhone;
@@ -52,6 +55,14 @@ public class Data {
 
     public void setPEmail(String pEmail) {
         this.pEmail = pEmail;
+    }
+
+    public String getPPpPath() {
+        return pPpPath;
+    }
+
+    public void setPPpPath(String pPpPath) {
+        this.pPpPath = pPpPath;
     }
 
     public String getPPhone() {
