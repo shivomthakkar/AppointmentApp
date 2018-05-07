@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +68,7 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
             TextView txtReportDate = (TextView) v.findViewById(R.id.txt_report_date);
             RelativeLayout btnViewReport = (RelativeLayout) v.findViewById(R.id.btn_view_report);
             RelativeLayout btnDownloadReport = (RelativeLayout) v.findViewById(R.id.btn_download_report);
+            ImageView ivDocsType = (ImageView) v.findViewById(R.id.iv_docs_type);
 
             if (txtReportName != null && p.getRtName() != null) {
                 txtReportName.setText(p.getRtName().toString());
@@ -85,6 +87,14 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
                     txtReportDate.setText(date);
                 } catch (Exception e) {
 
+                }
+            }
+
+            if (ivDocsType != null && p.getLrPath() != null) {
+                if (p.getLrPath().toString().contains("pdf")) {
+                    ivDocsType.setImageResource(R.drawable.pdf);
+                } else {
+                    ivDocsType.setImageResource(R.drawable.ic_type_image);
                 }
             }
 

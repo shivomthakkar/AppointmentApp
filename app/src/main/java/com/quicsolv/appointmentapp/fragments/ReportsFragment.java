@@ -129,4 +129,11 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        progressbar.setVisibility(View.VISIBLE);
+        getReportsList();
+    }
 }

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -71,6 +72,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     private String reportTypeId;
     private ProgressBar progressBar;
     private String selectedFilePath;
+    private TextView txtUploadedDocsname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,8 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         imageView = (ImageView) findViewById(R.id.imageView);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_upload_docs);
+
+        txtUploadedDocsname = (TextView) findViewById(R.id.uploaded_docs_name);
 
         btnChooseDocs = (Button) findViewById(R.id.btn_choose_docs);
         btnUploadDocs = (Button) findViewById(R.id.btn_upload_docs);
@@ -197,7 +201,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         //allows to select data and return it
         intent.setAction(Intent.ACTION_GET_CONTENT);
         //starts new activity to select file and return data
-        startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),RESULT_SELECT_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), RESULT_SELECT_IMAGE);
 
     }
 
@@ -211,19 +215,28 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESULT_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
-            //set the selected image to image variable
-            Uri image = data.getData();
-//            imageView.setImageURI(image);
-//            imagePath = getRealPathFromURI(image);
 
             //get the current timeStamp and strore that in the time Variable
             Long tsLong = System.currentTimeMillis() / 1000;
             timestamp = tsLong.toString();
 
             Uri selectedFileUri = data.getData();
-            selectedFilePath = FilePath.getPath(this,selectedFileUri);
+            selectedFilePath = FilePath.getPath(this, selectedFileUri);
 //            selectedFilePath = getRealPathFromURI(selectedFileUri);
-            Log.i(TAG,"Selected File Path:" + selectedFilePath);
+            Log.i(TAG, "Selected File Path:" + selectedFilePath);
+
+            if (selectedFilePath != null && !selectedFilePath.equals("")) {
+                String[] splittedSelectedFilePath = selectedFilePath.split("/");
+                txtUploadedDocsname.setText(splittedSelectedFilePath[splittedSelectedFilePath.length - 1]);
+                if (selectedFilePath.contains("pdf")) {
+                    imageView.setImageResource(R.drawable.pdf);
+                } else {
+                    imageView.setImageURI(selectedFileUri);
+                    imagePath = getRealPathFromURI(selectedFileUri);
+                }
+
+            }
+
         }
     }
 

@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quicsolv.appointmentapp.MyApplication;
@@ -106,7 +105,6 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-
     private void openDefaultFragment() {
         Fragment fragment = null;
         Class fragmentClass = null;
