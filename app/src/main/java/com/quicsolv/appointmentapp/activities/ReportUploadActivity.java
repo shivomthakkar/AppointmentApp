@@ -1,7 +1,9 @@
 package com.quicsolv.appointmentapp.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -27,7 +28,6 @@ import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.List;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.ReportTypeListResponse;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -208,75 +208,6 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-//    private String hashMapToUrl(HashMap<String, String> params) throws UnsupportedEncodingException {
-//        StringBuilder result = new StringBuilder();
-//        boolean first = true;
-//        for (Map.Entry<String, String> entry : params.entrySet()) {
-//            if (first)
-//                first = false;
-//            else
-//                result.append("&");
-//
-//            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-//            result.append("=");
-//            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-//        }
-//
-//        return result.toString();
-//    }
-//
-//
-//    //async task to upload image
-//    private class Upload extends AsyncTask<Void, Void, String> {
-//        private Bitmap image;
-//        private String name;
-//
-//        public Upload(Bitmap image, String name) {
-//            this.image = image;
-//            this.name = name;
-//        }
-//
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            //compress the image to jpg format
-//            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//            /*
-//            * encode image to base64 so that it can be picked by saveImage.php file
-//            * */
-//            String encodeImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-//
-//            //generate hashMap to store encodedImage and the name
-//            HashMap<String, String> detail = new HashMap<>();
-//            detail.put("file", name);
-//            detail.put("image", encodeImage);
-//            detail.put("pid", "3");
-//            detail.put("rt_id", "2");
-//
-//            try {
-//                //convert this HashMap to encodedUrl to send to php file
-//                String dataToSend = hashMapToUrl(detail);
-//                //make a Http request and send data to saveImage.php file
-//                String response = Request.post(SERVER, dataToSend);
-//
-//                //return the response
-//                return response;
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                Log.e(TAG, "ERROR  " + e);
-//                return null;
-//            }
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            //show image uploaded
-//            Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     public String multipartRequest(final String urlTo, final Map<String, String> parmas, final String filepath, final String filefield, final String fileMimeType) {
         final HttpURLConnection[] connection = {null};
         final DataOutputStream[] outputStream = {null};
@@ -366,6 +297,30 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
 
                         result[0] = convertStreamToString(inputStream[0]);
 
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    progressBar.setVisibility(View.GONE);
+                                    JSONObject jsonObj = new JSONObject(result[0]);
+                                    if (jsonObj.has("errormessage")) {
+                                        String errorMsg = jsonObj.getString("errormessage");
+                                        errorMsg = errorMsg.replace("<p>", "").replace("</p>", "");
+                                        dialogSuccessError(errorMsg, false);
+                                    } else if (jsonObj.has("code")) {
+                                        String code = jsonObj.getString("code");
+                                        if (code.equals("200")) {
+                                            String message = jsonObj.getString("message");
+                                            dialogSuccessError(message, true);
+                                        }
+                                    }
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        });
+
+
                         fileInputStream.close();
                         inputStream[0].close();
                         outputStream[0].flush();
@@ -377,9 +332,6 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             });
 
             thread.start();
-
-            progressBar.setVisibility(View.GONE);
-            finish();
 
             return result[0];
         } catch (Exception e) {
@@ -419,6 +371,27 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             }
         }
         return sb.toString();
+    }
+
+
+    private void dialogSuccessError(String message, final boolean wantToCloseActicity) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("File Upload Status");
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                if (wantToCloseActicity) {
+                    finish();
+                }
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }

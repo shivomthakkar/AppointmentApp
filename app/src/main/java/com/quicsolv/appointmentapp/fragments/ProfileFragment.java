@@ -1,8 +1,10 @@
 package com.quicsolv.appointmentapp.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,6 +37,8 @@ import com.quicsolv.appointmentapp.retrofit.models.pojo.patientprofile.UpdatePat
 import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -300,6 +304,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Map<String, String> params = new HashMap<String, String>(2);
             params.put("pid", pid);
 
+            progressBar.setVisibility(View.VISIBLE);
             String result = multipartRequest(SERVER, params, imagePath, "file", "image/*");
             Log.d("", result);
         }
@@ -406,6 +411,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                         result[0] = convertStreamToString(inputStream[0]);
 
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    progressBar.setVisibility(View.GONE);
+                                    JSONObject jsonObj = new JSONObject(result[0]);
+                                    if (jsonObj.has("errormessage")) {
+                                        String errorMsg = jsonObj.getString("errormessage");
+                                        errorMsg = errorMsg.replace("<p>", "").replace("</p>", "");
+                                        dialogSuccessError(errorMsg);
+                                    } else if (jsonObj.has("code")) {
+                                        String code = jsonObj.getString("code");
+                                        if (code.equals("200")) {
+                                            String message = jsonObj.getString("message");
+                                            dialogSuccessError(message);
+                                        }
+                                    }
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        });
+
                         fileInputStream.close();
                         inputStream[0].close();
                         outputStream[0].flush();
@@ -509,5 +537,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         mTxt_dob.setText(sdf.format(myCalendar.getTime()));
         mTxt_dob.setError(null);
+    }
+
+
+
+    private void dialogSuccessError(String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("File Upload Status");
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

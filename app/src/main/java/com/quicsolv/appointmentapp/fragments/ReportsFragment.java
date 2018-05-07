@@ -1,8 +1,11 @@
 package com.quicsolv.appointmentapp.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.activities.DashboardActivity;
@@ -18,16 +22,13 @@ import com.quicsolv.appointmentapp.activities.ReportUploadActivity;
 import com.quicsolv.appointmentapp.adapters.UploadedFilesListAdapter;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
-import com.quicsolv.appointmentapp.retrofit.models.interfaces.UploadReportInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.UploadedReportsListInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.uploadedfilelist.Datum;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.uploadedfilelist.UploadedReportsListResponse;
 import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
-import java.io.File;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,22 +37,14 @@ import retrofit2.Response;
 
 public class ReportsFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "ReportsFragment";
     private Context mContext;
     private ListView listviewReports;
     private ProgressBar progressbar;
-    private LinearLayout layoutNoRecord;
     private Button btnUploadDocs;
     private UploadedReportsListInterface uploadedReportsListInterface;
     private List<Datum> listReports;
-    File file1;
-    String uploadedFileName, first, file_1;
-    StringTokenizer tokens;
-    int serverResponseCode;
-    private static final String IMAGE_DIRECTORY = "/appointmentapp";
-    private String imagePath;
-    private File file;
-    String mediaPath;
+    private LinearLayout layoutNoRecord;
+    private static final int EXTERNAL_STORAGE_PERMISSION_CONSTANT = 100;
 
     public ReportsFragment() {
         // Required empty public constructor
@@ -72,6 +65,10 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
         progressbar.setVisibility(View.VISIBLE);
         getReportsList();
+
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
+        }
 
         return view;
     }
@@ -117,8 +114,18 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_upload_docs:
-                Intent intent = new Intent(mContext, ReportUploadActivity.class);
-                startActivity(intent);
+
+                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
+                }
+
+                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(mContext, "No Permission", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(mContext, ReportUploadActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
         }
     }
