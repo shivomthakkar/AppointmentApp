@@ -3,20 +3,22 @@ package com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by tushar on 5/6/2018.
  */
 
 public class ReportTypeListResponse {
-    @SerializedName("list")
+    @SerializedName("rt_type_list")
     @Expose
-    private java.util.List<List> list = null;
+    private List<RtTypeList> rtTypeList = null;
 
-    public java.util.List<List> getList() {
-        return list;
+    public List<RtTypeList> getRtTypeList() {
+        return rtTypeList;
     }
 
-    public void setList(java.util.List<List> list) {
-        this.list = list;
+    public void setRtTypeList(List<RtTypeList> rtTypeList) {
+        this.rtTypeList = rtTypeList;
     }
 }

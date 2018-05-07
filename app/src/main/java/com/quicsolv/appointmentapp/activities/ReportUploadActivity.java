@@ -24,8 +24,8 @@ import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.GetReportTypesListInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.UploadReportInterface;
-import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.List;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.ReportTypeListResponse;
+import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.RtTypeList;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
 import org.json.JSONObject;
@@ -108,19 +108,19 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onResponse(Call<ReportTypeListResponse> call, Response<ReportTypeListResponse> response) {
                 if (response.body() != null) {
-                    final ArrayList<List> reportTypeList = new ArrayList<>();
-                    List rtList = null;
-                    if (response.body().getList() != null && response.body().getList().size() > 0) {
-                        for (int i = 0; i < response.body().getList().size(); i++) {
-                            rtList = new List();
-                            rtList.setRtId(response.body().getList().get(i).getRtId());
-                            rtList.setRtName(response.body().getList().get(i).getRtName());
+                    final ArrayList<RtTypeList> reportTypeList = new ArrayList<>();
+                    RtTypeList rtList = null;
+                    if (response.body().getRtTypeList() != null && response.body().getRtTypeList().size() > 0) {
+                        for (int i = 0; i < response.body().getRtTypeList().size(); i++) {
+                            rtList = new RtTypeList();
+                            rtList.setRtId(response.body().getRtTypeList().get(i).getRtId());
+                            rtList.setRtName(response.body().getRtTypeList().get(i).getRtName());
                             reportTypeList.add(rtList);
                         }
                     }
 
-                    ArrayAdapter<List> adapter =
-                            new ArrayAdapter<List>(mContext, R.layout.speciality_spinner_item, reportTypeList);
+                    ArrayAdapter<RtTypeList> adapter =
+                            new ArrayAdapter<RtTypeList>(mContext, R.layout.speciality_spinner_item, reportTypeList);
                     adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
 
                     spinnerReportType.setAdapter(adapter);

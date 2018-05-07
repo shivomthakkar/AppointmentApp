@@ -128,7 +128,6 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
                             apsList.setSpId(response.body().getApsList().get(i).getSpId());
                             apsList.setSpName(response.body().getApsList().get(i).getSpName());
                             specList.add(apsList);
-
                         }
                     }
 
