@@ -7,8 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.GetReportTypesList
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.UploadReportInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.ReportTypeListResponse;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.reporttype.RtTypeList;
+import com.quicsolv.appointmentapp.utils.FilePath;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
 import org.json.JSONObject;
@@ -67,6 +70,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     private GetReportTypesListInterface getReportTypesListInterface;
     private String reportTypeId;
     private ProgressBar progressBar;
+    private String selectedFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +168,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                 params.put("pid", pid);
                 params.put("rt_id", reportTypeId);
 
-                String result = multipartRequest(SERVER, params, imagePath, "file", "image/*");
+                String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
 //                try {
 //                    JSONObject jsonObj = new JSONObject(result);
 //                    String code = jsonObj.getString("code");
@@ -184,14 +188,24 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     //function to select a image
     private void selectImage() {
         //open album to select image
-        Intent gallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(gallaryIntent, RESULT_SELECT_IMAGE);
+//        Intent gallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(gallaryIntent, RESULT_SELECT_IMAGE);
+
+        Intent intent = new Intent();
+        //sets the select file to all types of files
+        intent.setType("*/*");
+        //allows to select data and return it
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        //starts new activity to select file and return data
+        startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),RESULT_SELECT_IMAGE);
+
     }
 
 
     /*
  * This function is called when we pick some image from the album
  * */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -199,12 +213,17 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         if (requestCode == RESULT_SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
             //set the selected image to image variable
             Uri image = data.getData();
-            imageView.setImageURI(image);
-            imagePath = getRealPathFromURI(image);
+//            imageView.setImageURI(image);
+//            imagePath = getRealPathFromURI(image);
 
             //get the current timeStamp and strore that in the time Variable
             Long tsLong = System.currentTimeMillis() / 1000;
             timestamp = tsLong.toString();
+
+            Uri selectedFileUri = data.getData();
+            selectedFilePath = FilePath.getPath(this,selectedFileUri);
+//            selectedFilePath = getRealPathFromURI(selectedFileUri);
+            Log.i(TAG,"Selected File Path:" + selectedFilePath);
         }
     }
 
