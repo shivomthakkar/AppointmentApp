@@ -18,13 +18,12 @@
             android:layout_margin="10dp"
             android:src="@drawable/ic_arrow_back_white" />
 
-        <ImageView
-            android:id="@+id/image_report"
+        <WebView
+            android:id="@+id/webview_report"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/iv_back"
-            android:layout_centerInParent="true"
-            android:scaleType="matrix" />
+            android:layout_centerInParent="true" />
 
         <ProgressBar
             android:id="@+id/progress_report"
