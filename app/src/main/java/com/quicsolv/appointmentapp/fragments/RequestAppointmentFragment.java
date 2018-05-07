@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -55,6 +56,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
     private CheckBox cbNeedImmidiate;
     private EditText edttxtDate, edttxtTime;
     private Button btnCreateAppointment;
+    private ProgressBar progressBar;
     String imdit_apptmnt_count = "";
     String sp_id = "";
     Calendar myCalendar = Calendar.getInstance();
@@ -79,6 +81,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
         createAppointmentInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(CreateAppointmentInterface.class);
 
         getIds(view);
+        progressBar.setVisibility(View.VISIBLE);
         fetchSpeciality();
         return view;
     }
@@ -87,6 +90,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
         spinnerSpeciality = (Spinner) view.findViewById(R.id.spinner_speciality);
         edttxtDescription = (EditText) view.findViewById(R.id.edttxt_description);
         cbNeedImmidiate = (CheckBox) view.findViewById(R.id.cb_need_immidiate);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_create_appointment);
 
         edttxtDate = (EditText) view.findViewById(R.id.edttxt_date);
         edttxtDate.setOnClickListener(this);
@@ -119,6 +123,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
         getSpecialityInterface.getSpecialityList().enqueue(new Callback<GetSpecialityResponse>() {
             @Override
             public void onResponse(Call<GetSpecialityResponse> call, Response<GetSpecialityResponse> response) {
+                progressBar.setVisibility(View.GONE);
                 if (response.body() != null) {
                     final ArrayList<ApsList> specList = new ArrayList<>();
                     ApsList apsList = null;
@@ -158,6 +163,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
             @Override
             public void onFailure(Call<GetSpecialityResponse> call, Throwable t) {
                 Log.d("", "");
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -226,6 +232,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
             @Override
             public void onResponse(Call<CreateAppointmentResponse> call, Response<CreateAppointmentResponse> response) {
                 Log.d("", "");
+                progressBar.setVisibility(View.GONE);
                 SuccessResponse_Dialog_Create_Appointment();
             }
 
@@ -262,6 +269,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                progressBar.setVisibility(View.VISIBLE);
                 createNewAppointment();
             }
         });

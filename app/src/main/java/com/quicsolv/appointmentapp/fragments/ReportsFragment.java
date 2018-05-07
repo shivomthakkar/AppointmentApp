@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
@@ -40,11 +41,12 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private ListView listviewReports;
     private ProgressBar progressbar;
-    private Button btnUploadDocs;
+    private Button btnUploadDocs, btnUpload;
     private UploadedReportsListInterface uploadedReportsListInterface;
     private List<Datum> listReports;
     private LinearLayout layoutNoRecord;
     private static final int EXTERNAL_STORAGE_PERMISSION_CONSTANT = 100;
+    private RelativeLayout rlToolbar;
 
     public ReportsFragment() {
         // Required empty public constructor
@@ -81,6 +83,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<UploadedReportsListResponse> call, Response<UploadedReportsListResponse> response) {
                 progressbar.setVisibility(View.GONE);
                 if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
+                    layoutNoRecord.setVisibility(View.GONE);
+                    rlToolbar.setVisibility(View.VISIBLE);
 
                     Prefs.setSharedPreferenceString(mContext, Prefs.PREF_UPLOADED_FILE_BASE_URL, response.body().getBaseUrl());
                     if (response.body().getData() != null) {
@@ -89,6 +93,9 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                         UploadedFilesListAdapter customAdapter = new UploadedFilesListAdapter(mContext, R.layout.row_appointment_history, listReports);
                         listviewReports.setAdapter(customAdapter);
                     }
+                } else {
+                    layoutNoRecord.setVisibility(View.VISIBLE);
+                    rlToolbar.setVisibility(View.GONE);
                 }
             }
 
@@ -105,8 +112,13 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         progressbar = (ProgressBar) view.findViewById(R.id.progress_reports);
         layoutNoRecord = (LinearLayout) view.findViewById(R.id.layout_no_reports);
 
+        rlToolbar = (RelativeLayout) view.findViewById(R.id.toolbar);
+
         btnUploadDocs = (Button) view.findViewById(R.id.btn_upload_docs);
         btnUploadDocs.setOnClickListener(this);
+
+        btnUpload = (Button) view.findViewById(R.id.btn_upload);
+        btnUpload.setOnClickListener(this);
     }
 
 
@@ -114,7 +126,19 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_upload_docs:
+                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
+                }
 
+                if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(mContext, "No Permission", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(mContext, ReportUploadActivity.class);
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.btn_upload:
                 if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
                 }

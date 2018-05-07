@@ -199,6 +199,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         if (data.getPPpPath() != null){
             Picasso.with(mContext).load(data.getPPpPath()).error(R.drawable.profile).into(profileImage);
+            ((DashboardActivity) getActivity()).setProfileImage(data.getPPpPath().toString());
         }
 
         String genderId = data.getGender();
@@ -225,7 +226,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
 
         ((DashboardActivity) getActivity()).setNavDrawerUserName(data.getPName().toString());
-        ((DashboardActivity) getActivity()).setProfileImage(data.getPPpPath().toString());
+
     }
 
     @Override
@@ -425,7 +426,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                         String code = jsonObj.getString("code");
                                         if (code.equals("200")) {
                                             String message = jsonObj.getString("message");
-                                            dialogSuccessError(message);
+                                            dialogSuccessError("Profile picture updated successfully.");
                                         }
                                     }
                                 } catch (Exception e) {
@@ -543,13 +544,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void dialogSuccessError(String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("File Upload Status");
+        builder.setTitle("Profile");
         builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                fetchPatientProfileData();
             }
         });
 

@@ -81,11 +81,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/button_filled"
+                        android:background="@drawable/button_outline"
                         android:padding="10dp"
-                        android:text="Upload"
+                        android:text="Upload Document"
                         android:textAllCaps="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/splash_color"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>

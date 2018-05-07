@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -172,19 +173,13 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                 params.put("pid", pid);
                 params.put("rt_id", reportTypeId);
 
-                String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
-//                try {
-//                    JSONObject jsonObj = new JSONObject(result);
-//                    String code = jsonObj.getString("code");
-//                    progressBar.setVisibility(View.GONE);
-//                    if (code.equals("200")) {
-//                        String message = jsonObj.getString("message");
-//                        Toast.makeText(mContext, ""+message, Toast.LENGTH_SHORT).show();
-//                        finish();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                if (selectedFilePath != null) {
+                    String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
+                }else{
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(mContext, "Please select file to upload", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }

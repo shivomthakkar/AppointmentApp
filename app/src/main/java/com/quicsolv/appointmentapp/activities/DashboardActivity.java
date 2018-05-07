@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -117,7 +118,7 @@ public class DashboardActivity extends AppCompatActivity
         } else {
             fragmentClass = NoInternetConnectionFragment.class;
         }
-        openFragment(fragment, fragmentClass);
+        openFragment(fragment, fragmentClass, true);
     }
 
     @Override
@@ -197,7 +198,7 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, true);
         } else if (id == R.id.nav_my_appointments) {
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
@@ -207,7 +208,7 @@ public class DashboardActivity extends AppCompatActivity
                 fragmentClass = NoInternetConnectionFragment.class;
 
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_request_appointment) {
             fab.setVisibility(View.GONE);
@@ -216,7 +217,7 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_my_questionnarie) {
             fab.setVisibility(View.GONE);
@@ -225,7 +226,7 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_reset_password) {
             fab.setVisibility(View.GONE);
@@ -234,7 +235,7 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_reports) {
             fab.setVisibility(View.GONE);
@@ -243,7 +244,7 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, false);
 
         } else if (id == R.id.nav_logout) {
             fab.setVisibility(View.GONE);
@@ -252,13 +253,13 @@ public class DashboardActivity extends AppCompatActivity
             } else {
                 fragmentClass = NoInternetConnectionFragment.class;
             }
-            openFragment(fragment, fragmentClass);
+            openFragment(fragment, fragmentClass, true);
         }
 
         return true;
     }
 
-    private void openFragment(Fragment fragment, Class fragmentClass) {
+    private void openFragment(Fragment fragment, Class fragmentClass, boolean wantToshoAnimation) {
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -266,7 +267,11 @@ public class DashboardActivity extends AppCompatActivity
         }
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "").commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (wantToshoAnimation) {
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
+        }
+        transaction.replace(R.id.frame_container, fragment, "").commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -291,7 +296,7 @@ public class DashboardActivity extends AppCompatActivity
         }
     }
 
-    public void setProfileImage(String profilePath){
-            Picasso.with(mContext).load(profilePath).error(R.drawable.profile).into(profileImage);
+    public void setProfileImage(String profilePath) {
+        Picasso.with(mContext).load(profilePath).error(R.drawable.profile).into(profileImage);
     }
 }
