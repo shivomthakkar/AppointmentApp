@@ -1,6 +1,8 @@
 package com.quicsolv.appointmentapp.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -126,7 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 doLogin(strEmail, strPswd);
             } else {
                 progressLogin.setVisibility(View.GONE);
-                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                dialogNoInternetConnection();
             }
         }else{
             loginMainLayout.setVisibility(View.VISIBLE);
@@ -311,6 +314,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    private void dialogNoInternetConnection() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("No Internet Connection.");
+        builder.setMessage("Please try again.");
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }
