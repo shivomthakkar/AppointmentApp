@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 dialogNoInternetConnection();
             }
-        }else{
+        } else {
             loginMainLayout.setVisibility(View.VISIBLE);
         }
 
@@ -249,7 +249,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if (response.body().getPpPath() != null && !response.body().getPpPath().toString().equals("")) {//set nav drawer profile picture
                             Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, response.body().getPpPath());
-                        }else{
+                        } else {
                             Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, "");
                         }
 
@@ -266,7 +266,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         } else if (response.body().getIsVerified().trim().equals("0")) {
                             progressLogin.setVisibility(View.VISIBLE);
-                            sentVerificationMail();
+                            boolean isEmailVerificationMailSent = Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, false);
+
+                            if (!isEmailVerificationMailSent) {
+                                sentVerificationMail();
+                            }else{
+                                Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                mainIntent.putExtra("Message", "To complete this process please enter email verification code, which we sent you on your registered email address.");
+                                startActivity(mainIntent);
+                            }
                         }
 
                     } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
@@ -295,6 +304,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 progressLogin.setVisibility(View.GONE);
                 if (response != null && response.body() != null) {
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, true);
                         Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mainIntent.putExtra("Message", "To complete this process please enter email verification code, which we sent you on your registered email address.");

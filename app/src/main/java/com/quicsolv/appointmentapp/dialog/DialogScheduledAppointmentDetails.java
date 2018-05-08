@@ -78,7 +78,7 @@ public class DialogScheduledAppointmentDetails extends Dialog implements
         }
 
         if (param.getAppitDate() != null) {
-            txtPrfTime.setText(param.getAppitDate() + "");
+            txtPrfTime.setText(param.getAppitTime() + "");
         }
 
         if (param.getDescription() != null) {

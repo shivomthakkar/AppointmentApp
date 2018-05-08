@@ -30,6 +30,8 @@ public class Prefs {
 
     public final static String PREF_UPLOADED_FILE_BASE_URL = "uploadedFileBaseUrl";
 
+    public final static String PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT = "emailVerificationMailAlreadySent";
+
     /**
      * Set a string shared preference
      *

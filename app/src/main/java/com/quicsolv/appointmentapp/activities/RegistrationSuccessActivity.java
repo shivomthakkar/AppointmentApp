@@ -19,6 +19,7 @@ import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
+import com.quicsolv.appointmentapp.retrofit.models.interfaces.ForgotPasswordInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.VerifyEmailInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.resetpassword.ResetPasswordResponse;
 import com.quicsolv.appointmentapp.utils.Connectivity;
@@ -37,6 +38,8 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
     private VerifyEmailInterface verifyEmailInterface;
     private ProgressBar progressBar;
     private TextView txtMsg;
+    private TextView btnLogin, btnResend;
+    private ForgotPasswordInterface resetPasswordInterface;
 
 
     @Override
@@ -48,6 +51,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         verifyEmailInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(VerifyEmailInterface.class);
+        resetPasswordInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(ForgotPasswordInterface.class);
 
         getIds();
     }
@@ -56,6 +60,12 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
     private void getIds() {
         btnProceed = (Button) findViewById(R.id.btn_proceed);
         btnProceed.setOnClickListener(this);
+
+        btnLogin = (TextView) findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(this);
+
+        btnResend = (TextView) findViewById(R.id.btn_resend);
+        btnResend.setOnClickListener(this);
 
         txtMsg = (TextView) findViewById(R.id.txt_msg);
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -95,6 +105,16 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                     Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+            case R.id.btn_login:
+                Intent mainIntent = new Intent(mContext, LoginActivity.class);
+                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(mainIntent);
+                break;
+            case R.id.btn_resend:
+                progressBar.setVisibility(View.VISIBLE);
+                sentVerificationMail();
+                break;
         }
     }
 
@@ -105,6 +125,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                 progressBar.setVisibility(View.GONE);
                 if (response != null && response.body() != null) {
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, false);
                         Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
                         mainIntent.putExtra("EmailSuccessMessage", "You are successfully verified your email address. \n\n To complete this process please proceed to questionnaire.");
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -118,6 +139,28 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
             @Override
             public void onFailure(Call<ResetPasswordResponse> call, Throwable t) {
                 Log.d("", "");
+            }
+        });
+    }
+
+    private void sentVerificationMail() {
+        resetPasswordInterface.forgotPassword(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_EMAIL, ""), "1").enqueue(new Callback<ResetPasswordResponse>() {
+            @Override
+            public void onResponse(Call<ResetPasswordResponse> call, Response<ResetPasswordResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response != null && response.body() != null) {
+                    if (response.body().getCode() == Constants.ERROR_CODE_200) {
+                        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, true);
+                        Toast.makeText(mContext, "Verification code sent to your email address", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResetPasswordResponse> call, Throwable t) {
+
             }
         });
     }

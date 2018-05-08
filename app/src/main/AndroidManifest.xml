@@ -54,7 +54,6 @@
         <activity
             android:name=".activities.RegistrationSuccessActivity"
             android:screenOrientation="portrait"
-            android:alwaysRetainTaskState="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.QuestionnarieCompletedActivity"

@@ -272,6 +272,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, "");
                         }
 
+                        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, true);
                         Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mainIntent.putExtra("Message", "You are successfully registered with us.\n\n To complete this process please enter email verification code, which we sent you on your registered email address.");
