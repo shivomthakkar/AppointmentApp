@@ -70,32 +70,32 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
 
         if (p != null) {
             if (viewHolder.txtQue != null && p.getQuestion() != null) {
-                viewHolder.txtQue.setText("Que. " + (position + 1) + " . " + p.getQuestion().toString());
+                viewHolder.txtQue.setText(p.getQuestion().toString());
             }
 
             if (p.getPAnswer() != null) {
 
                 if (p.getPAnswer().equals("1")) {
                     if (viewHolder.op1 != null && p.getOption1() != null) {
-                        viewHolder.op1.setText("Ans - " + p.getOption1().toString());
+                        viewHolder.op1.setText(p.getOption1().toString());
                     }
                 }
 
                 if (p.getPAnswer().equals("2")) {
                     if (viewHolder.op1 != null && p.getOption2() != null) {
-                        viewHolder.op1.setText("Ans - " + p.getOption2().toString());
+                        viewHolder.op1.setText(p.getOption2().toString());
                     }
                 }
 
                 if (p.getPAnswer().equals("3")) {
                     if (viewHolder.op1 != null && p.getOption3() != null) {
-                        viewHolder.op1.setText("Ans - " + p.getOption3().toString());
+                        viewHolder.op1.setText(p.getOption3().toString());
                     }
                 }
 
                 if (p.getPAnswer().equals("4")) {
                     if (viewHolder.op1 != null && p.getOption4() != null) {
-                        viewHolder.op1.setText("Ans - " + p.getOption4().toString());
+                        viewHolder.op1.setText(p.getOption4().toString());
                     }
                 }
             }
