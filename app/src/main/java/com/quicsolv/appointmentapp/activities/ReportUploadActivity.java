@@ -177,7 +177,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                     String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
                 }else{
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "Please select file to upload", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Please select report to upload", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -338,7 +338,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                                         String code = jsonObj.getString("code");
                                         if (code.equals("200")) {
                                             String message = jsonObj.getString("message");
-                                            dialogSuccessError(message, true);
+                                            dialogSuccessError("Report has been uploaded successfully.", true);
                                         }
                                     }
                                 } catch (Exception e) {
@@ -403,7 +403,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
 
     private void dialogSuccessError(String message, final boolean wantToCloseActicity) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("File Upload Status");
+        builder.setTitle("Report Upload Status");
         builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

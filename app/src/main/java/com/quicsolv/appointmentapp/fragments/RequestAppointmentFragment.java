@@ -264,16 +264,16 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
     private void dialogAskBeforeRequestAppointment() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle("Request Appointment");
-        builder.setMessage("Do you want to request appointment.?");
+        builder.setMessage("Are you sure about requesting appointment.?");
         builder.setCancelable(false);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Yes, I'm sure.", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 progressBar.setVisibility(View.VISIBLE);
                 createNewAppointment();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No, I'm not sure.", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

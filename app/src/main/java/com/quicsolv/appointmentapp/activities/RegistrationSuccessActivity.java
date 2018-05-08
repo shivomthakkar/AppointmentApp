@@ -127,7 +127,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
                         Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, false);
                         Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
-                        mainIntent.putExtra("EmailSuccessMessage", "You are successfully verified your email address. \n\n To complete this process please proceed to questionnaire.");
+                        mainIntent.putExtra("EmailSuccessMessage", "Your email address has been successfully verified. \n\n To complete this process please proceed to questionnaire.");
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
                     } else {

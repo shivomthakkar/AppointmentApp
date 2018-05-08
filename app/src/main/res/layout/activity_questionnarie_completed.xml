@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Thank you for questionnaire, you are all set to use application."
+                android:text="Thank you for submitting the questionnaire, you are all set to use the application now!"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
