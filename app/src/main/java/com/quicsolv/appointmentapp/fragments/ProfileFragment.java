@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        ((DashboardActivity) getActivity()).setToolBarTitle("My Profile");
+        ((DashboardActivity) getActivity()).setToolBarTitle(getString(R.string.header_my_profile));
 
         mContext = getActivity();
         getPatientProfiletInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetPatientProfiletInterface.class);

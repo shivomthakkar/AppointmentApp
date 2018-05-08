@@ -88,7 +88,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                     resetCode = edttxtDynamicAccessCode.getText().toString();
                     edttxtDynamicAccessCode.setError(null);
                 } else {
-                    edttxtDynamicAccessCode.setError("Enter email verification code");
+                    edttxtDynamicAccessCode.setError(getString(R.string.enter_email_verification_code));
                 }
 
                 if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
@@ -97,12 +97,12 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                         progressBar.setVisibility(View.VISIBLE);
                         verifyEmail(resetCode);
                     } else {
-                        edttxtDynamicAccessCode.setError("Enter email verification code");
+                        edttxtDynamicAccessCode.setError(getString(R.string.enter_email_verification_code));
                     }
 
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -127,7 +127,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
                         Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, false);
                         Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
-                        mainIntent.putExtra("EmailSuccessMessage", "Your email address has been successfully verified. \n\n To complete this process please proceed to questionnaire.");
+                        mainIntent.putExtra("EmailSuccessMessage", getString(R.string.email_verified_proceed_to_questionnaire));
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
                     } else {
@@ -151,7 +151,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity implements Vi
                 if (response != null && response.body() != null) {
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
                         Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, true);
-                        Toast.makeText(mContext, "Verification code sent to your email address", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, getString(R.string.verification_code_sent_on_email), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }

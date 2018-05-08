@@ -50,6 +50,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     finish();
                 } else {
                     Intent mainIntent = new Intent(mContext, MainActivity.class);
+                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(mainIntent);
                     finish();
                 }

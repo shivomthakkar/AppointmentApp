@@ -78,11 +78,11 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                         progressResetPswd.setVisibility(View.VISIBLE);
                         resetPassword(email);
                     } else {
-                        edttxtEmail.setError("Please enter email id");
+                        edttxtEmail.setError(getString(R.string.enter_email_address));
                     }
                 } else {
                     progressResetPswd.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -119,7 +119,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
         } else {
             builder = new AlertDialog.Builder(mContext);
         }
-        builder.setTitle("Reset Password")
+        builder.setTitle(getString(R.string.password_reset_title))
                 .setMessage(message.toString())
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -128,6 +128,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mainIntent.putExtra("Email", edttxtEmail.getText().toString());
                         startActivity(mainIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

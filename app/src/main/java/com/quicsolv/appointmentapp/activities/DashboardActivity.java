@@ -135,8 +135,8 @@ public class DashboardActivity extends AppCompatActivity
 // TODO Auto-generated method stub
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         // builder.setCancelable(false);
-        builder.setMessage("Are you sure! you want to leave application.?");
-        builder.setPositiveButton("Yes, please.", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.are_you_sure_quit));
+        builder.setPositiveButton(getString(R.string.yes_please), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -145,7 +145,7 @@ public class DashboardActivity extends AppCompatActivity
                 finish();
             }
         });
-        builder.setNegativeButton("No, I want to stay here.", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.no_stay_here), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -68,7 +68,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             timestamp;
     public String imagePath;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = ReportUploadActivity.class.getSimpleName();
     private GetReportTypesListInterface getReportTypesListInterface;
     private String reportTypeId;
     private ProgressBar progressBar;
@@ -177,7 +177,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                     String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
                 }else{
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "Please select report to upload", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.please_select_report_to_upload), Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -338,7 +338,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                                         String code = jsonObj.getString("code");
                                         if (code.equals("200")) {
                                             String message = jsonObj.getString("message");
-                                            dialogSuccessError("Report has been uploaded successfully.", true);
+                                            dialogSuccessError(getString(R.string.report_uploaded_successfully), true);
                                         }
                                     }
                                 } catch (Exception e) {
@@ -403,7 +403,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
 
     private void dialogSuccessError(String message, final boolean wantToCloseActicity) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("Report Upload Status");
+        builder.setTitle(getString(R.string.report_upload_status));
         builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

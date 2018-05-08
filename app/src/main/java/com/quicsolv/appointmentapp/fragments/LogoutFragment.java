@@ -30,23 +30,23 @@ public class LogoutFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_logout, container, false);
 
-        ((DashboardActivity) getActivity()).setToolBarTitle("Logout");
+        ((DashboardActivity) getActivity()).setToolBarTitle(getString(R.string.header_logout));
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme);
 
         // Setting Dialog Title
-        alertDialog.setTitle("Logout");
+        alertDialog.setTitle(getString(R.string.header_logout));
 
         alertDialog.setCancelable(false);
 
         // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want logout?");
+        alertDialog.setMessage(getString(R.string.want_to_logout));
 
         // Setting Icon to Dialog
         alertDialog.setIcon(R.drawable.ic_logout_black);
 
         // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(getString(R.string.yes_please), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Prefs.setSharedPreferenceString(getActivity(), Prefs.PREF_EMAIL, "");
                 Prefs.setSharedPreferenceString(getActivity(), Prefs.PREF_PASSWORD, "");
@@ -58,7 +58,7 @@ public class LogoutFragment extends Fragment {
         });
 
         // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getString(R.string.no_stay_here), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }

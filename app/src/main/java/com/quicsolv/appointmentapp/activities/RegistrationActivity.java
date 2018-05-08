@@ -150,7 +150,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 boolean isValidEmail = false;
 
                 if (strFullName.equals("")) {
-                    edttxtFullName.setError("Full name missing");
+                    edttxtFullName.setError(getString(R.string.enter_full_name));
                 }
 
 //                if (strMobNo.equals("")) {
@@ -158,31 +158,31 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 //                }
 
                 if (strEmail.equals("")) {
-                    edttxtEmail.setError("Email address missing");
+                    edttxtEmail.setError(getString(R.string.enter_email_address));
                 } else {
                     if (isValidEmail(edttxtEmail.getText().toString())) {
                         isValidEmail = true;
                     } else {
                         isValidEmail = false;
-                        edttxtEmail.setError("Enter correct email");
+                        edttxtEmail.setError(getString(R.string.enter_correct_email_address));
                     }
                 }
 
                 if (strPswd.equals("")) {
-                    edttxtPassword.setError("Password missing");
+                    edttxtPassword.setError(getString(R.string.enter_password));
                 }
 
                 if (strDOB.equals("")) {
-                    edttxtDOB.setError("DOB missing");
+                    edttxtDOB.setError(getString(R.string.enter_dob));
                 }
 
                 int selectedGender = 1;
                 int selectedId = rgGender.getCheckedRadioButtonId();
                 rbGenderType = (RadioButton) findViewById(selectedId);
 
-                if (rbGenderType.getText().toString().equalsIgnoreCase("male")) {
+                if (rbGenderType.getText().toString().equalsIgnoreCase(getString(R.string.male))) {
                     selectedGender = 1;
-                } else if (rbGenderType.getText().toString().equalsIgnoreCase("female")) {
+                } else if (rbGenderType.getText().toString().equalsIgnoreCase(getString(R.string.female))) {
                     selectedGender = 2;
                 }
 
@@ -199,7 +199,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         doRegistration(strFullName, strMobNo, strEmail, strPswd, selectedGender, strDOB);
                     } else {
                         progressLogin.setVisibility(View.GONE);
-                        Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -275,7 +275,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, true);
                         Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        mainIntent.putExtra("Message", "You are successfully registered with us.\n\n To complete this process please enter email verification code, which we sent you on your registered email address.");
+                        mainIntent.putExtra("Message", getString(R.string.registered_success_message));
                         startActivity(mainIntent);
                     } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                         //failure

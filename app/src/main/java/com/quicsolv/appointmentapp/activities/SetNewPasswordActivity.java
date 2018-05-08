@@ -85,7 +85,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                     email = edttxtEmail.getText().toString();
                     edttxtEmail.setError(null);
                 } else {
-                    edttxtEmail.setError("Enter email id");
+                    edttxtEmail.setError(getString(R.string.enter_email_address));
                 }
 
                 String newPswd = "";
@@ -93,7 +93,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                     newPswd = edttxtNewPswd.getText().toString();
                     edttxtNewPswd.setError(null);
                 } else {
-                    edttxtNewPswd.setError("Enter new password");
+                    edttxtNewPswd.setError(getString(R.string.enter_password));
                 }
 
                 String confirmPswd = "";
@@ -101,7 +101,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                     confirmPswd = edttxtConfirmPswd.getText().toString();
                     edttxtConfirmPswd.setError(null);
                 } else {
-                    edttxtConfirmPswd.setError("Enter confirm password");
+                    edttxtConfirmPswd.setError(getString(R.string.enter_confirm_password));
                 }
 
                 String resetCode = "";
@@ -109,7 +109,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                     resetCode = edttxtDynamicAccessCode.getText().toString();
                     edttxtDynamicAccessCode.setError(null);
                 } else {
-                    edttxtDynamicAccessCode.setError("Enter dynamic access code");
+                    edttxtDynamicAccessCode.setError(getString(R.string.enter_dynamic_access_code));
                 }
 
                 if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
@@ -119,14 +119,14 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                             progressResetPswd.setVisibility(View.VISIBLE);
                             setNewPassword(email, newPswd, resetCode);
                         } else {
-                            Toast.makeText(mContext, "All fields are required", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, getString(R.string.all_fields_are_required), Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        edttxtConfirmPswd.setError("Password does not match");
+                        edttxtConfirmPswd.setError(getString(R.string.password_does_not_match));
                     }
                 } else {
                     progressResetPswd.setVisibility(View.GONE);
-                    Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -143,7 +143,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                     if (response.body().getCode() == Constants.ERROR_CODE_200) {
                         //success
 //                    Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        showSuccessAlert(response.body().getMessage());
+                        showSuccessAlert(getString(R.string.password_reset_successfully));
                     } else {
                         Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -165,7 +165,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
         } else {
             builder = new AlertDialog.Builder(mContext);
         }
-        builder.setTitle("Password Reset Successfully")
+        builder.setTitle(getString(R.string.password_reset_title))
                 .setMessage(message.toString())
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -175,6 +175,7 @@ public class SetNewPasswordActivity extends AppCompatActivity implements View.On
                         Intent mainIntent = new Intent(mContext, LoginActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(mainIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

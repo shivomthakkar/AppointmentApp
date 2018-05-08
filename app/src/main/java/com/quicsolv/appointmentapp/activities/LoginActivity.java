@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         doLogin(strEmail, strPswd);
                     } else {
                         progressLogin.setVisibility(View.GONE);
-                        Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     edttxtEmail.setError("Enter correct email");
@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
                                 Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
                                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                                mainIntent.putExtra("EmailSuccessMessage", "You are almost done. \n\n To complete this process please proceed to questionnaire.");
+                                mainIntent.putExtra("EmailSuccessMessage", getString(R.string.proceed_to_questionnaire));
                                 startActivity(mainIntent);
                             } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
                                 Intent mainIntent = new Intent(mContext, DashboardActivity.class);
@@ -270,10 +270,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             if (!isEmailVerificationMailSent) {
                                 sentVerificationMail();
-                            }else{
+                            } else {
                                 Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
                                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                                mainIntent.putExtra("Message", "To complete this process please enter email verification code, which we sent you on your registered email address.");
+                                mainIntent.putExtra("Message", getString(R.string.enter_email_code_to_proceed));
                                 startActivity(mainIntent);
                             }
                         }
@@ -285,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         //failure
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
-                        Toast.makeText(mContext, "Please enter correct credentials..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, getString(R.string.enter_correct_credentials), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -307,7 +307,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT, true);
                         Intent mainIntent = new Intent(mContext, RegistrationSuccessActivity.class);
                         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        mainIntent.putExtra("Message", "To complete this process please enter email verification code, which we sent you on your registered email address.");
+                        mainIntent.putExtra("Message", getString(R.string.proceed_to_questionnaire));
                         startActivity(mainIntent);
                     } else {
                         Toast.makeText(mContext, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -328,8 +328,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void dialogNoInternetConnection() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("No Internet Connection.");
-        builder.setMessage("Please try again.");
+        builder.setTitle(getString(R.string.no_internet_connection));
+        builder.setMessage(R.string.please_try_again);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

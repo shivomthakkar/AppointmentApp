@@ -116,14 +116,14 @@ public class QuestionariesActivity extends FragmentActivity {
                 if (isOption1Selected || isOption2Selected || isOption3Selected || isOption4Selected) {
 
                     if (pager.getCurrentItem() == listQuestionnarie.size() - 1 && questionnarieNewListObject.get(pager.getCurrentItem()).getPAnswer() == null) {
-                        Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, getString(R.string.answer_selection_required), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     if (btnNextQuestion.getText().toString().trim().equalsIgnoreCase("Finish")) {
                         questionnarieNewListObject.get(0);
                         saveQuestionnarieToServer();
-                    }else{
+                    } else {
                         btnNextQuestion.setText("Next question");
                     }
 
@@ -147,7 +147,7 @@ public class QuestionariesActivity extends FragmentActivity {
                     } else {
                         btnBack.setVisibility(View.VISIBLE);
                     }
-                    Toast.makeText(mContext, "Please select answer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.answer_selection_required), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -243,7 +243,7 @@ public class QuestionariesActivity extends FragmentActivity {
                     pager.setAdapter(pageAdapter);
                 } else {
                     //failure
-                    Toast.makeText(mContext, "Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();
                 }
             }
 

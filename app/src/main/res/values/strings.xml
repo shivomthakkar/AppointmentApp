@@ -9,14 +9,63 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="no_internet_connection">No Internet Connection..</string>
     <string name="my_account">My Account</string>
     <string name="acccount">Account</string>
 
     <string name="str_btn_proceed">"Submit &amp; proceed to next question"</string>
 
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="enter_correct_credentials">Please enter correct credentials.</string>
+    <string name="no_internet_connection">No Internet Connection.</string>
+
+    //DashboardActivity
+    <string name="are_you_sure_quit">Are you sure you want to leave the application.?</string>
+    <string name="yes_please">Yes, please.</string>
+    <string name="no_stay_here">No, I want to stay here.</string>
+
+    <string name="proceed_to_questionnaire">You are almost done. \n\n To complete this process please proceed to questionnaire.</string>
+    <string name="enter_email_code_to_proceed">To complete this process please enter email verification code, which we sent you on your registered email address.</string>
+    <string name="please_try_again">Please try again.</string>
+
+    //Registration
+    <string name="enter_full_name">Enter full name.</string>
+    <string name="enter_email_address">Enter email address.</string>
+    <string name="enter_correct_email_address">Please enter correct email address.</string>
+    <string name="enter_password">Enter password.</string>
+    <string name="enter_confirm_password">Enter confirm password.</string>
+    <string name="enter_dynamic_access_code">Enter dynamic access code.</string>
+    <string name="enter_dob">Enter date of birth.</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="registered_success_message">You are successfully registered with us. \n\n To complete this process please enter email verification code, which we sent you on your registered email address.</string>
+
+    <string name="enter_email_verification_code">Enter email verification code.</string>
+    <string name="email_verified_proceed_to_questionnaire">Your email address has been successfully verified. \n\n To complete this process please proceed to questionnaire.</string>
+    <string name="verification_code_sent_on_email">Verification code sent on your email address.</string>
+
+    <string name="answer_selection_required">Please select answer</string>
+
+    //Report Upload
+    <string name="please_select_report_to_upload">Please select report to upload.</string>
+    <string name="report_uploaded_successfully">Report has been uploaded successfully.</string>
+    <string name="report_upload_status">Report Upload Status</string>
+
+
+    <string name="all_fields_are_required">All fields are required.</string>
+    <string name="password_does_not_match">Password does not match.</string>
+
+    <string name="password_reset_title">Reset Password</string>
+    <string name="password_reset_successfully">Your password has been reset successfully.</string>
+
+    //Appointment List Fragment
+    <string name="header_list_of_appointments">List of Appointments</string>
+    <string name="tab_history">History</string>
+    <string name="tab_scheduled">Scheduled</string>
+    <string name="tab_pending">Pending</string>
+
+    <string name="header_logout">Logout</string>
+    <string name="want_to_logout">Are you sure you want logout?</string>
+
+    <string name="header_my_profile">My Profile</string>
+
 
 </resources>

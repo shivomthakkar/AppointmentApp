@@ -30,12 +30,12 @@ public class AppointmentListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_appointment_list, container, false);
 
-        ((DashboardActivity) getActivity()).setToolBarTitle("List of Appointments");
+        ((DashboardActivity) getActivity()).setToolBarTitle(getString(R.string.header_list_of_appointments));
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("History"));
-        tabLayout.addTab(tabLayout.newTab().setText("Scheduled"));
-        tabLayout.addTab(tabLayout.newTab().setText("Pending"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_history)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_scheduled)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_pending)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         View root = tabLayout.getChildAt(0);
