@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.quicsolv.appointmentapp.MyApplication;
@@ -193,6 +194,7 @@ public class DashboardActivity extends AppCompatActivity
         Class fragmentClass = null;
 
         if (id == R.id.nav_my_profile) {
+            hideKeyboard();
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = ProfileFragment.class;
@@ -201,6 +203,7 @@ public class DashboardActivity extends AppCompatActivity
             }
             openFragment(fragment, fragmentClass, true);
         } else if (id == R.id.nav_my_appointments) {
+            hideKeyboard();
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = AppointmentListFragment.class;
@@ -212,6 +215,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_request_appointment) {
+            hideKeyboard();
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = RequestAppointmentFragment.class;
@@ -221,6 +225,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_my_questionnarie) {
+            hideKeyboard();
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = SubmittedQuestionnarieFragment.class;
@@ -230,6 +235,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_reset_password) {
+            hideKeyboard();
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = ResetPasswordFragment.class;
@@ -239,6 +245,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_reports) {
+            hideKeyboard();
             fab.setVisibility(View.GONE);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
                 fragmentClass = ReportsFragment.class;
@@ -248,6 +255,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass, false);
 
         } else if (id == R.id.nav_logout) {
+            hideKeyboard();
             logoutDialog();
         }
 
@@ -333,5 +341,13 @@ public class DashboardActivity extends AppCompatActivity
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    public void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
