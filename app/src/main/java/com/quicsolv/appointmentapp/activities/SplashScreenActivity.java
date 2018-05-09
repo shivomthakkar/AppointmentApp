@@ -46,6 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 if (!strEmail.trim().equals("") && !strPswd.trim().equals("")) {
                     Intent mainIntent = new Intent(mContext, LoginActivity.class);
+                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(mainIntent);
                     finish();
                 } else {

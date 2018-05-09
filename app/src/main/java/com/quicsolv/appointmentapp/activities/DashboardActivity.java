@@ -144,7 +144,6 @@ public class DashboardActivity extends AppCompatActivity
                 // TODO Auto-generated method stub
 //                Toast.makeText(mContext, "Yes i wanna exit", Toast.LENGTH_LONG).show();
                 finish();
-                finish();
             }
         });
         builder.setNegativeButton(getString(R.string.no_stay_here), new DialogInterface.OnClickListener() {
