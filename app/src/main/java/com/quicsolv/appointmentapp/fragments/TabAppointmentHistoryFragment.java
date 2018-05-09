@@ -120,6 +120,8 @@ public class TabAppointmentHistoryFragment extends Fragment implements View.OnCl
                     if (response.body().getApList().get3() != null) {
                         listHistory = response.body().getApList().get3();
 
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_DOCTOR_PROFILE_IMAGE_BASE_URL, response.body().getBaseUrl());
+
                         HistoryAppointmentListAdapter customAdapter = new HistoryAppointmentListAdapter(mContext, R.layout.row_appointment_history, listHistory);
                         listviewAppointmentHistory.setAdapter(customAdapter);
                         progressLogin.setVisibility(View.GONE);

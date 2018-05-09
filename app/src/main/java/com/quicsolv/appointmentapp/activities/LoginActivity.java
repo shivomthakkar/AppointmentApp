@@ -185,11 +185,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 boolean isValidEmail = false;
-                if (isValidEmail(edttxtEmail.getText().toString())) {
-                    isValidEmail = true;
-                } else {
-                    isValidEmail = false;
-                    edttxtEmail.setError("Enter correct email");
+                if (!strEmail.equals("")) {
+                    if (isValidEmail(edttxtEmail.getText().toString())) {
+                        isValidEmail = true;
+                    } else {
+                        isValidEmail = false;
+                        edttxtEmail.setError("Enter correct email");
+                    }
                 }
 
                 if (!strEmail.equals("") && !strPswd.equals("") && isValidEmail) {

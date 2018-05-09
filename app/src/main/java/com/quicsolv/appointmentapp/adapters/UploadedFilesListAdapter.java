@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.NotificationCompat;
@@ -37,8 +36,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**********************************************************************
  * Created by   -  Tushar Patil
@@ -84,15 +84,14 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
             }
 
             if (txtReportDate != null && p.getCreatedDatetime() != null) {
-
-                SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-
-                // Create a calendar object that will convert the date and time value in milliseconds to date.
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(Long.parseLong(p.getCreatedDatetime()));
-
                 try {
-                    String date = formatter.format(calendar.getTime());
+//                    Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+//                    cal.setTimeInMillis(Long.parseLong(p.getCreatedDatetime()));
+//                    String date = DateFormat.format("MM-dd-yyyy", cal).toString();
+
+                    long timestamp = Long.parseLong(p.getCreatedDatetime());
+                    String date = GetHumanReadableDate(timestamp, "MM-dd-yyyy HH:mm aa");
+
                     txtReportDate.setText(date);
                 } catch (Exception e) {
 
@@ -130,6 +129,13 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
         }
 
         return v;
+    }
+
+    public static String GetHumanReadableDate(long epochSec, String dateFormatStr) {
+        Date date = new Date(epochSec * 1000);
+        SimpleDateFormat format = new SimpleDateFormat(dateFormatStr,
+                Locale.getDefault());
+        return format.format(date);
     }
 
 
@@ -208,14 +214,6 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
 
             Intent intent = new Intent();
             intent.setAction(android.content.Intent.ACTION_VIEW);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.setData(Uri.parse("package:" + mContext.getPackageName()));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 Uri contentUri = FileProvider.getUriForFile(getContext(), "com.quicsolv.appointmentapp.fileProvider", file);

@@ -264,7 +264,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
     private void dialogAskBeforeRequestAppointment() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle("Request Appointment");
-        builder.setMessage("Are you sure about requesting appointment.?");
+        builder.setMessage("Are you sure about requesting appointment?");
         builder.setCancelable(false);
         builder.setPositiveButton("Yes, I'm sure.", new DialogInterface.OnClickListener() {
             @Override

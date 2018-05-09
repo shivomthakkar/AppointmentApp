@@ -17,6 +17,9 @@ public class AppointmentListResponse {
     @SerializedName("ap_list")
     @Expose
     private ApList apList;
+    @SerializedName("base_url")
+    @Expose
+    private String baseUrl;
 
     public Integer getCode() {
         return code;
@@ -32,5 +35,13 @@ public class AppointmentListResponse {
 
     public void setApList(ApList apList) {
         this.apList = apList;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 }

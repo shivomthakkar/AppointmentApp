@@ -129,6 +129,8 @@ public class TabScheduledAppointmentFragment extends Fragment implements View.On
                     if (response.body().getApList().get1() != null) {
                         listHistory = response.body().getApList().get1();
 
+                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_DOCTOR_PROFILE_IMAGE_BASE_URL, response.body().getBaseUrl());
+
                         ScheduledAppointmentListAdapter customAdapter = new ScheduledAppointmentListAdapter(mContext, R.layout.row_appointment_history, listHistory);
                         listviewAppointmentHistory.setAdapter(customAdapter);
                         progressLogin.setVisibility(View.GONE);

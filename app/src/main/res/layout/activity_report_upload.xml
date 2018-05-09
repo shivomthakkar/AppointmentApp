@@ -21,6 +21,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_back_white" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -40,19 +49,36 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
+                        android:textSize="18sp"
                         android:textColor="@color/splash_color" />
 
-
-                    <Button
-                        android:id="@+id/btn_choose_docs"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/button_outline"
-                        android:text="Choose Document"
-                        android:textAllCaps="false"
-                        android:textColor="@color/splash_color"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center|center_horizontal|center_vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_browse" />
+
+                        <Button
+                            android:id="@+id/btn_choose_docs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/button_filled"
+                            android:paddingLeft="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="Browse Report"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
 
                     <TextView
                         android:layout_width="match_parent"
@@ -99,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/button_filled"
-                    android:text="Upload Document"
+                    android:text="Upload Report"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 

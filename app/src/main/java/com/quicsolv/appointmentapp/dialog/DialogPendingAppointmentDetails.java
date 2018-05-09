@@ -67,7 +67,7 @@ public class DialogPendingAppointmentDetails extends Dialog implements
             String outputDate = "";
 
             SimpleDateFormat df_input = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
-            SimpleDateFormat df_output = new SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault());
+            SimpleDateFormat df_output = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
 
             try {
                 parsed = df_input.parse(param.getPrfDate());

@@ -509,7 +509,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<UpdatePatientProfileResponse> call, Response<UpdatePatientProfileResponse> response) {
                 if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    Toast.makeText(mContext, "Profile picture has been successfully updated.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Profile has been successfully updated.", Toast.LENGTH_SHORT).show();
                     btnUpdateProfile.setVisibility(View.GONE);
                     btnEdit.setText("Edit");
                     progressBar.setVisibility(View.VISIBLE);

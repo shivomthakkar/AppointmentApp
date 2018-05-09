@@ -3,6 +3,7 @@ package com.quicsolv.appointmentapp.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -25,7 +26,6 @@ import android.widget.TextView;
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
-import com.quicsolv.appointmentapp.fragments.LogoutFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
 import com.quicsolv.appointmentapp.fragments.ProfileFragment;
 import com.quicsolv.appointmentapp.fragments.ReportsFragment;
@@ -143,6 +143,7 @@ public class DashboardActivity extends AppCompatActivity
                 // TODO Auto-generated method stub
 //                Toast.makeText(mContext, "Yes i wanna exit", Toast.LENGTH_LONG).show();
                 finish();
+                finish();
             }
         });
         builder.setNegativeButton(getString(R.string.no_stay_here), new DialogInterface.OnClickListener() {
@@ -247,13 +248,7 @@ public class DashboardActivity extends AppCompatActivity
             openFragment(fragment, fragmentClass, false);
 
         } else if (id == R.id.nav_logout) {
-            fab.setVisibility(View.GONE);
-            if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = LogoutFragment.class;
-            } else {
-                fragmentClass = NoInternetConnectionFragment.class;
-            }
-            openFragment(fragment, fragmentClass, true);
+            logoutDialog();
         }
 
         return true;
@@ -298,5 +293,45 @@ public class DashboardActivity extends AppCompatActivity
 
     public void setProfileImage(String profilePath) {
         Picasso.with(mContext).load(profilePath).error(R.drawable.profile).into(profileImage);
+    }
+
+    public void logoutDialog(){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext, R.style.AlertDialogTheme);
+
+        // Setting Dialog Title
+        alertDialog.setTitle(getString(R.string.header_logout));
+
+        alertDialog.setCancelable(false);
+
+        // Setting Dialog Message
+        alertDialog.setMessage(getString(R.string.want_to_logout));
+
+        // Setting Icon to Dialog
+        alertDialog.setIcon(R.drawable.ic_logout_black);
+
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton(getString(R.string.yes_please), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
+                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
+
+                finish();
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton(getString(R.string.no_stay_here), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

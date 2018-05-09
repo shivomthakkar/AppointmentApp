@@ -55,7 +55,10 @@ public class _1 {
     private String spName;
     @SerializedName("d_name")
     @Expose
-    private Object dName;
+    private String dName;
+    @SerializedName("d_pp_path")
+    @Expose
+    private String dPpPath;
     @SerializedName("aps_name")
     @Expose
     private String apsName;
@@ -172,12 +175,20 @@ public class _1 {
         this.spName = spName;
     }
 
-    public Object getDName() {
+    public String getDName() {
         return dName;
     }
 
-    public void setDName(Object dName) {
+    public void setDName(String dName) {
         this.dName = dName;
+    }
+
+    public String getDPpPath() {
+        return dPpPath;
+    }
+
+    public void setDPpPath(String dPpPath) {
+        this.dPpPath = dPpPath;
     }
 
     public String getApsName() {
@@ -187,5 +198,4 @@ public class _1 {
     public void setApsName(String apsName) {
         this.apsName = apsName;
     }
-
 }

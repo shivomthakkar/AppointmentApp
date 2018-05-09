@@ -27,7 +27,7 @@
                 android:background="@drawable/button_outline"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Upload Document"
+                android:text="Upload Report"
                 android:textColor="@color/white" />
         </RelativeLayout>
 
@@ -72,7 +72,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="No record found"
+                        android:text="You don't have any report's uploaded yet."
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
@@ -83,7 +83,7 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/button_outline"
                         android:padding="10dp"
-                        android:text="Upload Document"
+                        android:text="Upload Report"
                         android:textAllCaps="false"
                         android:textColor="@color/splash_color"
                         android:textSize="16sp" />

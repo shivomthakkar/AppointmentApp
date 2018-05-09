@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -74,6 +73,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     private ProgressBar progressBar;
     private String selectedFilePath;
     private TextView txtUploadedDocsname;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +101,9 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         imageView = (ImageView) findViewById(R.id.imageView);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_upload_docs);
+
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivBack.setOnClickListener(this);
 
         txtUploadedDocsname = (TextView) findViewById(R.id.uploaded_docs_name);
 
@@ -177,9 +180,14 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                     String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
                 }else{
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(mContext, getString(R.string.please_select_report_to_upload), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, getString(R.string.please_select_report_to_upload), Toast.LENGTH_SHORT).show();
+                    txtUploadedDocsname.setText(getString(R.string.please_select_report_to_upload));
+                    txtUploadedDocsname.setTextColor(mContext.getResources().getColor(R.color.red));
                 }
 
+                break;
+            case R.id.iv_back:
+                finish();
                 break;
         }
     }
@@ -223,6 +231,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             if (selectedFilePath != null && !selectedFilePath.equals("")) {
                 String[] splittedSelectedFilePath = selectedFilePath.split("/");
                 txtUploadedDocsname.setText(splittedSelectedFilePath[splittedSelectedFilePath.length - 1]);
+                txtUploadedDocsname.setTextColor(mContext.getResources().getColor(R.color.splash_color));
                 if (selectedFilePath.contains("pdf")) {
                     imageView.setImageResource(R.drawable.pdf);
                 } else {
