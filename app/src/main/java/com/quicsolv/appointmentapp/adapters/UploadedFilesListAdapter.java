@@ -1,16 +1,25 @@
 package com.quicsolv.appointmentapp.adapters;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -127,7 +136,8 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
     class MyAsyncTask extends AsyncTask<String, Void, Void> {
 
         ProgressDialog mProgressDialog = new ProgressDialog(mContext);
-
+        File file;
+        String imageName;
 
         @Override
         protected void onPreExecute() {
@@ -144,7 +154,7 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
         protected Void doInBackground(String... params) {
             try {
                 String imagePath = params[0];
-                String imageName = imagePath.substring(imagePath.indexOf("reports"), imagePath.length()).replace("reports/", "");
+                imageName = imagePath.substring(imagePath.indexOf("reports"), imagePath.length()).replace("reports/", "");
                 URL url = new URL(imagePath);
                 //create the new connection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -156,7 +166,7 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
                 //set the path where we want to save the file in this case, going to save it on the root directory of the sd card.
                 File SDCardRoot = Environment.getExternalStorageDirectory();
                 //create a new file, specifying the path, and the filename which we want to save the file as.
-                File file = new File(SDCardRoot, imageName);
+                file = new File(SDCardRoot, imageName);
                 //this will be used to write the downloaded data into the file we created
                 FileOutputStream fileOutput = new FileOutputStream(file);
                 //this will be used in reading the data from the internet
@@ -185,19 +195,51 @@ public class UploadedFilesListAdapter extends ArrayAdapter<Datum> {
             return null;
         }
 
-//        private void publishProgress(int i) {
-//            mProgressDialog.setProgress(i);
-//            if (mProgressDialog.getProgress() == mProgressDialog.getMax()) {
-//                mProgressDialog.dismiss();
-//                Toast.makeText(mContext, "File Downloaded", Toast.LENGTH_SHORT).show();
-//            }
-//        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             mProgressDialog.dismiss();
             Toast.makeText(mContext, "File Downloaded", Toast.LENGTH_SHORT).show();
+
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            String type = mime.getMimeTypeFromExtension(ext);
+
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + mContext.getPackageName()));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(getContext(), "com.quicsolv.appointmentapp.fileProvider", file);
+                intent.setDataAndType(contentUri, type);
+            } else {
+                intent.setDataAndType(Uri.fromFile(file), type);
+            }
+
+//            intent.setDataAndType(Uri.fromFile(downloadedFile), "*/*");
+
+            PendingIntent pIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
+
+            Notification noti = new NotificationCompat.Builder(mContext)
+                    .setContentTitle("Download completed")
+                    .setContentText(imageName)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                    .setContentIntent(pIntent).build();
+
+            noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, noti);
         }
     }
 }
