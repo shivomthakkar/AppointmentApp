@@ -246,6 +246,18 @@
                         android:textSize="18sp"
                         android:visibility="gone" />
 
+
+                    <Button
+                        android:id="@+id/btn_my_reports"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_filled"
+                        android:text="My Reports"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:visibility="gone"/>
+
                 </LinearLayout>
 
                 <ProgressBar

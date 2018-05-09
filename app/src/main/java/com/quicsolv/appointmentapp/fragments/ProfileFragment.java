@@ -8,9 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -34,6 +38,7 @@ import com.quicsolv.appointmentapp.retrofit.models.interfaces.UpdatePatientProfi
 import com.quicsolv.appointmentapp.retrofit.models.pojo.patientprofile.Data;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.patientprofile.GetPatientProfileResponse;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.patientprofile.UpdatePatientProfileResponse;
+import com.quicsolv.appointmentapp.utils.Connectivity;
 import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 import com.squareup.picasso.Picasso;
@@ -76,6 +81,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private EditText mTxt_dob;
     private TextView btnEdit;
     private Button btnUpdateProfile;
+    private Button btnMyReports;
     private GetPatientProfiletInterface getPatientProfiletInterface;
     private UpdatePatientProfileInterface updatePatientProfileInterface;
     Calendar myCalendar = Calendar.getInstance();
@@ -175,6 +181,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnUpdateProfile = (Button) view.findViewById(R.id.btn_update_profile);
         btnUpdateProfile.setOnClickListener(this);
 
+        btnMyReports = (Button) view.findViewById(R.id.btn_my_reports);
+        btnMyReports.setOnClickListener(this);
+        btnMyReports.setVisibility(View.VISIBLE);
+
         selectedStartDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -196,8 +206,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         layoutGender.setVisibility(View.GONE);
         txtGender.setVisibility(View.VISIBLE);
+        btnMyReports.setVisibility(View.VISIBLE);
 
-        if (data.getPPpPath() != null){
+        if (data.getPPpPath() != null) {
             Picasso.with(mContext).load(data.getPPpPath()).error(R.drawable.profile).into(profileImage);
             ((DashboardActivity) getActivity()).setProfileImage(data.getPPpPath().toString());
         }
@@ -229,6 +240,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -239,6 +251,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     progressBar.setVisibility(View.VISIBLE);
                     updateProfileData();
                 }
+                break;
+            case R.id.btn_my_reports:
+                showMyReportsFragment();
                 break;
             case R.id.txt_dob:
                 if (btnEdit.getText().toString().equalsIgnoreCase("Cancel")) {
@@ -253,6 +268,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_edit:
                 if (btnEdit.getText().toString().equalsIgnoreCase("Edit")) {
                     btnUpdateProfile.setVisibility(View.VISIBLE);
+                    btnMyReports.setVisibility(View.GONE);
                     btnEdit.setText("Cancel");
 
                     layoutGender.setVisibility(View.VISIBLE);
@@ -268,6 +284,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 } else {
                     btnUpdateProfile.setVisibility(View.GONE);
+                    btnMyReports.setVisibility(View.VISIBLE);
                     btnEdit.setText("Edit");
 
                     layoutGender.setVisibility(View.GONE);
@@ -287,6 +304,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 startActivityForResult(gallaryIntent, RESULT_SELECT_IMAGE);
                 break;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void showMyReportsFragment() {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, false);
+        if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
+            fragmentClass = ReportsFragment.class;
+        } else {
+            fragmentClass = NoInternetConnectionFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, "").commit();
     }
 
     @Override
@@ -539,7 +577,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mTxt_dob.setText(sdf.format(myCalendar.getTime()));
         mTxt_dob.setError(null);
     }
-
 
 
     private void dialogSuccessError(String message) {
