@@ -256,12 +256,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                         if (response.body().getIsVerified().trim().equals("1")) {
-                            if (response.body().getQc().trim().equals("0")) { //Questionnarie is incomplete
+                            if (response.body().getQc().trim().equals("0")) { //questionnaire is incomplete
                                 Intent mainIntent = new Intent(mContext, EmailVerifySuccessActivity.class);
                                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 mainIntent.putExtra("EmailSuccessMessage", getString(R.string.proceed_to_questionnaire));
                                 startActivity(mainIntent);
-                            } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //Questionnarie completed
+                            } else if (Integer.parseInt(response.body().getQc().trim().toString()) > 0) { //questionnaire completed
                                 Intent mainIntent = new Intent(mContext, DashboardActivity.class);
 //                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(mainIntent);
@@ -345,4 +345,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         alert.show();
     }
 
+    @Override
+    protected void onResume() {
+        boolean wantToQuit = Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, false);
+        if (wantToQuit){
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, false);
+            finish();
+        }
+        super.onResume();
+    }
 }

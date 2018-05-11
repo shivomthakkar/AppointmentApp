@@ -1,4 +1,4 @@
-package com.quicsolv.appointmentapp.fragments;
+package com.quicsolv.appointmentapp.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -7,11 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.quicsolv.appointmentapp.R;
-import com.quicsolv.appointmentapp.activities.DashboardActivity;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.CreateAppointmentInterface;
@@ -45,8 +43,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+public class RequestAppointmentActivity extends AppCompatActivity  implements View.OnClickListener {
 
-public class RequestAppointmentFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private GetSpecialityInterface getSpecialityInterface;
@@ -62,43 +60,39 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
     Calendar myCalendar = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener selectedStartDate;
 
-    public RequestAppointmentFragment() {
-        // Required empty public constructor
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_request_appointment, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_request_appointment);
 
-        ((DashboardActivity) getActivity()).setToolBarTitle("Request Appointment");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mContext = getActivity();
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        mContext = RequestAppointmentActivity.this;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         getSpecialityInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetSpecialityInterface.class);
         createAppointmentInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(CreateAppointmentInterface.class);
 
-        getIds(view);
+        getIds();
         progressBar.setVisibility(View.VISIBLE);
         fetchSpeciality();
-        return view;
     }
 
-    private void getIds(View view) {
-        spinnerSpeciality = (Spinner) view.findViewById(R.id.spinner_speciality);
-        edttxtDescription = (EditText) view.findViewById(R.id.edttxt_description);
-        cbNeedImmidiate = (CheckBox) view.findViewById(R.id.cb_need_immidiate);
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_create_appointment);
 
-        edttxtDate = (EditText) view.findViewById(R.id.edttxt_date);
+    private void getIds() {
+        spinnerSpeciality = (Spinner) findViewById(R.id.spinner_speciality);
+        edttxtDescription = (EditText) findViewById(R.id.edttxt_description);
+        cbNeedImmidiate = (CheckBox) findViewById(R.id.cb_need_immidiate);
+        progressBar = (ProgressBar) findViewById(R.id.progress_create_appointment);
+
+        edttxtDate = (EditText) findViewById(R.id.edttxt_date);
         edttxtDate.setOnClickListener(this);
 
-        edttxtTime = (EditText) view.findViewById(R.id.edttxt_time);
+        edttxtTime = (EditText) findViewById(R.id.edttxt_time);
         edttxtTime.setOnClickListener(this);
 
-        btnCreateAppointment = (Button) view.findViewById(R.id.btn_create_appointment);
+        btnCreateAppointment = (Button) findViewById(R.id.btn_create_appointment);
         btnCreateAppointment.setOnClickListener(this);
 
         selectedStartDate = new DatePickerDialog.OnDateSetListener() {
@@ -251,6 +245,7 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                finish();
                 Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, true);
                 Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
                 intent_dashboard_activity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -289,5 +284,16 @@ public class RequestAppointmentFragment extends Fragment implements View.OnClick
 
         edttxtDate.setText(sdf.format(myCalendar.getTime()));
         edttxtDate.setError(null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

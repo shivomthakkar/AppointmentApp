@@ -53,7 +53,9 @@ public class LogoutFragment extends Fragment {
 
                 getActivity().finish();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

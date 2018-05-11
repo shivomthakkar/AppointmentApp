@@ -33,6 +33,8 @@ public class Prefs {
 
     public final static String PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT = "emailVerificationMailAlreadySent";
 
+    public final static String PREF_WANT_TO_EXIT = "wantToExit";
+
     /**
      * Set a string shared preference
      *

@@ -39,23 +39,20 @@ public class PendingAppointmentListAdapter extends ArrayAdapter<_2> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.row_appointment_history, null);
+            v = vi.inflate(R.layout.row_pending_appointment_history, null);
         }
 
         _2 p = getItem(position);
 
         if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.txt_doctor_name);
             TextView tt2 = (TextView) v.findViewById(R.id.txt_sp_name);
             TextView tt3 = (TextView) v.findViewById(R.id.txt_apt_date);
             TextView tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
+            TextView txtDesc = (TextView) v.findViewById(R.id.txt_description);
 
-            if (tt1 != null && p.getDName() != null) {
-                tt1.setText(p.getDName().toString());
-            }
 
             if (tt2 != null && p.getSpName() != null) {
-                tt2.setText(p.getSpName());
+                tt2.setText("Problem related to - " + p.getSpName());
             }
 
             if (tt3 != null && p.getPrfDate() != null) {
@@ -73,14 +70,18 @@ public class PendingAppointmentListAdapter extends ArrayAdapter<_2> {
                 }
 
                 tt3.setText(outputDate);
-            }else{
+            } else {
                 tt3.setText("");
             }
 
             if (tt4 != null && p.getPrfTime() != null) {
                 tt4.setText(p.getPrfTime());
-            }else{
+            } else {
                 tt4.setText("");
+            }
+
+            if (txtDesc != null && p.getDescription() != null) {
+                txtDesc.setText(p.getDescription());
             }
         }
 

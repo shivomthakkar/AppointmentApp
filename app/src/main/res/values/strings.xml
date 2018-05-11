@@ -49,6 +49,8 @@
     <string name="report_uploaded_successfully">Report has been uploaded successfully.</string>
     <string name="report_upload_status">Report Upload Status</string>
 
+    <string name="appointment_request_success">Your appointment request has been submitted successfully.\n\nYour request will be reviewed &amp; approved by the admin.</string>
+    <string name="pending_apt_note">**Note - Your request will be reviewed &amp; approved by the admin.</string>
 
     <string name="all_fields_are_required">All fields are required.</string>
     <string name="password_does_not_match">Password does not match.</string>

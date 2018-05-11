@@ -49,7 +49,7 @@ public class SubmittedQuestionnarieFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_submitted_ques, container, false);
 
         mContext = getActivity();
-        ((DashboardActivity) getActivity()).setToolBarTitle("Questionnarie");
+        ((DashboardActivity) getActivity()).setToolBarTitle("Questionnaire");
         questionnariesInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(QuestionnariesInterface.class);
 
 

@@ -1,6 +1,7 @@
 package com.quicsolv.appointmentapp.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -74,6 +75,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     private String selectedFilePath;
     private TextView txtUploadedDocsname;
     private ImageView ivBack;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +173,14 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
             case R.id.btn_upload_docs:
                 //setup params
                 progressBar.setVisibility(View.VISIBLE);
+
+                dialog = new Dialog(mContext);
+                dialog.setContentView(R.layout.dialog_with_progress_text);
+                dialog.setCancelable(false);
+                TextView text = (TextView) dialog.findViewById(R.id.text);
+                text.setText("Uploading report(s)...");
+                dialog.show();
+
                 String pid = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "");
                 Map<String, String> params = new HashMap<String, String>(2);
                 params.put("pid", pid);
@@ -178,8 +188,9 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
 
                 if (selectedFilePath != null) {
                     String result = multipartRequest(SERVER, params, selectedFilePath, "file", "*/*");
-                }else{
+                } else {
                     progressBar.setVisibility(View.GONE);
+                    dialog.dismiss();
 //                    Toast.makeText(mContext, getString(R.string.please_select_report_to_upload), Toast.LENGTH_SHORT).show();
                     txtUploadedDocsname.setText(getString(R.string.please_select_report_to_upload));
                     txtUploadedDocsname.setTextColor(mContext.getResources().getColor(R.color.red));
@@ -338,6 +349,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                             public void run() {
                                 try {
                                     progressBar.setVisibility(View.GONE);
+                                    dialog.dismiss();
                                     JSONObject jsonObj = new JSONObject(result[0]);
                                     if (jsonObj.has("errormessage")) {
                                         String errorMsg = jsonObj.getString("errormessage");
@@ -351,7 +363,7 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                                         }
                                     }
                                 } catch (Exception e) {
-
+                                    dialog.dismiss();
                                 }
                             }
                         });

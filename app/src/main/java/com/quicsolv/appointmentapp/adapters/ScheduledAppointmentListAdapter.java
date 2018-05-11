@@ -62,7 +62,7 @@ public class ScheduledAppointmentListAdapter extends ArrayAdapter<_1> {
             }
 
             if (tt2 != null && p.getSpName() != null) {
-                tt2.setText(p.getSpName());
+                tt2.setText("Problem related to - " + p.getSpName());
             }
 
             if (tt3 != null && p.getAppitDate() != null) {

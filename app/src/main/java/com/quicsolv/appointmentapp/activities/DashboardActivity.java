@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
@@ -30,7 +31,6 @@ import com.quicsolv.appointmentapp.fragments.AppointmentListFragment;
 import com.quicsolv.appointmentapp.fragments.NoInternetConnectionFragment;
 import com.quicsolv.appointmentapp.fragments.ProfileFragment;
 import com.quicsolv.appointmentapp.fragments.ReportsFragment;
-import com.quicsolv.appointmentapp.fragments.RequestAppointmentFragment;
 import com.quicsolv.appointmentapp.fragments.ResetPasswordFragment;
 import com.quicsolv.appointmentapp.fragments.SubmittedQuestionnarieFragment;
 import com.quicsolv.appointmentapp.utils.Connectivity;
@@ -143,6 +143,7 @@ public class DashboardActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
 //                Toast.makeText(mContext, "Yes i wanna exit", Toast.LENGTH_LONG).show();
+                Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, true);
                 finish();
             }
         });
@@ -216,12 +217,15 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_request_appointment) {
             hideKeyboard();
             fab.setVisibility(View.GONE);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
             if (Connectivity.isNetworkConnected(MyApplication.getInstance())) {
-                fragmentClass = RequestAppointmentFragment.class;
+                Intent intent = new Intent(mContext, RequestAppointmentActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
             } else {
-                fragmentClass = NoInternetConnectionFragment.class;
+                Toast.makeText(mContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
-            openFragment(fragment, fragmentClass, true);
 
         } else if (id == R.id.nav_my_questionnarie) {
             hideKeyboard();
@@ -302,7 +306,7 @@ public class DashboardActivity extends AppCompatActivity
         Picasso.with(mContext).load(profilePath).error(R.drawable.profile).into(profileImage);
     }
 
-    public void logoutDialog(){
+    public void logoutDialog() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -342,11 +346,21 @@ public class DashboardActivity extends AppCompatActivity
         alertDialog.show();
     }
 
-    public void hideKeyboard(){
+    public void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        boolean wantToQuit = Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, false);
+        if (wantToQuit){
+            Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, false);
+            finish();
+        }
+        super.onResume();
     }
 }

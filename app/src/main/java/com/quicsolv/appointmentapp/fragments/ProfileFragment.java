@@ -2,6 +2,7 @@ package com.quicsolv.appointmentapp.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -97,6 +98,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public String SERVER = "http://qtademo.com/bookingapp/api/upload_pp",
             timestamp;
     public String imagePath;
+    private Dialog dialog;
 
 
     public ProfileFragment() {
@@ -344,6 +346,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             params.put("pid", pid);
 
             progressBar.setVisibility(View.VISIBLE);
+            dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.dialog_with_progress_text);
+            dialog.setCancelable(false);
+            TextView text = (TextView) dialog.findViewById(R.id.text);
+            text.setText("Uploading profile photo...");
+            dialog.show();
             String result = multipartRequest(SERVER, params, imagePath, "file", "image/*");
             Log.d("", result);
         }
@@ -455,6 +463,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             public void run() {
                                 try {
                                     progressBar.setVisibility(View.GONE);
+                                    dialog.dismiss();
                                     JSONObject jsonObj = new JSONObject(result[0]);
                                     if (jsonObj.has("errormessage")) {
                                         String errorMsg = jsonObj.getString("errormessage");
@@ -468,7 +477,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                         }
                                     }
                                 } catch (Exception e) {
-
+                                    dialog.dismiss();
                                 }
                             }
                         });
