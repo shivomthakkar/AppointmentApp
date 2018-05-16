@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<GetPatientProfileResponse> call, Response<GetPatientProfileResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    setData(response.body().getData());
+                    setData(response.body().getBaseUrl(), response.body().getData());
                 }
             }
 
@@ -200,7 +200,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         };
     }
 
-    private void setData(Data data) {
+    private void setData(String baseUrl, Data data) {
         mTxt_uname.setText(data.getPName());
         mTxt_name.setText(data.getPName());
         mTxt_mob_no.setText(data.getPPhone());
@@ -211,8 +211,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnMyReports.setVisibility(View.VISIBLE);
 
         if (data.getPPpPath() != null) {
-            Picasso.with(mContext).load(data.getPPpPath()).error(R.drawable.profile).into(profileImage);
-            ((DashboardActivity) getActivity()).setProfileImage(data.getPPpPath().toString());
+            Picasso.with(mContext).load(baseUrl + data.getPPpPath()).error(R.drawable.profile).into(profileImage);
+            ((DashboardActivity) getActivity()).setProfileImage(baseUrl + data.getPPpPath().toString());
         }
 
         String genderId = data.getGender();
@@ -345,7 +345,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             Map<String, String> params = new HashMap<String, String>(2);
             params.put("pid", pid);
 
-            progressBar.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.VISIBLE);
             dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.dialog_with_progress_text);
             dialog.setCancelable(false);
