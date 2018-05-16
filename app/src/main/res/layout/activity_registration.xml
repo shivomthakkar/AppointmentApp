@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_screen">
+        android:layout_marginBottom="10dp"
+        android:background="@color/gray">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -44,13 +45,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_outline"
-                    android:drawableLeft="@drawable/ic_person_white"
+                    android:background="@drawable/edittext_outline_login"
+                    android:drawableLeft="@drawable/ic_vector_person"
                     android:drawablePadding="10dp"
                     android:hint="Full name"
                     android:inputType="textPersonName"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
@@ -58,14 +59,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_outline"
-                    android:drawableLeft="@drawable/ic_mobile_white"
+                    android:background="@drawable/edittext_outline_login"
+                    android:drawableLeft="@drawable/ic_vector_mobile"
                     android:drawablePadding="10dp"
                     android:hint="Mobile number(optional)"
                     android:inputType="number"
                     android:maxLength="13"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
@@ -73,13 +74,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_outline"
-                    android:drawableLeft="@drawable/ic_mail_white"
+                    android:background="@drawable/edittext_outline_login"
+                    android:drawableLeft="@drawable/ic_vector_email"
                     android:drawablePadding="10dp"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <RelativeLayout
@@ -91,13 +92,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/edittext_outline"
-                        android:drawableLeft="@drawable/ic_password"
+                        android:background="@drawable/edittext_outline_login"
+                        android:drawableLeft="@drawable/ic_vector_password"
                         android:drawablePadding="10dp"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:padding="@dimen/edttxt_padding"
-                        android:textColor="@color/white"
+                        android:textColor="@color/txt_color"
                         android:textColorHint="@color/hint_color" />
 
                     <CheckBox
@@ -115,22 +116,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_outline"
+                    android:background="@drawable/edittext_outline_login"
                     android:clickable="false"
-                    android:drawableLeft="@drawable/ic_calender_white"
+                    android:drawableLeft="@drawable/ic_vector_calender"
                     android:drawablePadding="10dp"
                     android:editable="false"
                     android:focusableInTouchMode="false"
                     android:hint="Date of Birth"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/edittext_outline"
+                    android:background="@drawable/edittext_outline_login"
                     android:orientation="horizontal"
                     android:padding="13dp"
                     android:weightSum="2">
@@ -141,7 +142,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
                         android:layout_weight="1.2"
-                        android:drawableLeft="@drawable/ic_person_white"
+                        android:drawableLeft="@drawable/ic_vector_person"
                         android:drawablePadding="10dp"
                         android:text="Gender"
                         android:textSize="18sp" />
@@ -159,19 +160,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:buttonTint="@color/splash_color"
+                            android:buttonTint="@color/txt_color"
                             android:checked="true"
                             android:text="Male"
-                            android:textColor="@color/splash_color" />
+                            android:textColor="@color/txt_color" />
 
                         <RadioButton
                             android:id="@+id/rb_female"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:buttonTint="@color/splash_color"
+                            android:buttonTint="@color/txt_color"
                             android:text="Female"
-                            android:textColor="@color/splash_color" />
+                            android:textColor="@color/txt_color" />
 
                     </RadioGroup>
                 </LinearLayout>
@@ -182,14 +183,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
-                    android:background="@drawable/button_filled"
+                    android:background="@drawable/button_filled_login"
                     android:text="Register"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -200,7 +202,7 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="Login"
-                        android:textColor="@color/splash_color"
+                        android:textColor="@color/txt_color"
                         android:textSize="18sp" />
 
                 </LinearLayout>

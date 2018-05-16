@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppointmentApp</string>
+    <string name="app_name">HealthApp</string>
 
     <string name="forgot_pswd_instruction">Enter your email address and we will send you instruction on how to change your password</string>
     <string name="title_activity_dashboard">DashboardActivity</string>

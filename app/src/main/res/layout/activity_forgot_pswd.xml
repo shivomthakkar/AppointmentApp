@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_screen">
+        android:background="@color/gray">
 
         <ImageView
             android:layout_width="match_parent"
@@ -33,12 +33,12 @@
                 android:id="@+id/edttxt_reset_pswd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_outline"
-                android:drawableLeft="@drawable/ic_mail_white"
+                android:background="@drawable/edittext_outline_login"
+                android:drawableLeft="@drawable/ic_vector_email"
                 android:drawablePadding="10dp"
                 android:hint="Email"
                 android:padding="@dimen/edttxt_padding"
-                android:textColor="@color/white"
+                android:textColor="@color/txt_color"
                 android:textColorHint="@color/hint_color" />
 
             <TextView
@@ -47,6 +47,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="@string/forgot_pswd_instruction"
+                android:textColor="@color/txt_color"
                 android:textSize="16sp" />
 
             <Button
@@ -54,9 +55,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/button_filled"
+                android:background="@drawable/button_filled_login"
                 android:text="Send"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
         </LinearLayout>

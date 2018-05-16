@@ -16,4 +16,26 @@
     <color name="red">#FF0000</color>
 
     <color name="black_overlay">#66000000</color>
+
+
+    <!--<color name="colorPrimary">#1a2226</color>-->
+    <!--<color name="colorPrimaryDark">#1a2226</color>-->
+    <!--<color name="colorPrimaryLight">#374850</color>-->
+    <!--<color name="colorAccent">#67BA72</color>-->
+
+    <!--<color name="white">#FFFFFF</color>-->
+    <!--<color name="black">#000000</color>-->
+    <color name="gray">#dddddd</color>
+    <color name="dark_gray">#cdcdcd</color>
+
+    <color name="btn_color">#67BA72</color>
+    <color name="dark_blue">#1a2226</color>
+    <color name="txt_color">#2F5597</color>
+    <color name="edttxt_bg_clr_login">#cccccc</color>
+    <color name="hint_color_login">#8Cdddddd</color>
+
+    <!--<color name="hint_color">#8C2F5597</color>-->
+    <!--<color name="red">#FF0000</color>-->
+
+    <!--<color name="black_overlay">#66000000</color>-->
 </resources>
