@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_screen">
+        android:background="@color/gray">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Problem related to"
-                        android:textColor="@color/splash_color"
+                        android:textColor="@color/txt_color"
                         android:textSize="16sp" />
 
                     <RelativeLayout
@@ -56,7 +56,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_down_arrow_white" />
+                            android:src="@drawable/ic_vector_down_arrow" />
 
                     </RelativeLayout>
 
@@ -73,17 +73,18 @@
                         android:inputType="textMultiLine"
                         android:lines="5"
                         android:padding="@dimen/edttxt_padding"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/hint_color" />
+                        android:textColor="@color/txt_color"
+                        android:textColorHint="@color/hint_color"
+                        android:textSize="18sp" />
 
                     <CheckBox
                         android:id="@+id/cb_need_immidiate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:buttonTint="@color/splash_color"
+                        android:buttonTint="@color/txt_color"
                         android:text="Check in case of emergency"
-                        android:textColor="@color/splash_color"
+                        android:textColor="@color/txt_color"
                         android:textSize="18sp" />
 
                     <LinearLayout
@@ -104,7 +105,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Prefered date"
-                                android:textColor="@color/splash_color"
+                                android:textColor="@color/txt_color"
                                 android:textSize="16sp" />
 
                             <EditText
@@ -114,15 +115,16 @@
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edittext_outline"
                                 android:clickable="false"
-                                android:drawableLeft="@drawable/ic_calender_white"
+                                android:drawableLeft="@drawable/ic_vector_calender"
                                 android:drawablePadding="10dp"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
                                 android:hint="Date"
                                 android:inputType="text"
                                 android:padding="@dimen/edttxt_padding"
-                                android:textColor="@color/white"
-                                android:textColorHint="@color/hint_color" />
+                                android:textColor="@color/txt_color"
+                                android:textColorHint="@color/hint_color"
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -136,7 +138,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Prefered time"
-                                android:textColor="@color/splash_color"
+                                android:textColor="@color/txt_color"
                                 android:textSize="16sp" />
 
                             <EditText
@@ -146,15 +148,16 @@
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edittext_outline"
                                 android:clickable="false"
-                                android:drawableLeft="@drawable/ic_calender_white"
+                                android:drawableLeft="@drawable/ic_vector_calender"
                                 android:drawablePadding="10dp"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
                                 android:hint="Time"
                                 android:inputType="text"
                                 android:padding="@dimen/edttxt_padding"
-                                android:textColor="@color/white"
-                                android:textColorHint="@color/hint_color" />
+                                android:textColor="@color/txt_color"
+                                android:textColorHint="@color/hint_color"
+                                android:textSize="18sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -165,7 +168,7 @@
                         android:layout_marginTop="50dp"
                         android:background="@drawable/button_filled"
                         android:text="Submit"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18sp" />
 
                 </LinearLayout>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_screen"
+    android:background="@color/gray"
     tools:context="com.quicsolv.appointmentapp.activities.ReportUploadActivity">
 
 
@@ -75,7 +75,7 @@
                             android:paddingRight="10dp"
                             android:text="Browse Report"
                             android:textAllCaps="false"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="Report Type"
-                        android:textColor="@color/splash_color"
+                        android:textColor="@color/txt_color"
                         android:textSize="16sp" />
 
                     <RelativeLayout
@@ -113,7 +113,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_down_arrow_white" />
+                            android:src="@drawable/ic_vector_down_arrow" />
 
                     </RelativeLayout>
 
@@ -126,7 +126,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/button_filled"
                     android:text="Upload Report"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <ProgressBar

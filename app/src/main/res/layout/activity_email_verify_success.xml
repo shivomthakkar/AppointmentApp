@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_screen">
+        android:background="@color/gray">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/txt_color"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -44,7 +44,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_filled"
             android:text="Proceed"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>
 

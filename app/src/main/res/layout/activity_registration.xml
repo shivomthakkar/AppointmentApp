@@ -145,6 +145,7 @@
                         android:drawableLeft="@drawable/ic_vector_person"
                         android:drawablePadding="10dp"
                         android:text="Gender"
+                        android:textColor="@color/hint_color"
                         android:textSize="18sp" />
 
                     <RadioGroup

@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/gray">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
             android:layout_above="@+id/bottom_ll"
             android:layout_below="@+id/header"
             android:fillViewport="true"
+            android:background="@color/gray"
             android:padding="20dp"
             android:scrollbars="none">
 
@@ -51,7 +52,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:text="Doctor Name :"
-                            android:textColor="@color/splash_color"
+                            android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -79,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:text="Speciality :"
-                            android:textColor="@color/splash_color"
+                            android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -106,7 +107,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:text="Appointment Date :"
-                            android:textColor="@color/splash_color"
+                            android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -133,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:text="Appointment Time :"
-                            android:textColor="@color/splash_color"
+                            android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -160,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:text="Description :"
-                            android:textColor="@color/splash_color"
+                            android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -187,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:text="Status :"
-                            android:textColor="@color/splash_color"
+                            android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -213,6 +214,7 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:padding="10dp"
+            android:background="@color/gray"
             android:weightSum="2">
 
             <Button
@@ -223,7 +225,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_filled"
                 android:text="OK"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:visibility="invisible" />
 
@@ -235,7 +237,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_filled"
                 android:text="Ok"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>
     </RelativeLayout>

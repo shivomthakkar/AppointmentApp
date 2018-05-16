@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_screen">
+        android:background="@color/gray">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -43,12 +43,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_outline"
-                    android:drawableLeft="@drawable/ic_password"
+                    android:drawableLeft="@drawable/ic_vector_password"
                     android:drawablePadding="10dp"
                     android:hint="Old password"
                     android:inputType="textPassword"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
@@ -57,13 +57,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_outline"
-                    android:drawableLeft="@drawable/ic_password"
+                    android:drawableLeft="@drawable/ic_vector_password"
                     android:drawablePadding="10dp"
                     android:hint="New password"
                     android:inputType="textPassword"
                     android:maxLength="13"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <EditText
@@ -72,12 +72,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_outline"
-                    android:drawableLeft="@drawable/ic_password"
+                    android:drawableLeft="@drawable/ic_vector_password"
                     android:drawablePadding="10dp"
                     android:hint="Confirm new password"
                     android:inputType="textPassword"
                     android:padding="@dimen/edttxt_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/txt_color"
                     android:textColorHint="@color/hint_color" />
 
                 <Button
@@ -87,7 +87,7 @@
                     android:layout_marginTop="50dp"
                     android:background="@drawable/button_filled"
                     android:text="Reset Password"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
             </LinearLayout>
