@@ -28,6 +28,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="Upload Report"
+                android:textAllCaps="false"
                 android:textColor="@color/white" />
         </RelativeLayout>
 

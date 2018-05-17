@@ -92,8 +92,9 @@
                         android:background="@drawable/button_filled"
                         android:gravity="right"
                         android:padding="8dp"
+                        android:textAllCaps="false"
                         android:text="Download"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/white" />
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

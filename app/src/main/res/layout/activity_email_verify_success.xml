@@ -44,6 +44,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_filled"
             android:text="Proceed"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>

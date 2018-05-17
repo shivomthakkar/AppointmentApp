@@ -27,7 +27,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Problem related to"
+                        android:text="Problem related to :"
                         android:textColor="@color/txt_color"
                         android:textSize="16sp" />
 
@@ -104,7 +104,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Prefered date"
+                                android:text="Preferred date :"
                                 android:textColor="@color/txt_color"
                                 android:textSize="16sp" />
 
@@ -119,7 +119,7 @@
                                 android:drawablePadding="10dp"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
-                                android:hint="Date"
+                                android:hint="Select date"
                                 android:inputType="text"
                                 android:padding="@dimen/edttxt_padding"
                                 android:textColor="@color/txt_color"
@@ -137,7 +137,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Prefered time"
+                                android:text="Preferred time :"
                                 android:textColor="@color/txt_color"
                                 android:textSize="16sp" />
 
@@ -148,11 +148,11 @@
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/edittext_outline"
                                 android:clickable="false"
-                                android:drawableLeft="@drawable/ic_vector_calender"
+                                android:drawableLeft="@drawable/ic_vector_time"
                                 android:drawablePadding="10dp"
                                 android:editable="false"
                                 android:focusableInTouchMode="false"
-                                android:hint="Time"
+                                android:hint="Select time"
                                 android:inputType="text"
                                 android:padding="@dimen/edttxt_padding"
                                 android:textColor="@color/txt_color"
@@ -168,6 +168,7 @@
                         android:layout_marginTop="50dp"
                         android:background="@drawable/button_filled"
                         android:text="Submit"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 

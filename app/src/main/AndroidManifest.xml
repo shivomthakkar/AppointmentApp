@@ -75,7 +75,7 @@
         <activity
             android:name=".activities.ReportUploadActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="Upload Report" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -74,7 +75,6 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
     private ProgressBar progressBar;
     private String selectedFilePath;
     private TextView txtUploadedDocsname;
-    private ImageView ivBack;
     private Dialog dialog;
 
     @Override
@@ -83,6 +83,8 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_report_upload);
 
         mContext = ReportUploadActivity.this;
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         uploadReportInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(UploadReportInterface.class);
         getReportTypesListInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetReportTypesListInterface.class);
@@ -103,9 +105,6 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
         imageView = (ImageView) findViewById(R.id.imageView);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_upload_docs);
-
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        ivBack.setOnClickListener(this);
 
         txtUploadedDocsname = (TextView) findViewById(R.id.uploaded_docs_name);
 
@@ -196,9 +195,6 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
                     txtUploadedDocsname.setTextColor(mContext.getResources().getColor(R.color.red));
                 }
 
-                break;
-            case R.id.iv_back:
-                finish();
                 break;
         }
     }
@@ -440,6 +436,18 @@ public class ReportUploadActivity extends AppCompatActivity implements View.OnCl
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

@@ -90,6 +90,7 @@
                     android:layout_marginTop="15dp"
                     android:buttonTint="@color/txt_color"
                     android:text="Remember me"
+                    android:textAllCaps="false"
                     android:textColor="@color/txt_color"
                     android:textSize="18sp" />
 
@@ -100,6 +101,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/button_filled_login"
                     android:text="Login"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -117,6 +119,7 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="Register"
+                        android:textAllCaps="false"
                         android:textColor="@color/txt_color"
                         android:textSize="18sp" />
 
@@ -128,11 +131,13 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="Forgot Password"
+                        android:textAllCaps="false"
                         android:textColor="@color/txt_color"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
+
         <ProgressBar
             android:id="@+id/progress_login"
             style="?android:attr/progressBarStyle"

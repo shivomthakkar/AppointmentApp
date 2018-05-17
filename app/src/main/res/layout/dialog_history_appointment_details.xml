@@ -107,7 +107,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
-                            android:text="Appointment Date :"
+                            android:text="Appointment date :"
                             android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -134,7 +134,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
-                            android:text="Appointment Time :"
+                            android:text="Appointment time :"
                             android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -238,6 +238,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_filled"
                 android:text="Ok"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>

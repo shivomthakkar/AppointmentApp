@@ -51,7 +51,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
-                            android:text="Doctor Name :"
+                            android:text="Doctor name :"
                             android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -64,7 +64,6 @@
                             android:layout_weight="0.7"
                             android:background="@drawable/button_outline_light"
                             android:padding="8dp"
-                            android:text="Tushar Patil"
                             android:textSize="18sp"/>
                     </LinearLayout>
 
@@ -106,7 +105,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
-                            android:text="Appointment Date :"
+                            android:text="Appointment date :"
                             android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -133,7 +132,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
-                            android:text="Appointment Time :"
+                            android:text="Appointment time :"
                             android:textColor="@color/txt_color"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -235,6 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:textAllCaps="false"
                 android:background="@drawable/button_filled"
                 android:text="Ok"
                 android:textColor="@color/white"

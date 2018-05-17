@@ -120,25 +120,9 @@
                         android:drawableLeft="@drawable/ic_vector_person"
                         android:drawablePadding="10dp"
                         android:textColor="@color/txt_color"
-                        android:hint="Full Name"
+                        android:hint="Full name"
                         android:textColorHint="#8C000000"
                         android:textSize="18sp" />
-
-
-                    <EditText
-                        android:id="@+id/txt_mob_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:singleLine="true"
-                        android:inputType="number"
-                        android:drawableLeft="@drawable/ic_vector_mobile"
-                        android:drawablePadding="10dp"
-                        android:hint="Mobile Number"
-                        android:textColorHint="#8C000000"
-                        android:textColor="@color/txt_color"
-                        android:textSize="18sp" />
-
 
                     <EditText
                         android:id="@+id/txt_email"
@@ -166,7 +150,7 @@
                         android:drawablePadding="10dp"
                         android:editable="false"
                         android:focusableInTouchMode="false"
-                        android:hint="Date of Birth"
+                        android:hint="Date of birth"
                         android:textColor="@color/txt_color"
                         android:textColorHint="#8C000000"
                         android:textSize="18sp" />
@@ -236,6 +220,20 @@
                         </RadioGroup>
                     </LinearLayout>
 
+                    <EditText
+                        android:id="@+id/txt_mob_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:drawableLeft="@drawable/ic_vector_mobile"
+                        android:drawablePadding="10dp"
+                        android:hint="Mobile number"
+                        android:textColorHint="#8C000000"
+                        android:textColor="@color/txt_color"
+                        android:textSize="18sp" />
+
                     <Button
                         android:id="@+id/btn_update_profile"
                         android:layout_width="match_parent"
@@ -243,6 +241,7 @@
                         android:layout_marginTop="20dp"
                         android:background="@drawable/button_filled"
                         android:text="Update"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:visibility="gone" />
@@ -255,6 +254,7 @@
                         android:layout_marginTop="20dp"
                         android:background="@drawable/button_filled"
                         android:text="My Reports"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:visibility="gone"/>
