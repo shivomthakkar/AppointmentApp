@@ -35,27 +35,32 @@ public class PendingAppointmentListAdapter extends ArrayAdapter<_2> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
-
+        ViewHolder holder;
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.row_pending_appointment_history, null);
+            holder = new ViewHolder();
+            v.setTag(holder);
+        } else {
+            holder = (ViewHolder) v.getTag();
         }
 
         _2 p = getItem(position);
 
         if (p != null) {
-            TextView tt2 = (TextView) v.findViewById(R.id.txt_sp_name);
-            TextView tt3 = (TextView) v.findViewById(R.id.txt_apt_date);
-            TextView tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
-            TextView txtDesc = (TextView) v.findViewById(R.id.txt_description);
+            holder.tt2 = (TextView) v.findViewById(R.id.txt_sp_name);
+            holder.tt3 = (TextView) v.findViewById(R.id.txt_apt_date);
+            holder.tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
+            holder.txtDesc = (TextView) v.findViewById(R.id.txt_description);
 
 
-            if (tt2 != null && p.getSpName() != null) {
-                tt2.setText("Problem related to - " + p.getSpName());
+            if (holder.tt2 != null && p.getSpName() != null) {
+                holder.tt2.setText("Problem related to - " + p.getSpName());
             }
 
-            if (tt3 != null && p.getPrfDate() != null) {
+            if (holder.tt3 != null && p.getPrfDate() != null) {
+                holder.tt3.setVisibility(View.VISIBLE);
                 Date parsed = null;
                 String outputDate = "";
 
@@ -69,23 +74,33 @@ public class PendingAppointmentListAdapter extends ArrayAdapter<_2> {
 
                 }
 
-                tt3.setText(outputDate);
+                holder.tt3.setText(outputDate);
             } else {
-                tt3.setText("");
+                holder.tt3.setVisibility(View.GONE);
+                holder.tt3.setText("");
             }
 
-            if (tt4 != null && p.getPrfTime() != null) {
-                tt4.setText(p.getPrfTime());
+            if (holder.tt4 != null && p.getPrfTime() != null) {
+                holder.tt4.setVisibility(View.VISIBLE);
+                holder.tt4.setText(p.getPrfTime());
             } else {
-                tt4.setText("");
+                holder.tt4.setVisibility(View.GONE);
+                holder.tt4.setText("");
             }
 
-            if (txtDesc != null && p.getDescription() != null) {
-                txtDesc.setText(p.getDescription());
+            if (holder.txtDesc != null && p.getDescription() != null) {
+                holder.txtDesc.setText(p.getDescription());
             }
         }
 
         return v;
+    }
+
+    static class ViewHolder {
+        private TextView tt4;
+        private TextView tt2;
+        private TextView tt3;
+        private TextView txtDesc;
     }
 
 }

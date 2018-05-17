@@ -43,7 +43,7 @@
                     android:background="@drawable/edittext_outline_login"
                     android:drawableLeft="@drawable/ic_vector_email"
                     android:drawablePadding="10dp"
-                    android:hint="Email"
+                    android:hint="Email address"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/edttxt_padding"
                     android:singleLine="true"

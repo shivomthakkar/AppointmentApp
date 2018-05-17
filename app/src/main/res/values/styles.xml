@@ -32,6 +32,11 @@
         <item name="tabIndicatorColor">#8C67BA72</item>
         <item name="tabIndicatorHeight">58dp</item>
         <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
