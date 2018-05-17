@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quicsolv.appointmentapp.MyApplication;
@@ -39,6 +40,7 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
 
     private Context mContext;
     private Button btnSendEmail;
+    private TextView btnRegister, btnLogin;
     private EditText edttxtEmail;
     private ProgressBar progressResetPswd;
     private ForgotPasswordInterface resetPasswordInterface;
@@ -63,6 +65,12 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
 
         progressResetPswd = (ProgressBar) findViewById(R.id.progress_reset_pswd);
 
+        btnRegister = (TextView) findViewById(R.id.txt_register);
+        btnRegister.setOnClickListener(this);
+
+        btnLogin = (TextView) findViewById(R.id.txt_login);
+        btnLogin.setOnClickListener(this);
+
         btnSendEmail = (Button) findViewById(R.id.btn_send_email);
         btnSendEmail.setOnClickListener(this);
     }
@@ -84,6 +92,16 @@ public class ForgotPswdActivity extends AppCompatActivity implements View.OnClic
                     progressResetPswd.setVisibility(View.GONE);
                     Toast.makeText(mContext, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.txt_register:
+                Intent registerIntent = new Intent(mContext, RegistrationActivity.class);
+                registerIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(registerIntent);
+                break;
+            case R.id.txt_login:
+                Intent loginIntent = new Intent(mContext, LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(loginIntent);
                 break;
         }
     }

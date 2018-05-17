@@ -291,9 +291,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     } else if (response != null && response.body().getCode() == Constants.ERROR_CODE_400) {
                         //failure
+                        progressLogin.setVisibility(View.GONE);
                         Toast.makeText(mContext, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
                     } else {
                         //failure
+                        progressLogin.setVisibility(View.GONE);
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_EMAIL, "");
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PASSWORD, "");
                         Toast.makeText(mContext, getString(R.string.enter_correct_credentials), Toast.LENGTH_SHORT).show();
