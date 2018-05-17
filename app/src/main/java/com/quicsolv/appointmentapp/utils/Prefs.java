@@ -29,6 +29,7 @@ public class Prefs {
     public final static String PREF_IS_FROM_REQUEST_APT = "isFromRequestApt";
 
     public final static String PREF_UPLOADED_FILE_BASE_URL = "uploadedFileBaseUrl";
+    public final static String PREF_PROFILE_IMAGE_BASE_URL = "profileImageBaseUrl";
     public final static String PREF_DOCTOR_PROFILE_IMAGE_BASE_URL = "doctorProfileImageBaseUrl";
 
     public final static String PREF_IS_EMAIL_VERIFICATION_MAIL_ALREADY_SENT = "emailVerificationMailAlreadySent";

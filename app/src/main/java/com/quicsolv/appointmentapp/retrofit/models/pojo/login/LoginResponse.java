@@ -39,13 +39,16 @@ public class LoginResponse {
     private String gender;
     @SerializedName("dob")
     @Expose
-    private String dob;
+    private Object dob;
     @SerializedName("is_verified")
     @Expose
     private String isVerified;
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("base_url")
+    @Expose
+    private String baseUrl;
 
     public Integer getCode() {
         return code;
@@ -119,11 +122,11 @@ public class LoginResponse {
         this.gender = gender;
     }
 
-    public String getDob() {
+    public Object getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Object dob) {
         this.dob = dob;
     }
 
@@ -141,6 +144,14 @@ public class LoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 
 }

@@ -262,9 +262,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, response.body().getPName());
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, response.body().getPEmail());
-                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
                         Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_GENDER, response.body().getGender());
-                        Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob());
+
+                        if (response.body().getPPhone() != null) {
+                            Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PHONE, response.body().getPPhone());
+                        }
+
+                        if (response.body().getDob() != null) {
+                            Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_DOB, response.body().getDob().toString());
+                        }
 
                         if (response.body().getPpPath() != null && !response.body().getPpPath().toString().equals("")) {//set nav drawer profile picture
                             Prefs.setSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, response.body().getPpPath());

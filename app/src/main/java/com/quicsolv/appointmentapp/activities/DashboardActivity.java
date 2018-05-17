@@ -100,9 +100,10 @@ public class DashboardActivity extends AppCompatActivity
         txt_title_name_nav.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_NAME, ""));
         txt_title_email_nav.setText(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_EMAIL, ""));
 
+        String baseUrl = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PROFILE_IMAGE_BASE_URL, "");
         String profileImgUrl = Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PATIENT_PROFILE_IMAGE_URL_, "");
         if (!profileImgUrl.equals("")) {
-            Picasso.with(mContext).load(profileImgUrl).error(R.drawable.profile).into(profileImage);
+            Picasso.with(mContext).load(baseUrl + profileImgUrl).error(R.drawable.profile).into(profileImage);
         }
     }
 
@@ -357,7 +358,7 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         boolean wantToQuit = Prefs.getSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, false);
-        if (wantToQuit){
+        if (wantToQuit) {
             Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_WANT_TO_EXIT, false);
             finish();
         }

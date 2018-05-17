@@ -215,27 +215,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             ((DashboardActivity) getActivity()).setProfileImage(baseUrl + data.getPPpPath().toString());
         }
 
-        String genderId = data.getGender();
-        if (genderId.equals("1")) {
-            rgGender.check(R.id.rb_male);
-            txtGender.setText("Male");
-        } else {
-            rgGender.check(R.id.rb_female);
-            txtGender.setText("Female");
+        if (data.getGender() != null) {
+            String genderId = data.getGender();
+            if (genderId.equals("1")) {
+                rgGender.check(R.id.rb_male);
+                txtGender.setText("Male");
+            } else {
+                rgGender.check(R.id.rb_female);
+                txtGender.setText("Female");
+            }
         }
 
-        String date = data.getDob();
-        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat output = new SimpleDateFormat("MM-dd-yyyy");
-        try {
-            Date oneWayTripDate = input.parse(date);                 // parse input
-            mTxt_dob.setText(output.format(oneWayTripDate));// format output
+        if (data.getDob() != null) {
+            String date = data.getDob();
+            SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat output = new SimpleDateFormat("MM-dd-yyyy");
+            try {
+                Date oneWayTripDate = input.parse(date);                 // parse input
+                mTxt_dob.setText(output.format(oneWayTripDate));// format output
 
 
-            String[] str = mTxt_dob.getText().toString().split("-");
-            myCalendar.set(Integer.parseInt(str[2]), (Integer.parseInt(str[0]) - 1), Integer.parseInt(str[1]));
-        } catch (ParseException e) {
-            e.printStackTrace();
+                String[] str = mTxt_dob.getText().toString().split("-");
+                myCalendar.set(Integer.parseInt(str[2]), (Integer.parseInt(str[0]) - 1), Integer.parseInt(str[1]));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         ((DashboardActivity) getActivity()).setNavDrawerUserName(data.getPName().toString());
