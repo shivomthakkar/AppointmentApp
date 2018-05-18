@@ -70,6 +70,7 @@ public class ScheduledAppointmentListAdapter extends ArrayAdapter<_1> {
             }
 
             if (holder.tt3 != null && p.getAppitDate() != null) {
+                holder.tt3.setVisibility(View.VISIBLE);
                 Date parsed = null;
                 String outputDate = "";
 
@@ -84,10 +85,17 @@ public class ScheduledAppointmentListAdapter extends ArrayAdapter<_1> {
                 }
 
                 holder.tt3.setText(outputDate);
+            } else {
+                holder.tt3.setVisibility(View.GONE);
+                holder.tt3.setText("");
             }
 
             if (holder.tt4 != null && p.getAppitDate() != null) {
+                holder.tt4.setVisibility(View.VISIBLE);
                 holder.tt4.setText(p.getAppitTime());
+            } else {
+                holder.tt4.setVisibility(View.GONE);
+                holder.tt4.setText("");
             }
 
             if (p.getDPpPath() != null) {

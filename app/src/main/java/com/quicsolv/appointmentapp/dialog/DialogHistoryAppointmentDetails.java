@@ -62,7 +62,7 @@ public class DialogHistoryAppointmentDetails extends Dialog implements
             txtSpecialityName.setText(param.getSpName() + "");
         }
 
-        if (param.getPrfDate() != null) {
+        if (param.getAppitDate() != null) {
             Date parsed = null;
             String outputDate = "";
 
@@ -70,7 +70,7 @@ public class DialogHistoryAppointmentDetails extends Dialog implements
             SimpleDateFormat df_output = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
 
             try {
-                parsed = df_input.parse(param.getPrfDate());
+                parsed = df_input.parse(param.getAppitDate());
                 outputDate = df_output.format(parsed);
             } catch (ParseException e) {
 
@@ -79,8 +79,8 @@ public class DialogHistoryAppointmentDetails extends Dialog implements
             txtPrfdate.setText(outputDate + "");
         }
 
-        if (param.getPrfTime() != null) {
-            txtPrfTime.setText(param.getPrfTime() + "");
+        if (param.getAppitTime() != null) {
+            txtPrfTime.setText(param.getAppitTime() + "");
         }
 
         if (param.getDescription() != null) {

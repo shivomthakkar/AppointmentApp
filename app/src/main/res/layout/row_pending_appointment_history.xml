@@ -26,13 +26,13 @@
                 android:padding="10dp"
                 android:weightSum="3">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/doctor_profile_image"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_weight="1.2"
-                    android:src="@drawable/ic_pending_apt"
-                    app:civ_border_color="@color/splash_color" />
+                    android:src="@drawable/ic_launcher"
+                    android:scaleType="fitCenter" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -52,6 +52,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:drawablePadding="5dp"
                             android:drawableLeft="@drawable/ic_date_range_black"
                             android:gravity="left"
                             android:visibility="gone"
@@ -64,6 +65,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:visibility="gone"
+                            android:layout_marginLeft="5dp"
+                            android:drawablePadding="5dp"
                             android:drawableLeft="@drawable/ic_vector_time_black"
                             android:textColor="@color/black"
                             android:textSize="16sp" />

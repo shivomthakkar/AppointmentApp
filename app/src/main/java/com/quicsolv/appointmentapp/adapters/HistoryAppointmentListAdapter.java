@@ -42,54 +42,36 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
-
+        ViewHolder holder;
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.row_appointment_history, null);
+            holder = new ViewHolder();
+            v.setTag(holder);
+        } else {
+            holder = (ViewHolder) v.getTag();
         }
 
         _3 p = getItem(position);
 
         if (p != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.txt_doctor_name);
-            TextView tt2 = (TextView) v.findViewById(R.id.txt_sp_name);
-            TextView tt3 = (TextView) v.findViewById(R.id.txt_apt_date);
-            TextView tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
+            holder.tt1 = (TextView) v.findViewById(R.id.txt_doctor_name);
+            holder.tt2 = (TextView) v.findViewById(R.id.txt_sp_name);
+            holder.tt3 = (TextView) v.findViewById(R.id.txt_apt_date);
+            holder.tt4 = (TextView) v.findViewById(R.id.txt_apt_time);
             ImageView doctorProfileImage = (ImageView) v.findViewById(R.id.doctor_profile_image);
 
-            if (tt1 != null && p.getDName() != null) {
-                tt1.setText(p.getDName().toString());
+            if (holder.tt1 != null && p.getDName() != null) {
+                holder.tt1.setText(p.getDName().toString());
             }
 
-            if (tt2 != null && p.getSpName() != null) {
-                tt2.setText("Problem related to - " + p.getSpName());
+            if (holder.tt2 != null && p.getSpName() != null) {
+                holder.tt2.setText("Problem related to - " + p.getSpName());
             }
 
-//            if (tt3 != null && p.getAppitDate() != null) {
-//
-//                Date parsed = null;
-//                String outputDate = "";
-//
-//                SimpleDateFormat df_input = new SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
-//                SimpleDateFormat df_output = new SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault());
-//
-//                try {
-//                    parsed = df_input.parse(p.getAppitDate());
-//                    outputDate = df_output.format(parsed);
-//                } catch (ParseException e) {
-//
-//                }
-//
-//                tt3.setText(outputDate);
-//            }
-//
-//            if (tt4 != null && p.getAppitTime() != null) {
-//                tt4.setText(p.getAppitTime());
-//            }
-
-            if (tt3 != null && p.getPrfDate() != null) {
-
+            if (holder.tt3 != null && p.getAppitDate() != null) {
+                holder.tt3.setVisibility(View.VISIBLE);
                 Date parsed = null;
                 String outputDate = "";
 
@@ -97,17 +79,24 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
                 SimpleDateFormat df_output = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
 
                 try {
-                    parsed = df_input.parse(p.getPrfDate());
+                    parsed = df_input.parse(p.getAppitDate());
                     outputDate = df_output.format(parsed);
                 } catch (ParseException e) {
 
                 }
 
-                tt3.setText(outputDate);
+                holder.tt3.setText(outputDate);
+            } else {
+                holder.tt3.setVisibility(View.GONE);
+                holder.tt3.setText("");
             }
 
-            if (tt4 != null && p.getPrfTime() != null) {
-                tt4.setText(p.getPrfTime());
+            if (holder.tt4 != null && p.getAppitTime() != null) {
+                holder.tt4.setVisibility(View.VISIBLE);
+                holder.tt4.setText(p.getAppitTime());
+            } else {
+                holder.tt4.setVisibility(View.GONE);
+                holder.tt4.setText("");
             }
 
             if (p.getDPpPath() != null) {
@@ -117,6 +106,15 @@ public class HistoryAppointmentListAdapter extends ArrayAdapter<_3> {
         }
 
         return v;
+    }
+
+
+    static class ViewHolder {
+        private TextView tt1;
+        private TextView tt2;
+        private TextView tt3;
+        private TextView tt4;
+        private TextView txtDesc;
     }
 
 }

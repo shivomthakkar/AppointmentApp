@@ -52,8 +52,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:drawablePadding="5dp"
                             android:drawableLeft="@drawable/ic_date_range_black"
                             android:gravity="left"
+                            android:visibility="gone"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
@@ -62,6 +64,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:drawablePadding="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:visibility="gone"
                             android:drawableLeft="@drawable/ic_vector_time_black"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
