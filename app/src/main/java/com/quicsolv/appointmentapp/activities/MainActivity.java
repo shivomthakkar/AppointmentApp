@@ -61,9 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.txt_forgot_pswd:
-                Intent forgotPswdIntent = new Intent(mContext, ForgotPswdActivity.class);
-                forgotPswdIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(forgotPswdIntent);
+//                Intent forgotPswdIntent = new Intent(mContext, ForgotPswdActivity.class);
+//                forgotPswdIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                startActivity(forgotPswdIntent);
+                Intent mainIntent = new Intent(mContext, NewQuestionariesActivity.class);
+                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(mainIntent);
                 break;
         }
     }
