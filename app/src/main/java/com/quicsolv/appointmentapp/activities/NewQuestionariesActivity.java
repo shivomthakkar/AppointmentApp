@@ -32,12 +32,14 @@ import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.QuestionnarieListWithOptionsInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.QuestionnariesInterface;
+import com.quicsolv.appointmentapp.retrofit.models.interfaces.SaveSingleQuestionnarieInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.SubmitQuesAnsInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.Datum;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.GetListOfQuestionnarieWithOptions;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.Option;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.Option_;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.SubQuestion;
+import com.quicsolv.appointmentapp.retrofit.models.pojo.savesinglequesonserver.SingleQuestionnarieResponse;
 import com.quicsolv.appointmentapp.utils.Constants;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
@@ -63,8 +65,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
     private Button btnBack, btnNextQuestion;
     private ViewPager pager;
     private static List<Datum> questionnarieNewListObject;
-    public static boolean isOption1Selected = false,
-            isOption2Selected = false, isOption3Selected = false, isOption4Selected = false;
+    private SaveSingleQuestionnarieInterface saveSingleQuestionnarieInterface;
 
 
     @Override
@@ -79,6 +80,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
         questionnariesInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(QuestionnariesInterface.class);
         questionnarieListWithOptionsInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(QuestionnarieListWithOptionsInterface.class);
         submitQuesAnsInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(SubmitQuesAnsInterface.class);
+        saveSingleQuestionnarieInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(SaveSingleQuestionnarieInterface.class);
         listQuestionnarie = new ArrayList<>();
         progressQuestionnarie = (ProgressBar) findViewById(R.id.progress_questionnarie);
         fetchQuestionnarieFromAPI();
@@ -132,6 +134,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
 //                        return;
 //                    }
 
+                saveSingleQuestionnarieToServer(questionnarieNewListObject.get(0));
+
                 if (btnNextQuestion.getText().toString().trim().equalsIgnoreCase("Finish")) {
                     questionnarieNewListObject.get(0);
 ////                        saveQuestionnarieToServer();
@@ -165,41 +169,39 @@ public class NewQuestionariesActivity extends FragmentActivity {
         });
     }
 
-//    private void saveQuestionnarieToServer() {
-//
-//        SubmitQuesAnsRequest submitQuesAnsRequest = new SubmitQuesAnsRequest();
-//        submitQuesAnsRequest.setPid(Integer.parseInt(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")));
-//
-//        List<com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.Datum> listDatum = new ArrayList<>();
-//        com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.Datum datum = null;
-//
-//        for (int i = 0; i < questionnarieNewListObject.size(); i++) {
-//            datum = new com.quicsolv.appointmentapp.retrofit.models.pojo.submitQuesAns.Datum();
-//            datum.setQid(Integer.parseInt(questionnarieNewListObject.get(i).getQid().toString()));
-//            datum.setQrId(0);
-//            datum.setPAnswer(Integer.parseInt(questionnarieNewListObject.get(i).getPAnswer().toString()));
-//            datum.setQAnswer(Integer.parseInt(questionnarieNewListObject.get(i).getQAnswer().toString()));
-//            listDatum.add(datum);
-//        }
-//        submitQuesAnsRequest.setData(listDatum);
-//
-//        String dataJsnStr = new Gson().toJson(submitQuesAnsRequest);
-//
-//        submitQuesAnsInterface.submitQuesAns(dataJsnStr).enqueue(new Callback<SubmitQuesAnsResponse>() {
-//            @Override
-//            public void onResponse(Call<SubmitQuesAnsResponse> call, Response<SubmitQuesAnsResponse> response) {
-//                Log.d("", "");
-//                Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                startActivity(intent);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<SubmitQuesAnsResponse> call, Throwable t) {
-//                Log.d("", "");
-//            }
-//        });
-//    }
+    private void fetchQuestionnarieFromAPI() {
+        progressQuestionnarie.setVisibility(View.VISIBLE);
+        questionnarieListWithOptionsInterface.getAllQuestionsWithOptions(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<GetListOfQuestionnarieWithOptions>() {
+            @Override
+            public void onResponse(Call<GetListOfQuestionnarieWithOptions> call, Response<GetListOfQuestionnarieWithOptions> response) {
+                progressQuestionnarie.setVisibility(View.GONE);
+                if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
+                    //success
+                    for (int i = 0; i < response.body().getData().size(); i++) {
+                        Datum datum = response.body().getData().get(i);
+                        datum.setQaId("0");
+                        datum.setAnswer("");
+                        listQuestionnarie.add(datum);
+                    }
+
+                    questionnarieNewListObject = new ArrayList<Datum>(listQuestionnarie);
+
+                    List<Fragment> fragments = getFragments();
+                    pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
+                    pager = (ViewPager) findViewById(R.id.viewpager);
+                    pager.setAdapter(pageAdapter);
+                } else {
+                    //failure
+                    Toast.makeText(mContext, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetListOfQuestionnarieWithOptions> call, Throwable t) {
+                Log.d("", "");
+            }
+        });
+    }
 
     class MyPageAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments;
@@ -231,71 +233,6 @@ public class NewQuestionariesActivity extends FragmentActivity {
             fList.add(QuestionnarieFragments.newInstance(listQuestionnarie.get(i), currentPage, totalSize));
         }
         return fList;
-    }
-//
-//    private void fetchQuestionnarieFromAPI() {
-//        progressQuestionnarie.setVisibility(View.VISIBLE);
-//        questionnariesInterface.getQuestionnarie(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<QuestionnariesResponse>() {
-//            @Override
-//            public void onResponse(Call<QuestionnariesResponse> call, Response<QuestionnariesResponse> response) {
-//                Log.d("", "");
-//                progressQuestionnarie.setVisibility(View.GONE);
-//                if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-//                    //success
-//                    for (int i = 0; i < response.body().getData().size(); i++) {
-//                        Datum datum = response.body().getData().get(i);
-//                        listQuestionnarie.add(datum);
-//                    }
-//
-//                    questionnarieNewListObject = new ArrayList<Datum>(listQuestionnarie);
-//
-//                    List<Fragment> fragments = getFragments();
-//                    pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
-//                    pager = (ViewPager) findViewById(R.id.viewpager);
-//                    pager.setAdapter(pageAdapter);
-//                } else {
-//                    //failure
-//                    Toast.makeText(mContext, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<QuestionnariesResponse> call, Throwable t) {
-//                Log.d("", "");
-//            }
-//        });
-//    }
-
-    private void fetchQuestionnarieFromAPI() {
-        progressQuestionnarie.setVisibility(View.VISIBLE);
-        questionnarieListWithOptionsInterface.getAllQuestionsWithOptions(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, "")).enqueue(new Callback<GetListOfQuestionnarieWithOptions>() {
-            @Override
-            public void onResponse(Call<GetListOfQuestionnarieWithOptions> call, Response<GetListOfQuestionnarieWithOptions> response) {
-                progressQuestionnarie.setVisibility(View.GONE);
-                if (response != null && response.body().getCode() == Constants.ERROR_CODE_200) {
-                    //success
-                    for (int i = 0; i < response.body().getData().size(); i++) {
-                        Datum datum = response.body().getData().get(i);
-                        listQuestionnarie.add(datum);
-                    }
-
-                    questionnarieNewListObject = new ArrayList<Datum>(listQuestionnarie);
-
-                    List<Fragment> fragments = getFragments();
-                    pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
-                    pager = (ViewPager) findViewById(R.id.viewpager);
-                    pager.setAdapter(pageAdapter);
-                } else {
-                    //failure
-                    Toast.makeText(mContext, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetListOfQuestionnarieWithOptions> call, Throwable t) {
-                Log.d("", "");
-            }
-        });
     }
 
 
@@ -388,6 +325,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
             });
 
             txtQuestion.setText("Q." + curPage + "  " + datum.getQuestion());
+            questionnarieNewListObject.get(curPage - 1).setQaId("0");
+            questionnarieNewListObject.get(curPage - 1).setAnswer("");
 
             if (datum.getQtId().trim().equals("1")) { //Question type is Descriptive
 
@@ -397,6 +336,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 layoutCheckbox.setVisibility(View.GONE);
                 layoutMultiLevel.setVisibility(View.GONE);
                 layoutMultiLevelSubQue.setVisibility(View.GONE);
+                questionnarieNewListObject.get(curPage - 1).setAnswer(layoutDescriptive.getText().toString());
 
             } else if (datum.getQtId().trim().equals("2")) { //Question type is Datepicker
 
@@ -406,6 +346,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 layoutCheckbox.setVisibility(View.GONE);
                 layoutMultiLevel.setVisibility(View.GONE);
                 layoutMultiLevelSubQue.setVisibility(View.GONE);
+                questionnarieNewListObject.get(curPage - 1).setAnswer(layoutDate.toString());
 
             } else if (datum.getQtId().trim().equals("3")) { //Question type is Dropdown
 
@@ -426,6 +367,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
                 spinnerOptions.setAdapter(adapter);
 
+                questionnarieNewListObject.get(curPage - 1).setAnswer(spinnerOptions.getSelectedItem().toString());
+
             } else if (datum.getQtId().trim().equals("4")) { //Question type is Checkbox (Multiple selection)
 
                 layoutDescriptive.setVisibility(View.GONE);
@@ -435,15 +378,26 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 layoutMultiLevel.setVisibility(View.GONE);
                 layoutMultiLevelSubQue.setVisibility(View.GONE);
 
+                final ArrayList<String> srtArr = new ArrayList<>();
+                final String cbSelectedValues = "";
 
                 for (int i = 0; i < datum.getOptions().size(); i++) {
-                    CheckBox cbOption = new CheckBox(this.getContext());
+                    final CheckBox cbOption = new CheckBox(this.getContext());
                     cbOption.setPadding(30, 30, 30, 30);
                     cbOption.setText(datum.getOptions().get(i).getQOption());
                     cbOption.setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
                     cbOption.setTextSize(18);
                     layoutCheckbox.addView(cbOption);
+
+                    cbOption.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            srtArr.add(cbOption.getText().toString());
+                        }
+                    });
                 }
+
+                questionnarieNewListObject.get(curPage - 1).setAnswer(cbSelectedValues);
 
             } else if (datum.getQtId().trim().equals("5")) { //Question type is Radio Button (Single selection)
 
@@ -622,6 +576,38 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
             edtxtDate.setText(sdf.format(calendar.getTime()));
             edtxtDate.setError(null);
+        }
+    }
+
+    public void saveSingleQuestionnarieToServer(Datum queDatum) {
+        if (!queDatum.getQtId().equals("6")) {
+            saveSingleQuestionnarieInterface.saveQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
+                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
+                    queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), "sub_ques_ans", "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                @Override
+                public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
+                    Log.d("", "");
+                }
+
+                @Override
+                public void onFailure(Call<SingleQuestionnarieResponse> call, Throwable t) {
+                    Log.d("", "");
+                }
+            });
+        } else {
+            saveSingleQuestionnarieInterface.saveQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
+                    queDatum.getQId(), queDatum.getQtId(), "ansbytushar", "1",
+                    "", "", "sub_ques_ans", "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                @Override
+                public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
+                    Log.d("", "");
+                }
+
+                @Override
+                public void onFailure(Call<SingleQuestionnarieResponse> call, Throwable t) {
+                    Log.d("", "");
+                }
+            });
         }
     }
 }

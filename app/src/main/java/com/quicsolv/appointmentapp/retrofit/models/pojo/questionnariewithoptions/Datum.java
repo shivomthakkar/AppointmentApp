@@ -39,6 +39,12 @@ public class Datum implements Parcelable {
     @SerializedName("sub_question")
     @Expose
     private SubQuestion subQuestion;
+    @SerializedName("qa_id")
+    @Expose
+    private String qaId;
+    @SerializedName("answer")
+    @Expose
+    private String answer;
 
 
     protected Datum(Parcel in) {
@@ -47,6 +53,8 @@ public class Datum implements Parcelable {
         question = in.readString();
         qtId = in.readString();
         selectedQoId = in.readString();
+        qaId = in.readString();
+        answer = in.readString();
     }
 
     public static final Creator<Datum> CREATOR = new Creator<Datum>() {
@@ -74,6 +82,8 @@ public class Datum implements Parcelable {
         dest.writeString(question);
         dest.writeString(qtId);
         dest.writeString(selectedQoId);
+        dest.writeString(qaId);
+        dest.writeString(answer);
     }
 
 
@@ -139,5 +149,21 @@ public class Datum implements Parcelable {
 
     public void setSubQuestion(SubQuestion subQuestion) {
         this.subQuestion = subQuestion;
+    }
+
+    public String getQaId() {
+        return qaId;
+    }
+
+    public void setQaId(String qaId) {
+        this.qaId = qaId;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
