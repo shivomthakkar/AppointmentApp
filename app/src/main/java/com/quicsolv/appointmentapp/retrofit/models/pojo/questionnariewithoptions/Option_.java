@@ -15,7 +15,15 @@ public class Option_ {
     private Object qoId;
     @SerializedName("q_option")
     @Expose
-    private Object qOption;
+    private String qOption;
+
+    public Option_() {
+    }
+
+    public Option_(String qoId, String qOption) {
+        this.qoId = qoId;
+        this.qOption = qOption;
+    }
 
     public Object getQoId() {
         return qoId;
@@ -25,12 +33,17 @@ public class Option_ {
         this.qoId = qoId;
     }
 
-    public Object getQOption() {
+    public String getQOption() {
         return qOption;
     }
 
-    public void setQOption(Object qOption) {
+    public void setQOption(String qOption) {
         this.qOption = qOption;
+    }
+
+    @Override
+    public String toString() {
+        return qOption;
     }
 
 }

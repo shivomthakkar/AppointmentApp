@@ -17,6 +17,14 @@ public class Option {
     @Expose
     private String qOption;
 
+    public Option() {
+    }
+
+    public Option(String qoId, String qOption) {
+        this.qoId = qoId;
+        this.qOption = qOption;
+    }
+
     public String getQoId() {
         return qoId;
     }
@@ -31,5 +39,10 @@ public class Option {
 
     public void setQOption(String qOption) {
         this.qOption = qOption;
+    }
+
+    @Override
+    public String toString() {
+        return qOption;
     }
 }
