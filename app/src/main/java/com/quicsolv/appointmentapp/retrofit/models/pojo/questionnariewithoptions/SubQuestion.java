@@ -1,5 +1,8 @@
 package com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +14,7 @@ import java.util.List;
  * Date         -  26 Jun 2018
  ***********************************************************************/
 
-public class SubQuestion {
+public class SubQuestion implements Parcelable {
     @SerializedName("q_id")
     @Expose
     private String qId;
@@ -33,7 +36,46 @@ public class SubQuestion {
     @SerializedName("options")
     @Expose
     private List<Option_> options = null;
+    @SerializedName("answer")
+    @Expose
+    private String answer;
 
+    protected SubQuestion(Parcel in) {
+        qId = in.readString();
+        pqId = in.readString();
+        question = in.readString();
+        qtId = in.readString();
+        selectedQoId = in.readString();
+        answer = in.readString();
+    }
+
+    public static final Creator<Datum> CREATOR = new Creator<Datum>() {
+        @Override
+        public Datum createFromParcel(Parcel in) {
+            return new Datum(in);
+        }
+
+        @Override
+        public Datum[] newArray(int size) {
+            return new Datum[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(qId);
+        dest.writeString(pqId);
+        dest.writeString(question);
+        dest.writeString(qtId);
+        dest.writeString(selectedQoId);
+        dest.writeString(answer);
+    }
     public String getQId() {
         return qId;
     }
@@ -88,5 +130,13 @@ public class SubQuestion {
 
     public void setOptions(List<Option_> options) {
         this.options = options;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
