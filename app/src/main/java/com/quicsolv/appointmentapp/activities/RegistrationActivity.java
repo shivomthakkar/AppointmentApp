@@ -25,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -247,8 +248,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             e.printStackTrace();
         }
 
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
 
-        registerInterface.register(strFullName, strMobNo, strEmail, strPswd, selectedGender, dob).enqueue(new Callback<RegistrationResponse>() {
+        registerInterface.register(strFullName, strMobNo, strEmail, strPswd, selectedGender, dob, deviceToken).enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                 progressLogin.setVisibility(View.GONE);

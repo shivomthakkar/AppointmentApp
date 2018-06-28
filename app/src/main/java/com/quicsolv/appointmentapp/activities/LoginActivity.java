@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.quicsolv.appointmentapp.MyApplication;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
@@ -230,7 +231,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * @param strEmail
      * @param strPswd*/
     private void doLogin(String strEmail, String strPswd) {
-        loginInterface.login(Constants.USER_TYPE_PATIENT, strEmail, strPswd).enqueue(new Callback<LoginResponse>() {
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+        loginInterface.login(Constants.USER_TYPE_PATIENT, strEmail, strPswd, deviceToken).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 progressLogin.setVisibility(View.GONE);

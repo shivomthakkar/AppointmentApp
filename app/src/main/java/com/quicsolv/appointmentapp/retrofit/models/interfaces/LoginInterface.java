@@ -17,6 +17,7 @@ public interface LoginInterface {
     @FormUrlEncoded
     @POST("login")
     Call<LoginResponse> login(@Field("ut") String userType,
-                                 @Field("un") String userEmail,
-                                 @Field("p") String password);
+                              @Field("un") String userEmail,
+                              @Field("p") String password,
+                              @Field("dt") String deviceToken);
 }

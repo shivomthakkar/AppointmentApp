@@ -310,7 +310,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, selectedStartDate, myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                             myCalendar.get(Calendar.DAY_OF_MONTH));
-                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+//                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); //Disable Past date
+                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());//Disable future date
                     datePickerDialog.show();
                 }
             });
@@ -402,8 +403,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 }
 
                 ArrayAdapter<Option> adapter =
-                        new ArrayAdapter<Option>(getActivity(), R.layout.speciality_spinner_item, optionsList);
-                adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
+                        new ArrayAdapter<Option>(getActivity(), R.layout.date_spinner_item, optionsList);
+                adapter.setDropDownViewResource(R.layout.date_spinner_item);
                 spinnerOptions.setAdapter(adapter);
                 spinnerOptions.setSelection(0);
 
@@ -567,7 +568,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, selectedStartDateSubQue, myCalendarSubQue
                             .get(Calendar.YEAR), myCalendarSubQue.get(Calendar.MONTH),
                             myCalendarSubQue.get(Calendar.DAY_OF_MONTH));
-                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+//                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); //Disable Past date
+                    datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());//Disable future date
                     datePickerDialog.show();
                 }
             });
@@ -650,8 +652,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 }
 
                 ArrayAdapter<Option_> adapter =
-                        new ArrayAdapter<Option_>(getActivity(), R.layout.speciality_spinner_item, optionsList);
-                adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
+                        new ArrayAdapter<Option_>(getActivity(), R.layout.date_spinner_item, optionsList);
+                adapter.setDropDownViewResource(R.layout.date_spinner_item);
                 spinnerSubQueOptions.setAdapter(adapter);
                 spinnerSubQueOptions.setSelection(0);
 
@@ -758,9 +760,14 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
     public void saveSingleQuestionnarieToServer(Datum queDatum, final boolean isLastQuestion) {
 
+        String isQuestionComplete = "0";
+        if (isLastQuestion) {
+            isQuestionComplete = "1";
+        }
+
         if (!queDatum.getQtId().equals("6")) {
             saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                 @Override
                 public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                     Log.d("", "");
@@ -782,7 +789,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
             if (isMultilevelQuestion) {
                 saveSingleQuestionnarieInterface.saveMultiLevelQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
                         queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
-                        queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), queDatum.getSubQuestion().getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), queDatum.getSubQuestion().getAnswer(), "", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                         Log.d("", "");
@@ -802,7 +809,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 });
             } else {
                 saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                        queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                         Log.d("", "");

@@ -17,9 +17,10 @@ public interface RegisterInterface {
     @FormUrlEncoded
     @POST("register")
     Call<RegistrationResponse> register(@Field("un") String fullName,
-                                              @Field("m") String mobileNo,
-                                              @Field("ue") String userEmail,
-                                              @Field("p") String password,
-                                              @Field("g") Integer gender,
-                                              @Field("dob") String dob);
+                                        @Field("m") String mobileNo,
+                                        @Field("ue") String userEmail,
+                                        @Field("p") String password,
+                                        @Field("g") Integer gender,
+                                        @Field("dob") String dob,
+                                        @Field("dt") String deviceToken);
 }

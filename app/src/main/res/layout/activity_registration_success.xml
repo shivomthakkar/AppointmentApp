@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/edittext_outline"
-                android:drawableLeft="@drawable/ic_vector_mobile"
+                android:drawableLeft="@drawable/ic_vector_email"
                 android:drawablePadding="10dp"
                 android:hint="Email verification code"
                 android:inputType="number"
