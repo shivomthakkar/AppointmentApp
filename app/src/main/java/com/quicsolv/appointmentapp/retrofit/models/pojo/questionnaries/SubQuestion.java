@@ -1,8 +1,5 @@
 package com.quicsolv.appointmentapp.retrofit.models.pojo.questionnaries;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,11 +8,10 @@ import java.util.List;
 /**********************************************************************
  * Created by   -  Tushar Patil
  * Organization -  QuicSolv Technologies Pvt.Ltd
- * Date         -  19 Apr 2018
+ * Date         -  28 Jun 2018
  ***********************************************************************/
 
-public class Datum implements Parcelable {
-
+public class SubQuestion {
     @SerializedName("q_id")
     @Expose
     private String qId;
@@ -30,42 +26,25 @@ public class Datum implements Parcelable {
     private String qtId;
     @SerializedName("test_name")
     @Expose
-    private String testName;
+    private Object testName;
     @SerializedName("selected_qo_id")
     @Expose
     private String selectedQoId;
     @SerializedName("desc_ans")
     @Expose
-    private String descAns;
+    private Object descAns;
     @SerializedName("date_ans")
     @Expose
-    private String dateAns;
+    private Object dateAns;
     @SerializedName("single_ans")
     @Expose
     private String singleAns;
     @SerializedName("multi_ans")
     @Expose
-    private String multiAns;
+    private Object multiAns;
     @SerializedName("options")
     @Expose
-    private List<Option> options = null;
-    @SerializedName("sub_question")
-    @Expose
-    private SubQuestion subQuestion;
-
-    protected Datum(Parcel in) {
-        qId = in.readString();
-        pqId = in.readString();
-        question = in.readString();
-        qtId = in.readString();
-        testName = in.readString();
-        selectedQoId = in.readString();
-        descAns = in.readString();
-        dateAns = in.readString();
-        singleAns = in.readString();
-        multiAns = in.readString();
-    }
-
+    private List<Option_> options = null;
 
     public String getQId() {
         return qId;
@@ -99,11 +78,11 @@ public class Datum implements Parcelable {
         this.qtId = qtId;
     }
 
-    public String getTestName() {
+    public Object getTestName() {
         return testName;
     }
 
-    public void setTestName(String testName) {
+    public void setTestName(Object testName) {
         this.testName = testName;
     }
 
@@ -115,19 +94,19 @@ public class Datum implements Parcelable {
         this.selectedQoId = selectedQoId;
     }
 
-    public String getDescAns() {
+    public Object getDescAns() {
         return descAns;
     }
 
-    public void setDescAns(String descAns) {
+    public void setDescAns(Object descAns) {
         this.descAns = descAns;
     }
 
-    public String getDateAns() {
+    public Object getDateAns() {
         return dateAns;
     }
 
-    public void setDateAns(String dateAns) {
+    public void setDateAns(Object dateAns) {
         this.dateAns = dateAns;
     }
 
@@ -139,58 +118,19 @@ public class Datum implements Parcelable {
         this.singleAns = singleAns;
     }
 
-    public String getMultiAns() {
+    public Object getMultiAns() {
         return multiAns;
     }
 
-    public void setMultiAns(String multiAns) {
+    public void setMultiAns(Object multiAns) {
         this.multiAns = multiAns;
     }
 
-    public List<Option> getOptions() {
+    public List<Option_> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Option> options) {
+    public void setOptions(List<Option_> options) {
         this.options = options;
-    }
-
-    public SubQuestion getSubQuestion() {
-        return subQuestion;
-    }
-
-    public void setSubQuestion(SubQuestion subQuestion) {
-        this.subQuestion = subQuestion;
-    }
-
-    public static final Creator<Datum> CREATOR = new Creator<Datum>() {
-        @Override
-        public Datum createFromParcel(Parcel in) {
-            return new Datum(in);
-        }
-
-        @Override
-        public Datum[] newArray(int size) {
-            return new Datum[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(qId);
-        dest.writeString(pqId);
-        dest.writeString(question);
-        dest.writeString(qtId);
-        dest.writeString(testName);
-        dest.writeString(selectedQoId);
-        dest.writeString(descAns);
-        dest.writeString(dateAns);
-        dest.writeString(singleAns);
-        dest.writeString(multiAns);
     }
 }
