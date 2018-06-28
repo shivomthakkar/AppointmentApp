@@ -35,9 +35,7 @@ import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.RetrofitClient;
 import com.quicsolv.appointmentapp.retrofit.RetrofitConstants;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.QuestionnarieListWithOptionsInterface;
-import com.quicsolv.appointmentapp.retrofit.models.interfaces.QuestionnariesInterface;
 import com.quicsolv.appointmentapp.retrofit.models.interfaces.SaveSingleQuestionnarieInterface;
-import com.quicsolv.appointmentapp.retrofit.models.interfaces.SubmitQuesAnsInterface;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.Datum;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.GetListOfQuestionnarieWithOptions;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnariewithoptions.Option;
@@ -64,9 +62,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
     private Context mContext;
     MyPageAdapter pageAdapter;
-    private QuestionnariesInterface questionnariesInterface;
     private QuestionnarieListWithOptionsInterface questionnarieListWithOptionsInterface;
-    private SubmitQuesAnsInterface submitQuesAnsInterface;
     private List<Datum> listQuestionnarie;
     private ProgressBar progressQuestionnarie;
     private Button btnBack, btnNextQuestion;
@@ -85,9 +81,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        questionnariesInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(QuestionnariesInterface.class);
         questionnarieListWithOptionsInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(QuestionnarieListWithOptionsInterface.class);
-        submitQuesAnsInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(SubmitQuesAnsInterface.class);
         saveSingleQuestionnarieInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(SaveSingleQuestionnarieInterface.class);
         listQuestionnarie = new ArrayList<>();
         progressQuestionnarie = (ProgressBar) findViewById(R.id.progress_questionnarie);
@@ -551,8 +545,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
             return v;
         }
 
-        private void handleSubQuestionLayout(final int curPage, SubQuestion subQuestion) {
 
+        private void handleSubQuestionLayout(final int curPage, SubQuestion subQuestion) {
             selectedStartDateSubQue = new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -577,7 +571,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
             });
 
 
-            layoutDescriptive.addTextChangedListener(new TextWatcher() {
+            layoutSubQueDescriptive.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -594,7 +588,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 }
             });
 
-            layoutDate.addTextChangedListener(new TextWatcher() {
+            layoutSubQueDate.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -767,7 +761,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
         } else {
             saveSingleQuestionnarieInterface.saveQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
                     queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
-                    queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), "sub_ques_ans", "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), queDatum.getSubQuestion().getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
                 @Override
                 public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                     Log.d("", "");

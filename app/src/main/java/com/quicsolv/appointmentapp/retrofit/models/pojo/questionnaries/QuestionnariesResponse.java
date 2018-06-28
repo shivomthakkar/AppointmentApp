@@ -12,20 +12,12 @@ import java.util.List;
  ***********************************************************************/
 
 public class QuestionnariesResponse {
-    @SerializedName("code")
-    @Expose
-    private Integer code;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
+    @SerializedName("code")
+    @Expose
+    private Integer code;
 
     public List<Datum> getData() {
         return data;
@@ -33,5 +25,13 @@ public class QuestionnariesResponse {
 
     public void setData(List<Datum> data) {
         this.data = data;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

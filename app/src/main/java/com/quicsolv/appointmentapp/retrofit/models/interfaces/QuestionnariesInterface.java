@@ -15,6 +15,6 @@ import retrofit2.http.POST;
 
 public interface QuestionnariesInterface {
     @FormUrlEncoded
-    @POST("questionnaire")
+    @POST("pt_response")
     Call<QuestionnariesResponse> getQuestionnarie(@Field("pid") String patientId);
 }

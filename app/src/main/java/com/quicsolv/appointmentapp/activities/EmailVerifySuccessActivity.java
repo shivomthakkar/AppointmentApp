@@ -44,7 +44,7 @@ public class EmailVerifySuccessActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_proceed:
-                Intent mainIntent = new Intent(mContext, QuestionariesActivity.class);
+                Intent mainIntent = new Intent(mContext, NewQuestionariesActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(mainIntent);
                 break;

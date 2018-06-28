@@ -43,11 +43,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activities.QuestionariesActivity"
-            android:label="Questionnaire"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
             android:name=".activities.NewQuestionariesActivity"
             android:label="Questionnaire"
             android:screenOrientation="portrait"
