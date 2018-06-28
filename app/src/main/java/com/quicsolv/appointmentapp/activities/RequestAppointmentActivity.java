@@ -43,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequestAppointmentActivity extends AppCompatActivity  implements View.OnClickListener {
+public class RequestAppointmentActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private Context mContext;
@@ -94,6 +94,32 @@ public class RequestAppointmentActivity extends AppCompatActivity  implements Vi
 
         btnCreateAppointment = (Button) findViewById(R.id.btn_create_appointment);
         btnCreateAppointment.setOnClickListener(this);
+
+
+
+        if (Prefs.IS_FROM_NOTIFICATION){
+            String dateFromNotfn = Prefs.getSharedPreferenceString(getApplicationContext(), Prefs.PREF_NOTIFICATION_DATA, "");
+            if (!dateFromNotfn.equals("")) {
+                edttxtDate.setText(dateFromNotfn);
+                Prefs.IS_FROM_NOTIFICATION = false;
+                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_NOTIFICATION_DATA, "");
+            }
+
+//            if (getIntent() != null) {
+//                dateFromNotfn = getIntent().getStringExtra("app_date");
+//            }
+//
+//            if (dateFromNotfn == null) {
+//                Bundle notificationBundle = getIntent().getExtras();
+//                if (notificationBundle != null) {
+//                    dateFromNotfn = notificationBundle.getString("app_date");
+//                }
+//            }
+        }
+
+
+
+
 
         selectedStartDate = new DatePickerDialog.OnDateSetListener() {
             @Override
