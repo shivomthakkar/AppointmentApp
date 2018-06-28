@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.retrofit.models.pojo.questionnaries.Datum;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**********************************************************************
@@ -72,8 +68,8 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getDescAns() != null) {
-                    viewHolder.op1.setText(p.getDescAns().toString());
+                if (viewHolder.op1 != null && p.getAns() != null) {
+                    viewHolder.op1.setText(p.getAns().toString());
                 }
 
             } else if (p.getQtId().equals("2")) {//Datepicker
@@ -81,50 +77,38 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
 
-                if (viewHolder.op1 != null && p.getDateAns() != null) {
-                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    DateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
-                    String startDateStr = p.getDateAns().toString();
-                    Date date = null;
-                    String startDateStrNewFormat = "";
-                    try {
-                        date = inputFormat.parse(startDateStr);
-                        startDateStrNewFormat = outputFormat.format(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    viewHolder.op1.setText(startDateStrNewFormat);
+                if (viewHolder.op1 != null && p.getAns() != null) {
+                    viewHolder.op1.setText(p.getAns());
                 }
 
             } else if (p.getQtId().equals("3")) {//Dropdown
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getSingleAns() != null) {
-                    viewHolder.op1.setText(p.getSingleAns().toString());
+                if (viewHolder.op1 != null && p.getAns() != null) {
+                    viewHolder.op1.setText(p.getAns().toString());
                 }
 
             } else if (p.getQtId().equals("4")) {//Checkbox
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getMultiAns() != null) {
-                    viewHolder.op1.setText(p.getMultiAns().toString());
+                if (viewHolder.op1 != null && p.getAns() != null) {
+                    viewHolder.op1.setText(p.getAns().toString());
                 }
 
             } else if (p.getQtId().equals("5")) {//Radio Button
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getSingleAns() != null) {
-                    viewHolder.op1.setText(p.getSingleAns().toString());
+                if (viewHolder.op1 != null && p.getAns() != null) {
+                    viewHolder.op1.setText(p.getAns().toString());
                 }
             } else if (p.getQtId().equals("6")) {//Second level question
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.VISIBLE);
-                if (viewHolder.op1 != null && p.getSingleAns() != null) {
-                    viewHolder.op1.setText(p.getSingleAns().toString());
+                if (viewHolder.op1 != null && p.getAns() != null) {
+                    viewHolder.op1.setText(p.getAns().toString());
                 }
 
                 //Sub question layout
@@ -133,37 +117,25 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                 }
 
                 if (p.getSubQuestion().getQtId().equals("1")) {//Descriptive
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getDescAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getDescAns().toString());
+                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
+                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
                 } else if (p.getSubQuestion().getQtId().equals("2")) {//Datepicker
 
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getDateAns() != null) {
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        DateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
-                        String startDateStr = p.getSubQuestion().getDateAns().toString();
-                        Date date = null;
-                        String startDateStrNewFormat = "";
-                        try {
-                            date = inputFormat.parse(startDateStr);
-                            startDateStrNewFormat = outputFormat.format(date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                        viewHolder.op1Sub.setText(startDateStrNewFormat);
+                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
+                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns());
                     }
                 } else if (p.getSubQuestion().getQtId().equals("3")) {//Dropdown
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getSingleAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getSingleAns().toString());
+                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
+                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
                 } else if (p.getSubQuestion().getQtId().equals("4")) {//Checkbox
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getMultiAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getMultiAns().toString());
+                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
+                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
                 } else if (p.getSubQuestion().getQtId().equals("5")) {//Radio Button
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getSingleAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getSingleAns().toString());
+                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
+                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
                 }
             }

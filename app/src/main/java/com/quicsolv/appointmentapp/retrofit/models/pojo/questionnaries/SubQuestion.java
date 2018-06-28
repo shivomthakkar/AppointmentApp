@@ -3,8 +3,6 @@ package com.quicsolv.appointmentapp.retrofit.models.pojo.questionnaries;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**********************************************************************
  * Created by   -  Tushar Patil
  * Organization -  QuicSolv Technologies Pvt.Ltd
@@ -12,55 +10,15 @@ import java.util.List;
  ***********************************************************************/
 
 public class SubQuestion {
-    @SerializedName("q_id")
-    @Expose
-    private String qId;
-    @SerializedName("pq_id")
-    @Expose
-    private String pqId;
     @SerializedName("question")
     @Expose
     private String question;
     @SerializedName("qt_id")
     @Expose
     private String qtId;
-    @SerializedName("test_name")
+    @SerializedName("ans")
     @Expose
-    private Object testName;
-    @SerializedName("selected_qo_id")
-    @Expose
-    private String selectedQoId;
-    @SerializedName("desc_ans")
-    @Expose
-    private Object descAns;
-    @SerializedName("date_ans")
-    @Expose
-    private Object dateAns;
-    @SerializedName("single_ans")
-    @Expose
-    private String singleAns;
-    @SerializedName("multi_ans")
-    @Expose
-    private Object multiAns;
-    @SerializedName("options")
-    @Expose
-    private List<Option_> options = null;
-
-    public String getQId() {
-        return qId;
-    }
-
-    public void setQId(String qId) {
-        this.qId = qId;
-    }
-
-    public String getPqId() {
-        return pqId;
-    }
-
-    public void setPqId(String pqId) {
-        this.pqId = pqId;
-    }
+    private String ans;
 
     public String getQuestion() {
         return question;
@@ -78,59 +36,12 @@ public class SubQuestion {
         this.qtId = qtId;
     }
 
-    public Object getTestName() {
-        return testName;
+    public String getAns() {
+        return ans;
     }
 
-    public void setTestName(Object testName) {
-        this.testName = testName;
+    public void setAns(String ans) {
+        this.ans = ans;
     }
 
-    public String getSelectedQoId() {
-        return selectedQoId;
-    }
-
-    public void setSelectedQoId(String selectedQoId) {
-        this.selectedQoId = selectedQoId;
-    }
-
-    public Object getDescAns() {
-        return descAns;
-    }
-
-    public void setDescAns(Object descAns) {
-        this.descAns = descAns;
-    }
-
-    public Object getDateAns() {
-        return dateAns;
-    }
-
-    public void setDateAns(Object dateAns) {
-        this.dateAns = dateAns;
-    }
-
-    public String getSingleAns() {
-        return singleAns;
-    }
-
-    public void setSingleAns(String singleAns) {
-        this.singleAns = singleAns;
-    }
-
-    public Object getMultiAns() {
-        return multiAns;
-    }
-
-    public void setMultiAns(Object multiAns) {
-        this.multiAns = multiAns;
-    }
-
-    public List<Option_> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<Option_> options) {
-        this.options = options;
-    }
 }
