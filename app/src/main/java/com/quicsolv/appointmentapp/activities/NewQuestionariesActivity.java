@@ -3,6 +3,7 @@ package com.quicsolv.appointmentapp.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -70,6 +71,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
     private static List<Datum> questionnarieNewListObject;
     private SaveSingleQuestionnarieInterface saveSingleQuestionnarieInterface;
     private static String ans = "";
+    private static boolean isMultilevelQuestion = false;
 
 
     @Override
@@ -104,13 +106,13 @@ public class NewQuestionariesActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if (pager.getCurrentItem() != 0) {
-//
+
                     btnNextQuestion.setText("Next question");
-//
+
                     if (pager.getCurrentItem() == listQuestionnarie.size()) {
                         btnNextQuestion.setVisibility(View.VISIBLE);
                     }
-//
+
                     if (pager.getCurrentItem() == 1) {
                         btnBack.setVisibility(View.GONE);
                         btnNextQuestion.setVisibility(View.VISIBLE);
@@ -129,22 +131,18 @@ public class NewQuestionariesActivity extends FragmentActivity {
             public void onClick(View v) {
                 btnBack.setVisibility(View.VISIBLE);
 
-//                if (isOption1Selected || isOption2Selected || isOption3Selected || isOption4Selected) {
-//
-//                    if (pager.getCurrentItem() == listQuestionnarie.size() - 1 && questionnarieNewListObject.get(pager.getCurrentItem()).getPAnswer() == null) {
-//                        Toast.makeText(mContext, getString(R.string.answer_selection_required), Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-
-                saveSingleQuestionnarieToServer(questionnarieNewListObject.get(pager.getCurrentItem()));
+                boolean isLastQuestion = false;
 
                 if (btnNextQuestion.getText().toString().trim().equalsIgnoreCase("Finish")) {
                     questionnarieNewListObject.get(0);
-////                        saveQuestionnarieToServer();
+                    isLastQuestion = true;
+                    saveSingleQuestionnarieToServer(questionnarieNewListObject.get(pager.getCurrentItem()), isLastQuestion);
                 } else {
                     btnNextQuestion.setText("Next question");
+                    isLastQuestion = false;
+                    saveSingleQuestionnarieToServer(questionnarieNewListObject.get(pager.getCurrentItem()), isLastQuestion);
                 }
-//
+
                 if (pager.getCurrentItem() != listQuestionnarie.size()) {
                     if (pager.getCurrentItem() == listQuestionnarie.size() - 2) {
                         btnNextQuestion.setVisibility(View.GONE);
@@ -158,15 +156,6 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
                     pager.setCurrentItem(pager.getCurrentItem() + 1);
                 }
-//                } else {
-//                    pager.setCurrentItem(pager.getCurrentItem());
-//                    if (pager.getCurrentItem() == 0) {
-//                        btnBack.setVisibility(View.GONE);
-//                    } else {
-//                        btnBack.setVisibility(View.VISIBLE);
-//                    }
-//                    Toast.makeText(mContext, getString(R.string.answer_selection_required), Toast.LENGTH_SHORT).show();
-//                }
             }
         });
     }
@@ -416,11 +405,12 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         new ArrayAdapter<Option>(getActivity(), R.layout.speciality_spinner_item, optionsList);
                 adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
                 spinnerOptions.setAdapter(adapter);
+                spinnerOptions.setSelection(0);
 
                 spinnerOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        questionnarieNewListObject.get(curPage - 1).setAnswer(parent.getSelectedItemId() + "");
+                        questionnarieNewListObject.get(curPage - 1).setAnswer(((Option) spinnerOptions.getSelectedItem()).getQoId().toString());
                     }
 
                     @Override
@@ -455,6 +445,16 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked) {
                                 srtArr.add(cbOption.getTag().toString());
+                                String finalCbOptions = "";
+                                for (int j = 0; j < srtArr.size(); j++) {
+                                    finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
+                                }
+
+                                finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+
+                                questionnarieNewListObject.get(curPage - 1).setAnswer(finalCbOptions);
+                            } else {
+                                srtArr.remove(cbOption.getTag().toString());
                                 String finalCbOptions = "";
                                 for (int j = 0; j < srtArr.size(); j++) {
                                     finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
@@ -534,8 +534,10 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         questionnarieNewListObject.get(curPage - 1).setAnswer(selectedId);
                         if (selectedQueOpId.trim().equals(selectedId)) {
                             layoutMultiLevelSubQue.setVisibility(View.VISIBLE);
+                            isMultilevelQuestion = true;
                             handleSubQuestionLayout(curPage, parentDatum.getSubQuestion());
                         } else {
+                            isMultilevelQuestion = false;
                             layoutMultiLevelSubQue.setVisibility(View.GONE);
                         }
                     }
@@ -651,11 +653,12 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         new ArrayAdapter<Option_>(getActivity(), R.layout.speciality_spinner_item, optionsList);
                 adapter.setDropDownViewResource(R.layout.speciality_spinner_item);
                 spinnerSubQueOptions.setAdapter(adapter);
+                spinnerSubQueOptions.setSelection(0);
 
                 spinnerSubQueOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(parent.getSelectedItemId() + "");
+                        questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(((Option_) spinnerSubQueOptions.getSelectedItem()).getQoId().toString());
                     }
 
                     @Override
@@ -689,6 +692,16 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked) {
                                 srtArr.add(cbOption.getTag().toString());
+                                String finalCbOptions = "";
+                                for (int j = 0; j < srtArr.size(); j++) {
+                                    finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
+                                }
+
+                                finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+
+                                questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(finalCbOptions);
+                            } else {
+                                srtArr.remove(cbOption.getTag().toString());
                                 String finalCbOptions = "";
                                 for (int j = 0; j < srtArr.size(); j++) {
                                     finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
@@ -743,14 +756,21 @@ public class NewQuestionariesActivity extends FragmentActivity {
         }
     }
 
-    public void saveSingleQuestionnarieToServer(Datum queDatum) {
+    public void saveSingleQuestionnarieToServer(Datum queDatum, final boolean isLastQuestion) {
+
         if (!queDatum.getQtId().equals("6")) {
-            saveSingleQuestionnarieInterface.saveQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
-                    queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), "sub_ques_ans", "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+            saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
+                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
                 @Override
                 public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                     Log.d("", "");
+                    if (isLastQuestion) {
+                        if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
+                            Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivity(intent);
+                        }
+                    }
                 }
 
                 @Override
@@ -759,19 +779,50 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 }
             });
         } else {
-            saveSingleQuestionnarieInterface.saveQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
-                    queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), queDatum.getSubQuestion().getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
-                @Override
-                public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
-                    Log.d("", "");
-                }
+            if (isMultilevelQuestion) {
+                saveSingleQuestionnarieInterface.saveMultiLevelQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
+                        queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
+                        queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), queDatum.getSubQuestion().getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    @Override
+                    public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
+                        Log.d("", "");
+                        if (isLastQuestion) {
+                            if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
+                                Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(intent);
+                            }
+                        }
+                    }
 
-                @Override
-                public void onFailure(Call<SingleQuestionnarieResponse> call, Throwable t) {
-                    Log.d("", "");
-                }
-            });
+                    @Override
+                    public void onFailure(Call<SingleQuestionnarieResponse> call, Throwable t) {
+                        Log.d("", "");
+                    }
+                });
+            } else {
+                saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
+                        queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "").enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    @Override
+                    public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
+                        Log.d("", "");
+                        if (isLastQuestion) {
+                            if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
+                                Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SingleQuestionnarieResponse> call, Throwable t) {
+                        Log.d("", "");
+                    }
+                });
+            }
         }
+
+
     }
 }

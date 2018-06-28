@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "884727454271",
+    "firebase_url": "https://appointmentapp-30838.firebaseio.com",
+    "project_id": "appointmentapp-30838",
+    "storage_bucket": "appointmentapp-30838.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884727454271:android:aecd8845759055d9",
+        "android_client_info": {
+          "package_name": "com.quicsolv.appointmentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884727454271-hs4petbe70s1ufsm4diiualbe07r4icf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASTOuvSwLAsGhtjIbaxaMdiuU4qjTNPJI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,7 +16,15 @@ import retrofit2.http.POST;
 public interface SaveSingleQuestionnarieInterface {
     @FormUrlEncoded
     @POST("insert_ans")
-    Call<SingleQuestionnarieResponse> saveQuesOnServer(@Field("pid") String patientId,
+    Call<SingleQuestionnarieResponse> saveSingleQuesOnServer(@Field("pid") String patientId,
+                                                       @Field("m_data[q_id]") String m_data_q_id,
+                                                       @Field("m_data[qt_id]") String m_data_qt_id,
+                                                       @Field("m_data[ans]") String m_data_ans,
+                                                       @Field("m_data[qa_id]") String m_data_qa_id);
+
+    @FormUrlEncoded
+    @POST("insert_ans")
+    Call<SingleQuestionnarieResponse> saveMultiLevelQuesOnServer(@Field("pid") String patientId,
                                                        @Field("m_data[q_id]") String m_data_q_id,
                                                        @Field("m_data[qt_id]") String m_data_qt_id,
                                                        @Field("m_data[ans]") String m_data_ans,
