@@ -64,7 +64,7 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
             }
 
 
-            if (p.getQtId().equals("1")) {//Descriptive
+            if (p.getQtId() != null && p.getQtId().equals("1")) {//Descriptive
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
@@ -72,7 +72,7 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                     viewHolder.op1.setText(p.getAns().toString());
                 }
 
-            } else if (p.getQtId().equals("2")) {//Datepicker
+            } else if (p.getQtId() != null && p.getQtId().equals("2")) {//Datepicker
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
@@ -81,7 +81,7 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                     viewHolder.op1.setText(p.getAns());
                 }
 
-            } else if (p.getQtId().equals("3")) {//Dropdown
+            } else if (p.getQtId() != null && p.getQtId().equals("3")) {//Dropdown
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
@@ -89,7 +89,7 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                     viewHolder.op1.setText(p.getAns().toString());
                 }
 
-            } else if (p.getQtId().equals("4")) {//Checkbox
+            } else if (p.getQtId() != null && p.getQtId().equals("4")) {//Checkbox
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
@@ -97,13 +97,13 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                     viewHolder.op1.setText(p.getAns().toString());
                 }
 
-            } else if (p.getQtId().equals("5")) {//Radio Button
+            } else if (p.getQtId() != null && p.getQtId().equals("5")) {//Radio Button
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
                 if (viewHolder.op1 != null && p.getAns() != null) {
                     viewHolder.op1.setText(p.getAns().toString());
                 }
-            } else if (p.getQtId().equals("6")) {//Second level question
+            } else if (p.getQtId() != null && p.getQtId().equals("6")) {//Second level question
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.VISIBLE);
@@ -112,28 +112,28 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                 }
 
                 //Sub question layout
-                if (viewHolder.txtSubQue != null && p.getSubQuestion().getQuestion() != null) {
+                if (viewHolder.txtSubQue != null && p.getSubQuestion() != null && p.getSubQuestion().getQuestion() != null) {
                     viewHolder.txtSubQue.setText(p.getSubQuestion().getQuestion().toString());
                 }
 
-                if (p.getSubQuestion().getQtId().equals("1")) {//Descriptive
+                if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("1")) {//Descriptive
                     if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
                         viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
-                } else if (p.getSubQuestion().getQtId().equals("2")) {//Datepicker
+                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("2")) {//Datepicker
 
                     if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
                         viewHolder.op1Sub.setText(p.getSubQuestion().getAns());
                     }
-                } else if (p.getSubQuestion().getQtId().equals("3")) {//Dropdown
+                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("3")) {//Dropdown
                     if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
                         viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
-                } else if (p.getSubQuestion().getQtId().equals("4")) {//Checkbox
+                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("4")) {//Checkbox
                     if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
                         viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
-                } else if (p.getSubQuestion().getQtId().equals("5")) {//Radio Button
+                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("5")) {//Radio Button
                     if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
                         viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
                     }
