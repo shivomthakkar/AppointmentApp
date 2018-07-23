@@ -56,87 +56,93 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
         }
 
 
-        Datum p = getItem(position);
+        Datum data = getItem(position);
 
-        if (p != null) {
-            if (viewHolder.txtQue != null && p.getQuestion() != null) {
-                viewHolder.txtQue.setText(p.getQuestion().toString());
+        if (data != null) {
+            if (viewHolder.txtQue != null && data.getQuestion() != null) {
+                viewHolder.txtQue.setText(data.getQuestion().toString());
             }
 
 
-            if (p.getQtId() != null && p.getQtId().equals("1")) {//Descriptive
+            if (data.getQtId() != null && data.getQtId().equals("1") && data.getAns() != null && !data.getAns().trim().equals("")) {//Descriptive
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getAns() != null) {
-                    viewHolder.op1.setText(p.getAns().toString());
+                if (viewHolder.op1 != null && data.getAns() != null) {
+                    viewHolder.op1.setText(data.getAns().toString());
                 }
 
-            } else if (p.getQtId() != null && p.getQtId().equals("2")) {//Datepicker
+            } else if (data.getQtId() != null && data.getQtId().equals("2") && data.getAns() != null && !data.getAns().trim().equals("")) {//Datepicker
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
 
-                if (viewHolder.op1 != null && p.getAns() != null) {
-                    viewHolder.op1.setText(p.getAns());
+                if (viewHolder.op1 != null && data.getAns() != null) {
+                    viewHolder.op1.setText(data.getAns());
                 }
 
-            } else if (p.getQtId() != null && p.getQtId().equals("3")) {//Dropdown
+            } else if (data.getQtId() != null && data.getQtId().equals("3") && data.getAns() != null && !data.getAns().trim().equals("")) {//Dropdown
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getAns() != null) {
-                    viewHolder.op1.setText(p.getAns().toString());
+                if (viewHolder.op1 != null && data.getAns() != null) {
+                    viewHolder.op1.setText(data.getAns().toString());
                 }
 
-            } else if (p.getQtId() != null && p.getQtId().equals("4")) {//Checkbox
+            } else if (data.getQtId() != null && data.getQtId().equals("4") && data.getAns() != null && !data.getAns().trim().equals("")) {//Checkbox
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getAns() != null) {
-                    viewHolder.op1.setText(p.getAns().toString());
+                if (viewHolder.op1 != null && data.getAns() != null) {
+                    viewHolder.op1.setText(data.getAns().toString());
                 }
 
-            } else if (p.getQtId() != null && p.getQtId().equals("5")) {//Radio Button
+            } else if (data.getQtId() != null && data.getQtId().equals("5") && data.getAns() != null && !data.getAns().trim().equals("")) {//Radio Button
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
                 viewHolder.subQueLayout.setVisibility(View.GONE);
-                if (viewHolder.op1 != null && p.getAns() != null) {
-                    viewHolder.op1.setText(p.getAns().toString());
+                if (viewHolder.op1 != null && data.getAns() != null) {
+                    viewHolder.op1.setText(data.getAns().toString());
                 }
-            } else if (p.getQtId() != null && p.getQtId().equals("6")) {//Second level question
+            } else if (data.getQtId() != null && data.getQtId().equals("6") && data.getAns() != null && !data.getAns().trim().equals("")) {//Second level question
 
                 viewHolder.mainQueLayout.setVisibility(View.VISIBLE);
-                viewHolder.subQueLayout.setVisibility(View.VISIBLE);
-                if (viewHolder.op1 != null && p.getAns() != null) {
-                    viewHolder.op1.setText(p.getAns().toString());
+
+                if (viewHolder.op1 != null && data.getAns() != null) {
+                    viewHolder.op1.setText(data.getAns().toString());
                 }
 
-                //Sub question layout
-                if (viewHolder.txtSubQue != null && p.getSubQuestion() != null && p.getSubQuestion().getQuestion() != null) {
-                    viewHolder.txtSubQue.setText(p.getSubQuestion().getQuestion().toString());
-                }
 
-                if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("1")) {//Descriptive
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
+                if (data.getSubQuestion() != null && data.getSubQuestion().getQuestion() != null && data.getSubQuestion().getAns() != null && !data.getSubQuestion().getAns().trim().equals("")) {
+                    viewHolder.subQueLayout.setVisibility(View.VISIBLE);
+                    //Sub question layout
+                    if (viewHolder.txtSubQue != null && data.getSubQuestion() != null && data.getSubQuestion().getQuestion() != null) {
+                        viewHolder.txtSubQue.setText(data.getSubQuestion().getQuestion().toString());
                     }
-                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("2")) {//Datepicker
 
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns());
+                    if (data.getSubQuestion() != null && data.getSubQuestion().getQtId() != null && data.getSubQuestion().getQtId().equals("1")) {//Descriptive
+                        if (viewHolder.op1Sub != null && data.getSubQuestion().getAns() != null) {
+                            viewHolder.op1Sub.setText(data.getSubQuestion().getAns().toString());
+                        }
+                    } else if (data.getSubQuestion() != null && data.getSubQuestion().getQtId() != null && data.getSubQuestion().getQtId().equals("2")) {//Datepicker
+
+                        if (viewHolder.op1Sub != null && data.getSubQuestion().getAns() != null) {
+                            viewHolder.op1Sub.setText(data.getSubQuestion().getAns());
+                        }
+                    } else if (data.getSubQuestion() != null && data.getSubQuestion().getQtId() != null && data.getSubQuestion().getQtId().equals("3")) {//Dropdown
+                        if (viewHolder.op1Sub != null && data.getSubQuestion().getAns() != null) {
+                            viewHolder.op1Sub.setText(data.getSubQuestion().getAns().toString());
+                        }
+                    } else if (data.getSubQuestion() != null && data.getSubQuestion().getQtId() != null && data.getSubQuestion().getQtId().equals("4")) {//Checkbox
+                        if (viewHolder.op1Sub != null && data.getSubQuestion().getAns() != null) {
+                            viewHolder.op1Sub.setText(data.getSubQuestion().getAns().toString());
+                        }
+                    } else if (data.getSubQuestion() != null && data.getSubQuestion().getQtId() != null && data.getSubQuestion().getQtId().equals("5")) {//Radio Button
+                        if (viewHolder.op1Sub != null && data.getSubQuestion().getAns() != null) {
+                            viewHolder.op1Sub.setText(data.getSubQuestion().getAns().toString());
+                        }
                     }
-                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("3")) {//Dropdown
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
-                    }
-                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("4")) {//Checkbox
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
-                    }
-                } else if (p.getSubQuestion() != null && p.getSubQuestion().getQtId() != null && p.getSubQuestion().getQtId().equals("5")) {//Radio Button
-                    if (viewHolder.op1Sub != null && p.getSubQuestion().getAns() != null) {
-                        viewHolder.op1Sub.setText(p.getSubQuestion().getAns().toString());
-                    }
+                } else {
+                    viewHolder.subQueLayout.setVisibility(View.GONE);
                 }
             }
         }
