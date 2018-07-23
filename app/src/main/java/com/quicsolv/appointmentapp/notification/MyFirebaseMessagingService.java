@@ -51,7 +51,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendBackgroundNotification(RemoteMessage.Notification notification, Map<String, String> messageBody) {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(this, RequestAppointmentActivity.class);
-        intent.putExtra(Prefs.PREF_NOTIFICATION_DATA, messageBody.get("app_date"));
+        bundle.putString(Prefs.PREF_NOTIFICATION_DATA, messageBody.get("app_date"));
         intent.putExtra(Prefs.PREF_NOTIFICATION_DATA, messageBody.values().toArray()[1].toString());
         Prefs.IS_FROM_NOTIFICATION = true;
         intent.putExtras(bundle);
@@ -65,8 +65,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(notification.getBody())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-                .addAction(R.drawable.ic_launcher, "", pendingIntent);
+                .setContentIntent(pendingIntent);
+//                .addAction(R.drawable.ic_launcher, "", pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

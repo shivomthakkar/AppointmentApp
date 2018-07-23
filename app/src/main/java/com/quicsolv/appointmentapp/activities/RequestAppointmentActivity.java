@@ -74,6 +74,12 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
         getSpecialityInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(GetSpecialityInterface.class);
         createAppointmentInterface = RetrofitClient.getClient(RetrofitConstants.BASE_URL).create(CreateAppointmentInterface.class);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            //bundle must contain all info sent in "data" field of the notification
+            Log.d("","");
+        }
+
         getIds();
         progressBar.setVisibility(View.VISIBLE);
         fetchSpeciality();
@@ -96,26 +102,18 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
         btnCreateAppointment.setOnClickListener(this);
 
 
+        String dateFromNotfn = Prefs.getSharedPreferenceString(getApplicationContext(), Prefs.PREF_NOTIFICATION_DATA, "");
+        edttxtDate.setText(dateFromNotfn);
 
-        if (Prefs.IS_FROM_NOTIFICATION){
-            String dateFromNotfn = Prefs.getSharedPreferenceString(getApplicationContext(), Prefs.PREF_NOTIFICATION_DATA, "");
-            if (!dateFromNotfn.equals("")) {
-                edttxtDate.setText(dateFromNotfn);
-                Prefs.IS_FROM_NOTIFICATION = false;
-                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_NOTIFICATION_DATA, "");
-            }
-
-//            if (getIntent() != null) {
-//                dateFromNotfn = getIntent().getStringExtra("app_date");
+//        if (Prefs.IS_FROM_NOTIFICATION){
+//            String dateFromNotfn = Prefs.getSharedPreferenceString(getApplicationContext(), Prefs.PREF_NOTIFICATION_DATA, "");
+//            if (!dateFromNotfn.equals("")) {
+//                edttxtDate.setText(dateFromNotfn);
+//                Prefs.IS_FROM_NOTIFICATION = false;
+////                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_NOTIFICATION_DATA, "");
 //            }
 //
-//            if (dateFromNotfn == null) {
-//                Bundle notificationBundle = getIntent().getExtras();
-//                if (notificationBundle != null) {
-//                    dateFromNotfn = notificationBundle.getString("app_date");
-//                }
-//            }
-        }
+//        }
 
 
 
@@ -272,6 +270,8 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
+                Prefs.IS_FROM_NOTIFICATION = false;
+                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_NOTIFICATION_DATA, "");
                 Prefs.setSharedPreferenceBoolean(mContext, Prefs.PREF_IS_FROM_REQUEST_APT, true);
                 Intent intent_dashboard_activity = new Intent(mContext, DashboardActivity.class);
                 intent_dashboard_activity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -316,6 +316,8 @@ public class RequestAppointmentActivity extends AppCompatActivity implements Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Prefs.IS_FROM_NOTIFICATION = false;
+                Prefs.setSharedPreferenceString(mContext, Prefs.PREF_NOTIFICATION_DATA, "");
                 finish();
                 return true;
             default:

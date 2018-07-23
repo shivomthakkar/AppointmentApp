@@ -1,5 +1,6 @@
 package com.quicsolv.appointmentapp.fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.quicsolv.appointmentapp.R;
 import com.quicsolv.appointmentapp.activities.DashboardActivity;
+import com.quicsolv.appointmentapp.activities.RequestAppointmentActivity;
 import com.quicsolv.appointmentapp.adapters.PagersAdapter;
 import com.quicsolv.appointmentapp.utils.Prefs;
 
@@ -29,6 +31,13 @@ public class AppointmentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_appointment_list, container, false);
+
+        String dateStrFromNotfn = Prefs.getSharedPreferenceString(getActivity(), Prefs.PREF_NOTIFICATION_DATA, "");
+        if (!dateStrFromNotfn.equals("")){
+            Intent intent = new Intent(getActivity(), RequestAppointmentActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }
 
         ((DashboardActivity) getActivity()).setToolBarTitle(getString(R.string.header_list_of_appointments));
 
