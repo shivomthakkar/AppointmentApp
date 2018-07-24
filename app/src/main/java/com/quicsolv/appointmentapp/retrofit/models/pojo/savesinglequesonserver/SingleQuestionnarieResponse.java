@@ -16,6 +16,9 @@ public class SingleQuestionnarieResponse {
     @SerializedName("code")
     @Expose
     private Integer code;
+    @SerializedName("sqa_id")
+    @Expose
+    private String sqaId;
 
     public String getQaId() {
         return qaId;
@@ -31,5 +34,13 @@ public class SingleQuestionnarieResponse {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public String getSqaId() {
+        return sqaId;
+    }
+
+    public void setSqaId(String sqaId) {
+        this.sqaId = sqaId;
     }
 }

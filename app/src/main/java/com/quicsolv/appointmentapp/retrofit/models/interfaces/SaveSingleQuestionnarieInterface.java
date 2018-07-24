@@ -5,6 +5,7 @@ import com.quicsolv.appointmentapp.retrofit.models.pojo.savesinglequesonserver.S
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**********************************************************************
@@ -14,6 +15,7 @@ import retrofit2.http.POST;
  ***********************************************************************/
 
 public interface SaveSingleQuestionnarieInterface {
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST("insert_ans")
     Call<SingleQuestionnarieResponse> saveSingleQuesOnServer(@Field("pid") String patientId,
@@ -21,8 +23,9 @@ public interface SaveSingleQuestionnarieInterface {
                                                              @Field("m_data[qt_id]") String m_data_qt_id,
                                                              @Field("m_data[ans]") String m_data_ans,
                                                              @Field("m_data[qa_id]") String m_data_qa_id,
-                                                             @Field("q_complete") String questionComplete);
+                                                             @Field("q_complete") Integer questionComplete);
 
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST("insert_ans")
     Call<SingleQuestionnarieResponse> saveMultiLevelQuesOnServer(@Field("pid") String patientId,
@@ -34,5 +37,5 @@ public interface SaveSingleQuestionnarieInterface {
                                                                  @Field("s_data[qt_id]") String s_data_qt_id,
                                                                  @Field("s_data[ans]") String s_data_ans,
                                                                  @Field("s_data[qa_id]") String s_data_qa_id,
-                                                                 @Field("q_complete") String questionComplete);
+                                                                 @Field("q_complete") Integer questionComplete);
 }

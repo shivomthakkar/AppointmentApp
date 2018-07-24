@@ -760,17 +760,16 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
     public void saveSingleQuestionnarieToServer(Datum queDatum, final boolean isLastQuestion) {
 
-        String isQuestionComplete = "0";
+        Integer isQuestionComplete = 0;
         if (isLastQuestion) {
-            isQuestionComplete = "1";
+            isQuestionComplete = 1;
         }
 
         if (!queDatum.getQtId().equals("6")) {
             saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                    queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAnswer(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                 @Override
                 public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
-                    Log.d("", "");
                     if (isLastQuestion) {
                         if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                             Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
@@ -788,11 +787,10 @@ public class NewQuestionariesActivity extends FragmentActivity {
         } else {
             if (isMultilevelQuestion) {
                 saveSingleQuestionnarieInterface.saveMultiLevelQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                        queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId(),
-                        queDatum.getSubQuestion().getQId(), queDatum.getSubQuestion().getQtId(), queDatum.getSubQuestion().getAnswer(), "", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getQId().toString(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId().toString(),
+                        queDatum.getSubQuestion().getQId().toString(), queDatum.getSubQuestion().getQtId().toString(), queDatum.getSubQuestion().getAnswer(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
-                        Log.d("", "");
                         if (isLastQuestion) {
                             if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                                 Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
@@ -809,10 +807,9 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 });
             } else {
                 saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                        queDatum.getQId(), queDatum.getQtId(), queDatum.getAnswer(), "", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAnswer(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
-                        Log.d("", "");
                         if (isLastQuestion) {
                             if (response != null && response.body() != null && response.body().getCode() == Constants.ERROR_CODE_200) {
                                 Intent intent = new Intent(mContext, QuestionnarieCompletedActivity.class);
