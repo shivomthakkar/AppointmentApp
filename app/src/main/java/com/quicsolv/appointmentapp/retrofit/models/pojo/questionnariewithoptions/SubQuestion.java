@@ -36,9 +36,13 @@ public class SubQuestion implements Parcelable {
     @SerializedName("options")
     @Expose
     private List<Option_> options = null;
-    @SerializedName("answer")
+    @SerializedName("ans")
     @Expose
-    private String answer;
+    private Object ans;
+    @SerializedName("answer_by_me")
+    @Expose
+    private String answerbyMe;
+
 
     protected SubQuestion(Parcel in) {
         qId = in.readString();
@@ -46,7 +50,8 @@ public class SubQuestion implements Parcelable {
         question = in.readString();
         qtId = in.readString();
         selectedQoId = in.readString();
-        answer = in.readString();
+        ans = in.readString();
+        answerbyMe = in.readString();
     }
 
     public static final Creator<Datum> CREATOR = new Creator<Datum>() {
@@ -74,7 +79,8 @@ public class SubQuestion implements Parcelable {
         dest.writeString(question);
         dest.writeString(qtId);
         dest.writeString(selectedQoId);
-        dest.writeString(answer);
+        dest.writeString(ans.toString());
+        dest.writeString(answerbyMe);
     }
     public String getQId() {
         return qId;
@@ -132,11 +138,19 @@ public class SubQuestion implements Parcelable {
         this.options = options;
     }
 
-    public String getAnswer() {
-        return answer;
+    public Object getAns() {
+        return ans;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAns(Object ans) {
+        this.ans = ans;
+    }
+
+    public String getAnswerByMe() {
+        return answerbyMe;
+    }
+
+    public void setAnswerByMe(String ans) {
+        this.answerbyMe = answerbyMe;
     }
 }

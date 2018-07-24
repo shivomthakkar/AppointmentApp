@@ -171,7 +171,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         Datum datum = response.body().getData().get(i);
                         datum.setQaId("0");
-                        datum.setAnswer("");
+//                        datum.setAns("");
                         listQuestionnarie.add(datum);
                     }
 
@@ -318,8 +318,11 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
             txtQuestion.setText("Q." + curPage + "  " + datum.getQuestion());
             questionnarieNewListObject.get(curPage - 1).setQaId("0");
-            questionnarieNewListObject.get(curPage - 1).setAnswer("");
-
+            if (datum.getAns() != null) {
+                questionnarieNewListObject.get(curPage - 1).setAns(datum.getAns().toString());
+            } else {
+                questionnarieNewListObject.get(curPage - 1).setAns("");
+            }
 
             layoutDescriptive.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -334,7 +337,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    questionnarieNewListObject.get(curPage - 1).setAnswer(layoutDescriptive.getText().toString());
+                    questionnarieNewListObject.get(curPage - 1).setAns(layoutDescriptive.getText().toString());
                 }
             });
 
@@ -364,8 +367,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         e.printStackTrace();
                     }
 
-
-                    questionnarieNewListObject.get(curPage - 1).setAnswer(startDateStrNewFormat);
+                    questionnarieNewListObject.get(curPage - 1).setAns(startDateStrNewFormat);
                 }
             });
 
@@ -379,6 +381,10 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 layoutMultiLevel.setVisibility(View.GONE);
                 layoutMultiLevelSubQue.setVisibility(View.GONE);
 
+                if (datum.getAns() != null) {
+                    layoutDescriptive.setText(datum.getAns().toString());
+                }
+
             } else if (datum.getQtId().trim().equals("2")) { //Question type is Datepicker
 
                 layoutDescriptive.setVisibility(View.GONE);
@@ -387,6 +393,23 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 layoutCheckbox.setVisibility(View.GONE);
                 layoutMultiLevel.setVisibility(View.GONE);
                 layoutMultiLevelSubQue.setVisibility(View.GONE);
+
+                if (datum.getAns() != null) {
+                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+                    String startDateStr = datum.getAns().toString();
+                    Date date = null;
+                    String startDateStrNewFormat = "";
+                    try {
+                        date = inputFormat.parse(startDateStr);
+                        startDateStrNewFormat = outputFormat.format(date);
+                        myCalendar.setTime(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    layoutDate.setText(startDateStrNewFormat);
+                }
+
 
             } else if (datum.getQtId().trim().equals("3")) { //Question type is Dropdown
 
@@ -411,7 +434,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 spinnerOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        questionnarieNewListObject.get(curPage - 1).setAnswer(((Option) spinnerOptions.getSelectedItem()).getQoId().toString());
+                        questionnarieNewListObject.get(curPage - 1).setAns(((Option) spinnerOptions.getSelectedItem()).getQoId().toString());
                     }
 
                     @Override
@@ -419,6 +442,14 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
                     }
                 });
+
+                if (datum.getAns() != null) {
+                    for (int position = 0; position < adapter.getCount(); position++) {
+                        if (adapter.getItem(position).getQoId().toString().equals(datum.getAns())) {
+                            spinnerOptions.setSelection(position);
+                        }
+                    }
+                }
 
             } else if (datum.getQtId().trim().equals("4")) { //Question type is Checkbox (Multiple selection)
 
@@ -451,9 +482,11 @@ public class NewQuestionariesActivity extends FragmentActivity {
                                     finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
                                 }
 
-                                finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                if (!finalCbOptions.trim().equals("")) {
+                                    finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                }
 
-                                questionnarieNewListObject.get(curPage - 1).setAnswer(finalCbOptions);
+                                questionnarieNewListObject.get(curPage - 1).setAns(finalCbOptions);
                             } else {
                                 srtArr.remove(cbOption.getTag().toString());
                                 String finalCbOptions = "";
@@ -461,12 +494,23 @@ public class NewQuestionariesActivity extends FragmentActivity {
                                     finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
                                 }
 
-                                finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                if (!finalCbOptions.trim().equals("")) {
+                                    finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                }
 
-                                questionnarieNewListObject.get(curPage - 1).setAnswer(finalCbOptions);
+                                questionnarieNewListObject.get(curPage - 1).setAns(finalCbOptions);
                             }
                         }
                     });
+
+                    if (datum.getAns() != null) {
+                        String allOps[] = ((String) datum.getAns().toString()).split(",");
+                        for (int j = 0; j < allOps.length; j++) {
+                            if (allOps[j].toString().equals(datum.getOptions().get(i).getQoId().toString())) {
+                                cbOption.setChecked(true);
+                            }
+                        }
+                    }
                 }
 
             } else if (datum.getQtId().trim().equals("5")) { //Question type is Radio Button (Single selection)
@@ -489,6 +533,15 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
                     rb[i].setTextSize(18);
                     rg.addView(rb[i]);
+
+                    if (datum.getAns() != null) {
+                        String allOps[] = ((String) datum.getAns().toString()).split(",");
+                        for (int j = 0; j < allOps.length; j++) {
+                            if (allOps[j].toString().equals(datum.getOptions().get(i).getQoId().toString())) {
+                                rb[i].setChecked(true);
+                            }
+                        }
+                    }
                 }
                 layoutCheckbox.addView(rg);
 
@@ -496,7 +549,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         RadioButton radioButton = (RadioButton) v.findViewById(checkedId);
-                        questionnarieNewListObject.get(curPage - 1).setAnswer(radioButton.getTag().toString());
+                        questionnarieNewListObject.get(curPage - 1).setAns(radioButton.getTag().toString());
                     }
                 });
 
@@ -523,6 +576,26 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setTag(datum.getOptions().get(i).getQoId());
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
                     rb[i].setTextSize(18);
+
+
+                    if (datum.getAns() != null) {
+                        String allOps[] = ((String) datum.getAns().toString()).split(",");
+                        for (int j = 0; j < allOps.length; j++) {
+                            if (allOps[j].toString().equals(datum.getOptions().get(i).getQoId().toString())) {
+                                rb[i].setChecked(true);
+                                String selectedId = rb[i].getTag().toString().trim();
+                                questionnarieNewListObject.get(curPage - 1).setAns(selectedId);
+                                if (selectedQueOpId.trim().equals(selectedId)) {
+                                    layoutMultiLevelSubQue.setVisibility(View.VISIBLE);
+                                    isMultilevelQuestion = true;
+                                    handleSubQuestionLayout(curPage, parentDatum.getSubQuestion());
+                                } else {
+                                    isMultilevelQuestion = false;
+                                    layoutMultiLevelSubQue.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    }
                     rg.addView(rb[i]);
                 }
 //                layoutMultiLevel.addView(rg);
@@ -532,7 +605,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         int i = group.getCheckedRadioButtonId();
                         RadioButton radioButton = (RadioButton) v.findViewById(checkedId);
                         String selectedId = radioButton.getTag().toString().trim();
-                        questionnarieNewListObject.get(curPage - 1).setAnswer(selectedId);
+                        questionnarieNewListObject.get(curPage - 1).setAns(selectedId);
                         if (selectedQueOpId.trim().equals(selectedId)) {
                             layoutMultiLevelSubQue.setVisibility(View.VISIBLE);
                             isMultilevelQuestion = true;
@@ -588,7 +661,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(layoutSubQueDescriptive.getText().toString());
+                    questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAns(layoutSubQueDescriptive.getText().toString());
                 }
             });
 
@@ -618,7 +691,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                         e.printStackTrace();
                     }
 
-                    questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(startDateStrNewFormat);
+                    questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAns(startDateStrNewFormat);
                 }
             });
 
@@ -632,12 +705,32 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 layoutSubQueDropdown.setVisibility(View.GONE);
                 layoutSubQueCheckbox.setVisibility(View.VISIBLE);
 
+                if (subQuestion.getAns() != null) {
+                    layoutSubQueDescriptive.setText(subQuestion.getAns().toString());
+                }
+
             } else if (subQuestion.getQtId().trim().equals("2")) { //Question type is Datepicker
 
                 layoutSubQueDescriptive.setVisibility(View.GONE);
                 layoutSubQueDate.setVisibility(View.VISIBLE);
                 layoutSubQueDropdown.setVisibility(View.GONE);
                 layoutSubQueCheckbox.setVisibility(View.VISIBLE);
+
+                if (subQuestion.getAns() != null) {
+                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    DateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+                    String startDateStr = subQuestion.getAns().toString();
+                    Date date = null;
+                    String startDateStrNewFormat = "";
+                    try {
+                        date = inputFormat.parse(startDateStr);
+                        startDateStrNewFormat = outputFormat.format(date);
+                        myCalendarSubQue.setTime(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    layoutSubQueDate.setText(startDateStrNewFormat);
+                }
 
             } else if (subQuestion.getQtId().trim().equals("3")) { //Question type is Dropdown
 
@@ -660,7 +753,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 spinnerSubQueOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(((Option_) spinnerSubQueOptions.getSelectedItem()).getQoId().toString());
+                        questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAns(((Option_) spinnerSubQueOptions.getSelectedItem()).getQoId().toString());
                     }
 
                     @Override
@@ -668,6 +761,14 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
                     }
                 });
+
+                if (subQuestion.getAns() != null) {
+                    for (int position = 0; position < adapter.getCount(); position++) {
+                        if (adapter.getItem(position).getQoId().toString().equals(subQuestion.getAns())) {
+                            spinnerSubQueOptions.setSelection(position);
+                        }
+                    }
+                }
 
             } else if (subQuestion.getQtId().trim().equals("4")) { //Question type is Checkbox (Multiple selection)
 
@@ -699,9 +800,11 @@ public class NewQuestionariesActivity extends FragmentActivity {
                                     finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
                                 }
 
-                                finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                if (!finalCbOptions.trim().equals("")) {
+                                    finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                }
 
-                                questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(finalCbOptions);
+                                questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAns(finalCbOptions);
                             } else {
                                 srtArr.remove(cbOption.getTag().toString());
                                 String finalCbOptions = "";
@@ -709,12 +812,23 @@ public class NewQuestionariesActivity extends FragmentActivity {
                                     finalCbOptions = finalCbOptions + srtArr.get(j) + ",";
                                 }
 
-                                finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                if (!finalCbOptions.trim().equals("")) {
+                                    finalCbOptions = finalCbOptions.substring(0, finalCbOptions.length() - 1);
+                                }
 
-                                questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(finalCbOptions);
+                                questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAns(finalCbOptions);
                             }
                         }
                     });
+
+                    if (subQuestion.getAns() != null) {
+                        String allOps[] = ((String) subQuestion.getAns().toString()).split(",");
+                        for (int j = 0; j < allOps.length; j++) {
+                            if (allOps[j].toString().equals(subQuestion.getOptions().get(i).getQoId().toString())) {
+                                cbOption.setChecked(true);
+                            }
+                        }
+                    }
                 }
 
             } else if (subQuestion.getQtId().trim().equals("5")) { //Question type is Radio Button (Single selection)
@@ -736,13 +850,22 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
                     rb[i].setTextSize(18);
                     rg.addView(rb[i]);
+
+                    if (subQuestion.getAns() != null) {
+                        String allOps[] = ((String) subQuestion.getAns().toString()).split(",");
+                        for (int j = 0; j < allOps.length; j++) {
+                            if (allOps[j].toString().equals(subQuestion.getOptions().get(i).getQoId().toString())) {
+                                rb[i].setChecked(true);
+                            }
+                        }
+                    }
                 }
                 layoutSubQueCheckbox.addView(rg);
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         RadioButton radioButton = (RadioButton) getActivity().findViewById(checkedId);
-                        questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAnswer(radioButton.getTag().toString());
+                        questionnarieNewListObject.get(curPage - 1).getSubQuestion().setAns(radioButton.getTag().toString());
                     }
                 });
 
@@ -767,7 +890,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
 
         if (!queDatum.getQtId().equals("6")) {
             saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                    queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAnswer(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAns().toString(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                 @Override
                 public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                     if (isLastQuestion) {
@@ -787,8 +910,8 @@ public class NewQuestionariesActivity extends FragmentActivity {
         } else {
             if (isMultilevelQuestion) {
                 saveSingleQuestionnarieInterface.saveMultiLevelQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                        queDatum.getQId().toString(), queDatum.getQtId(), queDatum.getAnswer(), queDatum.getQaId().toString(),
-                        queDatum.getSubQuestion().getQId().toString(), queDatum.getSubQuestion().getQtId().toString(), queDatum.getSubQuestion().getAnswer(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getQId().toString(), queDatum.getQtId(), queDatum.getAns().toString(), queDatum.getQaId().toString(),
+                        queDatum.getSubQuestion().getQId().toString(), queDatum.getSubQuestion().getQtId().toString(), queDatum.getSubQuestion().getAns().toString(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                         if (isLastQuestion) {
@@ -807,7 +930,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                 });
             } else {
                 saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                        queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAnswer(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAns().toString(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                         if (isLastQuestion) {
