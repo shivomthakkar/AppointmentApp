@@ -140,10 +140,14 @@ public class SubmittedQuesListAdapter extends ArrayAdapter<Datum> {
                         if (viewHolder.op1Sub != null && data.getSubQuestion().getAns() != null) {
                             viewHolder.op1Sub.setText(data.getSubQuestion().getAns().toString());
                         }
+                    }else{
+                        viewHolder.subQueLayout.setVisibility(View.GONE);
                     }
                 } else {
                     viewHolder.subQueLayout.setVisibility(View.GONE);
                 }
+            }else{
+                viewHolder.mainQueLayout.setVisibility(View.GONE);
             }
         }
 
