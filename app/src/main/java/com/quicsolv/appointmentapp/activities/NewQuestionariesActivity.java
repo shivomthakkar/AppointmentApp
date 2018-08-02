@@ -180,6 +180,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     List<Fragment> fragments = getFragments();
                     pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
                     pager = (ViewPager) findViewById(R.id.viewpager);
+                    pager.setOffscreenPageLimit(response.body().getData().size());
                     pager.setAdapter(pageAdapter);
                 } else {
                     //failure
