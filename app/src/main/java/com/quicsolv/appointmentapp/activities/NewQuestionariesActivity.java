@@ -577,8 +577,10 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
                     rb[i].setTextSize(18);
 
+                    rg.addView(rb[i]);
 
-                    if (datum.getAns() != null) {
+
+                    if (datum.getAns() != null && !datum.getAns().toString().trim().equals("")) {
                         String allOps[] = ((String) datum.getAns().toString()).split(",");
                         for (int j = 0; j < allOps.length; j++) {
                             if (allOps[j].toString().equals(datum.getOptions().get(i).getQoId().toString())) {
@@ -596,14 +598,14 @@ public class NewQuestionariesActivity extends FragmentActivity {
                             }
                         }
                     }
-                    rg.addView(rb[i]);
                 }
 //                layoutMultiLevel.addView(rg);
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         int i = group.getCheckedRadioButtonId();
-                        RadioButton radioButton = (RadioButton) v.findViewById(checkedId);
+                        RadioButton radioButton = (RadioButton) v.findViewById(i);
+                        radioButton.setChecked(true);
                         String selectedId = radioButton.getTag().toString().trim();
                         questionnarieNewListObject.get(curPage - 1).setAns(selectedId);
                         if (selectedQueOpId.trim().equals(selectedId)) {
