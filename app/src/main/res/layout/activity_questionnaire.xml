@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:textAllCaps="false"
                 android:background="@drawable/button_filled"
-                android:text="Next Question"
+                android:text="Next"
                 android:textColor="@color/white" />
 
         </LinearLayout>
