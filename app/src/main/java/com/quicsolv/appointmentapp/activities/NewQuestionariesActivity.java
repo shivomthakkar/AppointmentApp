@@ -4,6 +4,8 @@ package com.quicsolv.appointmentapp.activities;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -107,7 +109,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
             public void onClick(View v) {
                 if (pager.getCurrentItem() != 0) {
 
-                    btnNextQuestion.setText("Next question");
+                    btnNextQuestion.setText("Next");
 
                     if (pager.getCurrentItem() == listQuestionnarie.size()) {
                         btnNextQuestion.setVisibility(View.VISIBLE);
@@ -138,7 +140,7 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     isLastQuestion = true;
                     saveSingleQuestionnarieToServer(questionnarieNewListObject.get(pager.getCurrentItem()), isLastQuestion);
                 } else {
-                    btnNextQuestion.setText("Next question");
+                    btnNextQuestion.setText("Next");
                     isLastQuestion = false;
                     saveSingleQuestionnarieToServer(questionnarieNewListObject.get(pager.getCurrentItem()), isLastQuestion);
                 }
@@ -470,7 +472,24 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     cbOption.setText(datum.getOptions().get(i).getQOption());
                     cbOption.setTag(datum.getOptions().get(i).getQoId());
                     cbOption.setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
-                    cbOption.setTextSize(18);
+                    cbOption.setTextSize(16);
+
+                    if(Build.VERSION.SDK_INT>=21){
+                        ColorStateList colorStateList = new ColorStateList(
+                                new int[][]{
+                                        new int[]{-android.R.attr.state_enabled}, //disabled
+                                        new int[]{android.R.attr.state_enabled} //enabled
+                                },
+                                new int[] {
+
+                                        getResources().getColor(R.color.txt_color), //disabled
+                                        getResources().getColor(R.color.txt_color) //enabled
+                                }
+                        );
+                        cbOption.setButtonTintList(colorStateList);//set the color tint list
+                        cbOption.invalidate(); //could not be necessary
+                    }
+
                     layoutCheckbox.addView(cbOption);
 
                     cbOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -532,7 +551,24 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setTag(datum.getOptions().get(i).getQoId());
                     rb[i].setPadding(30, 30, 30, 30);
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
-                    rb[i].setTextSize(18);
+                    rb[i].setTextSize(16);
+
+                    if(Build.VERSION.SDK_INT>=21){
+                        ColorStateList colorStateList = new ColorStateList(
+                                new int[][]{
+                                        new int[]{-android.R.attr.state_enabled}, //disabled
+                                        new int[]{android.R.attr.state_enabled} //enabled
+                                },
+                                new int[] {
+
+                                        getResources().getColor(R.color.txt_color), //disabled
+                                        getResources().getColor(R.color.txt_color) //enabled
+                                }
+                        );
+                        rb[i].setButtonTintList(colorStateList);//set the color tint list
+                        rb[i].invalidate(); //could not be necessary
+                    }
+
                     rg.addView(rb[i]);
 
                     if (datum.getAns() != null) {
@@ -576,7 +612,23 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setPadding(30, 30, 30, 30);
                     rb[i].setTag(datum.getOptions().get(i).getQoId());
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
-                    rb[i].setTextSize(18);
+                    rb[i].setTextSize(16);
+
+                    if(Build.VERSION.SDK_INT>=21){
+                        ColorStateList colorStateList = new ColorStateList(
+                                new int[][]{
+                                        new int[]{-android.R.attr.state_enabled}, //disabled
+                                        new int[]{android.R.attr.state_enabled} //enabled
+                                },
+                                new int[] {
+
+                                        getResources().getColor(R.color.txt_color), //disabled
+                                        getResources().getColor(R.color.txt_color) //enabled
+                                }
+                        );
+                        rb[i].setButtonTintList(colorStateList);//set the color tint list
+                        rb[i].invalidate(); //could not be necessary
+                    }
 
                     rg.addView(rb[i]);
 
@@ -790,7 +842,24 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     cbOption.setText(subQuestion.getOptions().get(i).getQOption());
                     cbOption.setTag(subQuestion.getOptions().get(i).getQoId());
                     cbOption.setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
-                    cbOption.setTextSize(18);
+                    cbOption.setTextSize(16);
+
+                    if(Build.VERSION.SDK_INT>=21){
+                        ColorStateList colorStateList = new ColorStateList(
+                                new int[][]{
+                                        new int[]{-android.R.attr.state_enabled}, //disabled
+                                        new int[]{android.R.attr.state_enabled} //enabled
+                                },
+                                new int[] {
+
+                                        getResources().getColor(R.color.txt_color), //disabled
+                                        getResources().getColor(R.color.txt_color) //enabled
+                                }
+                        );
+                        cbOption.setButtonTintList(colorStateList);//set the color tint list
+                        cbOption.invalidate(); //could not be necessary
+                    }
+
                     layoutSubQueCheckbox.addView(cbOption);
 
                     cbOption.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -851,7 +920,24 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     rb[i].setTag(subQuestion.getOptions().get(i).getQoId());
                     rb[i].setPadding(30, 30, 30, 30);
                     rb[i].setTextColor(getActivity().getResources().getColor(R.color.colorPrimaryDark));
-                    rb[i].setTextSize(18);
+                    rb[i].setTextSize(16);
+
+                    if(Build.VERSION.SDK_INT>=21){
+                        ColorStateList colorStateList = new ColorStateList(
+                                new int[][]{
+                                        new int[]{-android.R.attr.state_enabled}, //disabled
+                                        new int[]{android.R.attr.state_enabled} //enabled
+                                },
+                                new int[] {
+
+                                        getResources().getColor(R.color.txt_color), //disabled
+                                        getResources().getColor(R.color.txt_color) //enabled
+                                }
+                        );
+                        rb[i].setButtonTintList(colorStateList);//set the color tint list
+                        rb[i].invalidate(); //could not be necessary
+                    }
+
                     rg.addView(rb[i]);
 
                     if (subQuestion.getAns() != null) {
