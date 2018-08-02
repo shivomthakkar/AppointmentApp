@@ -891,8 +891,14 @@ public class NewQuestionariesActivity extends FragmentActivity {
         }
 
         if (!queDatum.getQtId().equals("6")) {
+            String ans;
+            if (queDatum.getAns() == null) {
+                ans = "";
+            } else {
+                ans = queDatum.getAns().toString();
+            }
             saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                    queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAns().toString(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                    queDatum.getQId().toString(), queDatum.getQtId().toString(), ans, "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                 @Override
                 public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                     if (isLastQuestion) {
@@ -911,9 +917,15 @@ public class NewQuestionariesActivity extends FragmentActivity {
             });
         } else {
             if (isMultilevelQuestion) {
+                String subAns;
+                if (queDatum.getSubQuestion().getAns() == null) {
+                    subAns = "";
+                } else {
+                    subAns = queDatum.getSubQuestion().getAns().toString();
+                }
                 saveSingleQuestionnarieInterface.saveMultiLevelQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
                         queDatum.getQId().toString(), queDatum.getQtId(), queDatum.getAns().toString(), queDatum.getQaId().toString(),
-                        queDatum.getSubQuestion().getQId().toString(), queDatum.getSubQuestion().getQtId().toString(), queDatum.getSubQuestion().getAns().toString(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getSubQuestion().getQId().toString(), queDatum.getSubQuestion().getQtId().toString(), subAns, "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                         if (isLastQuestion) {
@@ -931,8 +943,14 @@ public class NewQuestionariesActivity extends FragmentActivity {
                     }
                 });
             } else {
+                String ans;
+                if (queDatum.getAns() == null) {
+                    ans = "";
+                } else {
+                    ans = queDatum.getAns().toString();
+                }
                 saveSingleQuestionnarieInterface.saveSingleQuesOnServer(Prefs.getSharedPreferenceString(mContext, Prefs.PREF_PID, ""),
-                        queDatum.getQId().toString(), queDatum.getQtId().toString(), queDatum.getAns().toString(), "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
+                        queDatum.getQId().toString(), queDatum.getQtId().toString(), ans, "0", isQuestionComplete).enqueue(new Callback<SingleQuestionnarieResponse>() {
                     @Override
                     public void onResponse(Call<SingleQuestionnarieResponse> call, Response<SingleQuestionnarieResponse> response) {
                         if (isLastQuestion) {
